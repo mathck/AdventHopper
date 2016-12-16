@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Advent Hopper</string>
+
+    <string name="action_settings">Einstellungen</string>
+
+    <string name="dialog_action_ok">OK</string>
+    <string name="dialog_action_cancel">Abbrechen</string>
+    <string name="dialog_error_title">Ups...</string>
+
+    <string name="empty_list">Alle Adventmärkte haben geschlossen</string>
+    <string name="error_loading_list">Es gab ein Problem beim Laden der Adventmärkte</string>
+</resources>

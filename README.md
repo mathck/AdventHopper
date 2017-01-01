@@ -1,37 +1,22 @@
-# Android Boilerplate
+# Advent Hopper
 
-Sample Android app that we use at [ribot](http://ribot.co.uk) as a reference for new Android projects. It demonstrates the architecture, tools and guidelines that we use when developing for the Android platform (https://github.com/ribot/android-guidelines)
+## Übung 2: Erste Iteration
 
-Libraries and tools included:
+**Kernfunktionen implementieren**
+- [ ] Adventmarkt Liste
+- [ ] Bewertung über Firebase
+- [ ] Sharen und Navigation
 
-- Support libraries
-- RecyclerViews and CardViews 
-- [RxJava](https://github.com/ReactiveX/RxJava) and [RxAndroid](https://github.com/ReactiveX/RxAndroid) 
-- [Retrofit 2](http://square.github.io/retrofit/)
-- [Dagger 2](http://google.github.io/dagger/)
-- [SqlBrite](https://github.com/square/sqlbrite)
-- [Butterknife](https://github.com/JakeWharton/butterknife)
-- [Timber](https://github.com/JakeWharton/timber)
-- [Glide](https://github.com/bumptech/glide)
-- [AutoValue](https://github.com/google/auto/tree/master/value) with extensions [AutoValueParcel](https://github.com/rharter/auto-value-parcel) and [AutoValueGson](https://github.com/rharter/auto-value-gson)
-- Functional tests with [Espresso](https://google.github.io/android-testing-support-library/docs/espresso/index.html)
-- [Robolectric](http://robolectric.org/)
-- [Mockito](http://mockito.org/)
-- [Checkstyle](http://checkstyle.sourceforge.net/), [PMD](https://pmd.github.io/) and [Findbugs](http://findbugs.sourceforge.net/) for code analysis
+**[Projektbericht](https://docs.google.com/document/d/12vxkChPlguH4lb9czO-s94EkusvL7Bw8J4epfCDfBG4/edit?usp=sharing)**
 
-## Requirements
+- Verwenden Sie ein Framework
+- Blockieren Sie nicht den Main-Thread
+- Animationen zwischen views, achten auf den Backstack
+- Aktualisierbare Listen
 
-- JDK 1.8
-- [Android SDK](http://developer.android.com/sdk/index.html).
-- Android N [(API 24) ](http://developer.android.com/tools/revisions/platforms.html).
-- Latest Android SDK Tools and build tools.
+## Übung 1: Projektkonzept
 
-
-## Architecture
-
-This project follows ribot's Android architecture guidelines that are based on [MVP (Model View Presenter)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter). Read more about them [here](https://github.com/ribot/android-guidelines/blob/master/architecture_guidelines/android_architecture.md). 
-
-![](https://github.com/ribot/android-guidelines/raw/master/architecture_guidelines/architecture_diagram.png)
+__todo__
 
 ### How to implement a new screen following MVP
 
@@ -125,38 +110,34 @@ To upload a release build to Crashlytics run:
 ./gradlew assembleRelease crashlyticsUploadDistributionRelease
 ```
 
-## New project setup 
+## Architecture
 
-To quickly start a new project from this boilerplate follow the next steps:
+Sample Android app that we use at [ribot](http://ribot.co.uk) as a reference for new Android projects. It demonstrates the architecture, tools and guidelines that we use when developing for the Android platform (https://github.com/ribot/android-guidelines)
 
-* Download this [repository as a zip](https://github.com/ribot/android-boilerplate/archive/master.zip).
-* Change the package name. 
-  * Rename packages in main, androidTest and test using Android Studio.
-  * In `app/build.gradle` file, `packageName` and `testInstrumentationRunner`.
-  * In `src/main/AndroidManifest.xml` and `src/debug/AndroidManifest.xml`.
-* Create a new git repository, [see GitHub tutorial](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/).
-* Replace the example code with your app code following the same architecture.
-* In `app/build.gradle` add the signing config to enable release versions.
-* Add Fabric API key and secret to fabric.properties and uncomment Fabric plugin set up in `app/build.gradle`
-* Update `proguard-rules.pro` to keep models (see TODO in file) and add extra rules to file if needed.
-* Update README with information relevant to the new project.
-* Update LICENSE to match the requirements of the new project.
+This project follows ribot's Android architecture guidelines that are based on [MVP (Model View Presenter)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter). Read more about them [here](https://github.com/ribot/android-guidelines/blob/master/architecture_guidelines/android_architecture.md). 
 
-## License
+![](https://github.com/ribot/android-guidelines/raw/master/architecture_guidelines/architecture_diagram.png)
 
-```
-    Copyright 2015 Ribot Ltd.
+Libraries and tools included:
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+- Support libraries
+- RecyclerViews and CardViews 
+- [RxJava](https://github.com/ReactiveX/RxJava) and [RxAndroid](https://github.com/ReactiveX/RxAndroid) 
+- [Retrofit 2](http://square.github.io/retrofit/)
+- [Dagger 2](http://google.github.io/dagger/)
+- [SqlBrite](https://github.com/square/sqlbrite)
+- [Butterknife](https://github.com/JakeWharton/butterknife)
+- [Timber](https://github.com/JakeWharton/timber)
+- [Glide](https://github.com/bumptech/glide)
+- [AutoValue](https://github.com/google/auto/tree/master/value) with extensions [AutoValueParcel](https://github.com/rharter/auto-value-parcel) and [AutoValueGson](https://github.com/rharter/auto-value-gson)
+- Functional tests with [Espresso](https://google.github.io/android-testing-support-library/docs/espresso/index.html)
+- [Robolectric](http://robolectric.org/)
+- [Mockito](http://mockito.org/)
+- [Checkstyle](http://checkstyle.sourceforge.net/), [PMD](https://pmd.github.io/) and [Findbugs](http://findbugs.sourceforge.net/) for code analysis
 
-       http://www.apache.org/licenses/LICENSE-2.0
+## Requirements
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-```
-
+- JDK 1.8
+- [Android SDK](http://developer.android.com/sdk/index.html).
+- Android N [(API 24) ](http://developer.android.com/tools/revisions/platforms.html).
+- Latest Android SDK Tools and build tools.

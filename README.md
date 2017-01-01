@@ -16,7 +16,7 @@
 
 ## Übung 1: Projektkonzept
 
-__todo__
+[Abgabedokument ansehen](https://github.com/mathck/AdventHopper/blob/master/Projektkonzept.pdf)
 
 ### How to implement a new screen following MVP
 

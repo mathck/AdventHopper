@@ -5,6 +5,7 @@ import android.content.Context;
 
 import javax.inject.Singleton;
 
+import at.gren.tuwien.weihnachtsmarkt.data.remote.GovernmentDataService;
 import dagger.Module;
 import dagger.Provides;
 import at.gren.tuwien.weihnachtsmarkt.data.remote.RibotsService;
@@ -38,4 +39,9 @@ public class ApplicationModule {
         return RibotsService.Creator.newRibotsService();
     }
 
+    @Provides
+    @Singleton
+    GovernmentDataService provideGovernmentDataService() {
+        return GovernmentDataService.Creator.newGovernmentDataService();
+    }
 }

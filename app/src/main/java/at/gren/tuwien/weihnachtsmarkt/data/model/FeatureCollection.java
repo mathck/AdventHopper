@@ -13,10 +13,10 @@ public abstract class FeatureCollection implements Parcelable {
 
     public abstract String type();
     public abstract int totalFeatures();
-    public abstract List<Feature> features();
+    public abstract List<Weihnachtsmarkt> features();
 
-    public static FeatureCollection create(String type, int totalFeatures, List<Feature> features) {
-        return new AutoValue_FeatureCollection(type, totalFeatures, features);
+    public static FeatureCollection create(String type, int totalFeatures, List<Weihnachtsmarkt> weihnachtsmarkts) {
+        return new AutoValue_FeatureCollection(type, totalFeatures, weihnachtsmarkts);
     }
 
     public static TypeAdapter<FeatureCollection> typeAdapter(Gson gson) {

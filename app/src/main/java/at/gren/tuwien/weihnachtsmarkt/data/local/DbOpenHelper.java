@@ -12,7 +12,7 @@ import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
 @Singleton
 public class DbOpenHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "ribots.db";
+    public static final String DATABASE_NAME = "advent_hopper.db";
     public static final int DATABASE_VERSION = 2;
 
     @Inject
@@ -32,6 +32,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try {
             db.execSQL(Db.RibotProfileTable.CREATE);
+            db.execSQL(Db.FeatureTable.CREATE);
             //Add other tables here
             db.setTransactionSuccessful();
         } finally {

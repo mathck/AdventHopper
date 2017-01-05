@@ -5,7 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import at.gren.tuwien.weihnachtsmarkt.data.model.Feature;
+import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.data.model.FeatureCollection;
 import at.gren.tuwien.weihnachtsmarkt.data.remote.GovernmentDataService;
 import rx.Observable;
@@ -50,17 +50,17 @@ public class DataManager {
         return mDatabaseHelper.getRibots().distinct();
     }
 
-    public Observable<Feature> syncMärkte() {
+    public Observable<Weihnachtsmarkt> syncMärkte() {
         return mGovernmentDataService.getWeihnachtsmärkteUndSilvesterständeWien()
-                .concatMap(new Func1<FeatureCollection, Observable<Feature>>() {
+                .concatMap(new Func1<FeatureCollection, Observable<Weihnachtsmarkt>>() {
                     @Override
-                    public Observable<Feature> call(FeatureCollection märkte) {
+                    public Observable<Weihnachtsmarkt> call(FeatureCollection märkte) {
                         return mDatabaseHelper.setMärkte(märkte.features());
                     }
                 });
     }
 
-    public Observable<List<Feature>> getMärkte() {
+    public Observable<List<Weihnachtsmarkt>> getMärkte() {
         return mDatabaseHelper.getMärkte().distinct();
     }
 }

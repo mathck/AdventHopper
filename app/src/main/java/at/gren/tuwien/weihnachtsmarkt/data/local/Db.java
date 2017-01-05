@@ -5,7 +5,7 @@ import android.database.Cursor;
 
 import java.util.Date;
 
-import at.gren.tuwien.weihnachtsmarkt.data.model.Feature;
+import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Name;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Profile;
 
@@ -87,18 +87,18 @@ public class Db {
                         COLUMN_BIO + " TEXT" +
                         " ); ";
 
-        public static ContentValues toContentValues(Feature profile) {
+        public static ContentValues toContentValues(Weihnachtsmarkt profile) {
             ContentValues values = new ContentValues();
             return values;
         }
 
-        public static Feature parseCursor(Cursor cursor) {
+        public static Weihnachtsmarkt parseCursor(Cursor cursor) {
             Name name = Name.create(
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FIRST_NAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LAST_NAME)));
             long dobTime = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DATE_OF_BIRTH));
 
-            return Feature.builder()
+            return Weihnachtsmarkt.builder()
                     .build();
         }
     }

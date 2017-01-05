@@ -12,7 +12,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import at.gren.tuwien.weihnachtsmarkt.data.model.Feature;
+import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Ribot;
 import rx.Observable;
 import rx.Subscriber;
@@ -68,19 +68,19 @@ public class DatabaseHelper {
                 });
     }
 
-    public Observable<Feature> setMärkte(final Collection<Feature> newMärkte) {
-        return Observable.create(new Observable.OnSubscribe<Feature>() {
+    public Observable<Weihnachtsmarkt> setMärkte(final Collection<Weihnachtsmarkt> newMärkte) {
+        return Observable.create(new Observable.OnSubscribe<Weihnachtsmarkt>() {
             @Override
-            public void call(Subscriber<? super Feature> subscriber) {
+            public void call(Subscriber<? super Weihnachtsmarkt> subscriber) {
                 if (subscriber.isUnsubscribed()) return;
                 BriteDatabase.Transaction transaction = mDb.newTransaction();
                 try {
                     mDb.delete(Db.FeatureTable.TABLE_NAME, null);
-                    for (Feature feature : newMärkte) {
+                    for (Weihnachtsmarkt weihnachtsmarkt : newMärkte) {
                         long result = mDb.insert(Db.RibotProfileTable.TABLE_NAME,
-                                Db.FeatureTable.toContentValues(feature),
+                                Db.FeatureTable.toContentValues(weihnachtsmarkt),
                                 SQLiteDatabase.CONFLICT_REPLACE);
-                        if (result >= 0) subscriber.onNext(feature);
+                        if (result >= 0) subscriber.onNext(weihnachtsmarkt);
                     }
                     transaction.markSuccessful();
                     subscriber.onCompleted();
@@ -91,14 +91,14 @@ public class DatabaseHelper {
         });
     }
 
-    public Observable<List<Feature>> getMärkte() {
+    public Observable<List<Weihnachtsmarkt>> getMärkte() {
         return mDb.createQuery(Db.FeatureTable.TABLE_NAME,
                 "SELECT * FROM " + Db.FeatureTable.TABLE_NAME)
-                .mapToList(new Func1<Cursor, Feature>() {
+                .mapToList(new Func1<Cursor, Weihnachtsmarkt>() {
                     @Override
-                    public Feature call(Cursor cursor) {
-                        Feature feature = Db.FeatureTable.parseCursor(cursor);
-                        return Feature.create(feature.type(), feature.id(), feature.geometry(), feature.geometry_name(), feature.properties());
+                    public Weihnachtsmarkt call(Cursor cursor) {
+                        Weihnachtsmarkt weihnachtsmarkt = Db.FeatureTable.parseCursor(cursor);
+                        return Weihnachtsmarkt.create(weihnachtsmarkt.type(), weihnachtsmarkt.id(), weihnachtsmarkt.geometry(), weihnachtsmarkt.geometry_name(), weihnachtsmarkt.properties());
                     }
                 });
     }

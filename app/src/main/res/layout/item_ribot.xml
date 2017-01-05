@@ -11,36 +11,115 @@
     android:layout_marginTop="6dp"
     card_view:cardCornerRadius="2dp">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:showDividers="none"
+        android:weightSum="1">
 
-        <View
-            android:id="@+id/view_hex_color"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginRight="10dp"
-            android:background="@android:color/holo_blue_dark" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3.23"
+            android:layout_marginBottom="5dp">
 
-        <TextView
-            android:id="@+id/text_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/view_hex_color"
-            android:textSize="@dimen/text_body"
-            tools:text="Antony Ribot" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:clickable="true"
+                android:layout_weight="3.23"
+                card_view:srcCompat="@mipmap/ic_belvedere"
+                android:contextClickable="true"
+                android:layout_width="match_parent"
+                android:layout_height="105dp" />
 
-        <TextView
-            android:id="@+id/text_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text_name"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@id/view_hex_color"
-            android:textSize="@dimen/text_small_body"
-            tools:text="developer" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Belvedere"
+                android:ems="10"
+                android:id="@+id/editText"
+                android:textColor="?attr/colorControlNormal"
+                android:gravity="bottom|left"
+                android:layout_alignParentBottom="false"
+                android:layout_alignBottom="@+id/imageView" />
 
-    </RelativeLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3.23"
+            android:paddingBottom="5dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_height="match_parent"
+                    card_view:srcCompat="@mipmap/ic_walk"
+                    android:id="@+id/imageView2"
+                    android:layout_width="35dp"
+                    android:layout_margin="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:padding="0dp"
+                    android:paddingBottom="0dp"
+                    android:paddingEnd="0dp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:paddingStart="0dp"
+                    android:paddingTop="0dp"
+                    android:adjustViewBounds="false" />
+
+                <TextView
+                    android:id="@+id/text_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_body"
+                    tools:text="250m"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent">
+
+                <RatingBar
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ratingBar"
+                    android:minHeight="15dp"
+                    android:maxHeight="50dp"
+                    android:numStars="5"
+                    style="@style/Widget.AppCompat.RatingBar"
+                    android:rating="4"
+                    android:isIndicator="true"
+                    android:stepSize="1"
+                    android:clickable="true"
+                    android:layout_width="150dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    card_view:srcCompat="?android:attr/actionModeShareDrawable"
+                    android:id="@+id/imageView3"
+                    android:layout_weight="0.50"
+                    android:clickable="true" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

@@ -165,4 +165,4 @@ tasks.matching {it instanceof Test}.all {
     testLogging.events = ["failed", "passed", "skipped"]
 }
 
-
+apply plugin: 'com.google.gms.google-services'

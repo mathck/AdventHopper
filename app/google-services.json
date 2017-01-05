@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "589116827012",
+    "firebase_url": "https://advent-hopper.firebaseio.com",
+    "project_id": "advent-hopper",
+    "storage_bucket": "advent-hopper.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589116827012:android:53f6e236bd6a8228",
+        "android_client_info": {
+          "package_name": "at.gren.tuwien.weihnachtsmarkt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589116827012-gj55sphp4q9llo1fgc8dp2qld5bkhiq3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [ { "current_key": "AIzaSyCdjW_Liz_0JAT_5UTIbs3-K-hut7GVY6E"}],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

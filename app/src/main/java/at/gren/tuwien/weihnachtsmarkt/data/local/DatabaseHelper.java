@@ -12,6 +12,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import at.gren.tuwien.weihnachtsmarkt.data.model.Feature;
+import at.gren.tuwien.weihnachtsmarkt.data.model.FeatureCollection;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
@@ -67,4 +69,37 @@ public class DatabaseHelper {
                 });
     }
 
+    public Observable<Feature> setMärkte(final Collection<Feature> newMärkte) {
+        return Observable.create(new Observable.OnSubscribe<Feature>() {
+            @Override
+            public void call(Subscriber<? super Feature> subscriber) {
+                if (subscriber.isUnsubscribed()) return;
+                BriteDatabase.Transaction transaction = mDb.newTransaction();
+                try {
+                    mDb.delete(Db.FeatureTable.TABLE_NAME, null);
+                    for (Feature feature : newMärkte) {
+                        long result = mDb.insert(Db.RibotProfileTable.TABLE_NAME,
+                                Db.FeatureTable.toContentValues(feature),
+                                SQLiteDatabase.CONFLICT_REPLACE);
+                        if (result >= 0) subscriber.onNext(feature);
+                    }
+                    transaction.markSuccessful();
+                    subscriber.onCompleted();
+                } finally {
+                    transaction.end();
+                }
+            }
+        });
+    }
+
+    public Observable<List<Feature>> getMärkte() {
+        return mDb.createQuery(Db.FeatureTable.TABLE_NAME,
+                "SELECT * FROM " + Db.FeatureTable.TABLE_NAME)
+                .mapToList(new Func1<Cursor, Feature>() {
+                    @Override
+                    public Feature call(Cursor cursor) {
+                        return Feature.create(Db.FeatureTable.parseCursor(cursor));
+                    }
+                });
+    }
 }

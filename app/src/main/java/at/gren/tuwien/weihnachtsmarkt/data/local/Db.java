@@ -5,6 +5,7 @@ import android.database.Cursor;
 
 import java.util.Date;
 
+import at.gren.tuwien.weihnachtsmarkt.data.model.Feature;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Name;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Profile;
 
@@ -59,6 +60,45 @@ public class Db {
                     .setDateOfBirth(new Date(dobTime))
                     .setAvatar(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_AVATAR)))
                     .setBio(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIO)))
+                    .build();
+        }
+    }
+
+    // TODO table cols
+    public abstract static class FeatureTable {
+        public static final String TABLE_NAME = "feature";
+
+        public static final String COLUMN_EMAIL = "email";
+        public static final String COLUMN_FIRST_NAME = "first_name";
+        public static final String COLUMN_LAST_NAME = "last_name";
+        public static final String COLUMN_HEX_COLOR = "hex_color";
+        public static final String COLUMN_DATE_OF_BIRTH = "date_of_birth";
+        public static final String COLUMN_AVATAR = "avatar";
+        public static final String COLUMN_BIO = "bio";
+
+        public static final String CREATE =
+                "CREATE TABLE " + TABLE_NAME + " (" +
+                        COLUMN_EMAIL + " TEXT PRIMARY KEY, " +
+                        COLUMN_FIRST_NAME + " TEXT NOT NULL, " +
+                        COLUMN_LAST_NAME + " TEXT NOT NULL, " +
+                        COLUMN_HEX_COLOR + " TEXT NOT NULL, " +
+                        COLUMN_DATE_OF_BIRTH + " INTEGER NOT NULL, " +
+                        COLUMN_AVATAR + " TEXT, " +
+                        COLUMN_BIO + " TEXT" +
+                        " ); ";
+
+        public static ContentValues toContentValues(Feature profile) {
+            ContentValues values = new ContentValues();
+            return values;
+        }
+
+        public static Feature parseCursor(Cursor cursor) {
+            Name name = Name.create(
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FIRST_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LAST_NAME)));
+            long dobTime = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DATE_OF_BIRTH));
+
+            return Feature.builder()
                     .build();
         }
     }

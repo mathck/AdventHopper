@@ -9,6 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Arrays;
 import java.util.List;
 
+import at.gren.tuwien.weihnachtsmarkt.data.remote.GovernmentDataService;
 import rx.Observable;
 import rx.observers.TestSubscriber;
 import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
@@ -37,11 +38,12 @@ public class DataManagerTest {
     @Mock DatabaseHelper mMockDatabaseHelper;
     @Mock PreferencesHelper mMockPreferencesHelper;
     @Mock RibotsService mMockRibotsService;
+    @Mock GovernmentDataService mMockGovernmentDataService;
     private DataManager mDataManager;
 
     @Before
     public void setUp() {
-        mDataManager = new DataManager(mMockRibotsService, governmentDataService, mMockPreferencesHelper,
+        mDataManager = new DataManager(mMockRibotsService, mMockGovernmentDataService, mMockPreferencesHelper,
                 mMockDatabaseHelper);
     }
 

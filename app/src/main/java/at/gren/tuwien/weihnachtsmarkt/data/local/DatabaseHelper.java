@@ -13,12 +13,11 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import at.gren.tuwien.weihnachtsmarkt.data.model.Feature;
-import at.gren.tuwien.weihnachtsmarkt.data.model.FeatureCollection;
+import at.gren.tuwien.weihnachtsmarkt.data.model.Ribot;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-import at.gren.tuwien.weihnachtsmarkt.data.model.Ribot;
 
 @Singleton
 public class DatabaseHelper {
@@ -98,7 +97,8 @@ public class DatabaseHelper {
                 .mapToList(new Func1<Cursor, Feature>() {
                     @Override
                     public Feature call(Cursor cursor) {
-                        return Feature.create(Db.FeatureTable.parseCursor(cursor));
+                        Feature feature = Db.FeatureTable.parseCursor(cursor);
+                        return Feature.create(feature.type(), feature.id(), feature.geometry(), feature.geometry_name(), feature.properties());
                     }
                 });
     }

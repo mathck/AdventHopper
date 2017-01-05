@@ -52,10 +52,10 @@ public class DataManager {
 
     public Observable<Feature> syncMärkte() {
         return mGovernmentDataService.getWeihnachtsmärkteUndSilvesterständeWien()
-                .concatMap(new Func1<List<Feature>, Observable<Feature>>() {
+                .concatMap(new Func1<FeatureCollection, Observable<Feature>>() {
                     @Override
-                    public Observable<Feature> call(List<Feature> märkte) {
-                        return mDatabaseHelper.setMärkte(märkte);
+                    public Observable<Feature> call(FeatureCollection märkte) {
+                        return mDatabaseHelper.setMärkte(märkte.features());
                     }
                 });
     }

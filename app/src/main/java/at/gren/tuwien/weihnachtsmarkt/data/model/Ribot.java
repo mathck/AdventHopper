@@ -10,10 +10,10 @@ import com.google.gson.TypeAdapter;
 @AutoValue
 public abstract class Ribot implements Comparable<Ribot>, Parcelable {
 
-    public abstract Profile profile();
+    public abstract Weihnachtsmarkt weihnachtsmarkt();
 
-    public static Ribot create(Profile profile) {
-        return new AutoValue_Ribot(profile);
+    public static Ribot create(Weihnachtsmarkt weihnachtsmarkt) {
+        return new AutoValue_Ribot(weihnachtsmarkt);
     }
 
     public static TypeAdapter<Ribot> typeAdapter(Gson gson) {
@@ -22,7 +22,7 @@ public abstract class Ribot implements Comparable<Ribot>, Parcelable {
 
     @Override
     public int compareTo(@NonNull Ribot another) {
-        return profile().name().first().compareToIgnoreCase(another.profile().name().first());
+        return weihnachtsmarkt().id().compareToIgnoreCase(another.weihnachtsmarkt().id());
     }
 }
 

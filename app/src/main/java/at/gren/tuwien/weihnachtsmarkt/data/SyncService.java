@@ -9,14 +9,14 @@ import android.os.IBinder;
 
 import javax.inject.Inject;
 
+import at.gren.tuwien.weihnachtsmarkt.BoilerplateApplication;
+import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
+import at.gren.tuwien.weihnachtsmarkt.util.AndroidComponentUtil;
+import at.gren.tuwien.weihnachtsmarkt.util.NetworkUtil;
 import rx.Observer;
 import rx.Subscription;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
-import at.gren.tuwien.weihnachtsmarkt.BoilerplateApplication;
-import at.gren.tuwien.weihnachtsmarkt.data.model.Ribot;
-import at.gren.tuwien.weihnachtsmarkt.util.AndroidComponentUtil;
-import at.gren.tuwien.weihnachtsmarkt.util.NetworkUtil;
 
 public class SyncService extends Service {
 
@@ -49,9 +49,9 @@ public class SyncService extends Service {
         }
 
         if (mSubscription != null && !mSubscription.isUnsubscribed()) mSubscription.unsubscribe();
-        mSubscription = mDataManager.syncRibots()
+        mSubscription = mDataManager.syncMärkte()
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Ribot>() {
+                .subscribe(new Observer<Weihnachtsmarkt>() {
                     @Override
                     public void onCompleted() {
                         Timber.i("Synced successfully!");
@@ -66,7 +66,7 @@ public class SyncService extends Service {
                     }
 
                     @Override
-                    public void onNext(Ribot ribot) {
+                    public void onNext(Weihnachtsmarkt ribot) {
                     }
                 });
 

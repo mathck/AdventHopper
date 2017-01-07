@@ -4,16 +4,16 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
+import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
+import at.gren.tuwien.weihnachtsmarkt.injection.ConfigPersistent;
+import at.gren.tuwien.weihnachtsmarkt.ui.base.BasePresenter;
+import at.gren.tuwien.weihnachtsmarkt.util.RxUtil;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
-import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
-import at.gren.tuwien.weihnachtsmarkt.data.model.Ribot;
-import at.gren.tuwien.weihnachtsmarkt.injection.ConfigPersistent;
-import at.gren.tuwien.weihnachtsmarkt.ui.base.BasePresenter;
-import at.gren.tuwien.weihnachtsmarkt.util.RxUtil;
 
 @ConfigPersistent
 public class MainPresenter extends BasePresenter<MainMvpView> {
@@ -37,29 +37,29 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void loadRibots() {
+    public void loadMärkte() {
         checkViewAttached();
         RxUtil.unsubscribe(mSubscription);
-        mSubscription = mDataManager.getRibots()
+        mSubscription = mDataManager.getMärkte()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<Ribot>>() {
+                .subscribe(new Subscriber<List<Weihnachtsmarkt>>() {
                     @Override
                     public void onCompleted() {
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Timber.e(e, "There was an error loading the ribots.");
+                        Timber.e(e, "Fehler beim Laden der Weihnachtsmärkte.");
                         getMvpView().showError();
                     }
 
                     @Override
-                    public void onNext(List<Ribot> ribots) {
-                        if (ribots.isEmpty()) {
+                    public void onNext(List<Weihnachtsmarkt> märkte) {
+                        if (märkte.isEmpty()) {
                             getMvpView().showAdventmaerkteEmpty();
                         } else {
-                            getMvpView().showAdventmaerkte(ribots);
+                            getMvpView().showAdventmaerkte(märkte);
                         }
                     }
                 });

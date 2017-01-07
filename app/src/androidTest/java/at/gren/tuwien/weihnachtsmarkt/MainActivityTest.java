@@ -51,7 +51,7 @@ public class MainActivityTest {
 
     @Test
     public void listOfRibotsShows() {
-        List<Ribot> testDataRibots = TestDataFactory.makeListRibots(20);
+        List<Ribot> testDataRibots = TestDataFactory.makeListMärkte(20);
         when(component.getMockDataManager().getRibots())
                 .thenReturn(Observable.just(testDataRibots));
 

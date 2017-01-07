@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Collections;
 import java.util.List;
 
+import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import rx.Observable;
 import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Ribot;
@@ -47,12 +48,12 @@ public class MainPresenterTest {
 
     @Test
     public void loadRibotsReturnsRibots() {
-        List<Ribot> ribots = TestDataFactory.makeListRibots(10);
-        when(mMockDataManager.getRibots())
-                .thenReturn(Observable.just(ribots));
+        List<Weihnachtsmarkt> märkte = TestDataFactory.makeListMärkte(10);
+        when(mMockDataManager.getMärkte())
+                .thenReturn(Observable.just(märkte));
 
-        mMainPresenter.loadRibots();
-        verify(mMockMainMvpView).showAdventmaerkte(ribots);
+        mMainPresenter.loadMärkte();
+        verify(mMockMainMvpView).showAdventmaerkte(märkte);
         verify(mMockMainMvpView, never()).showAdventmaerkteEmpty();
         verify(mMockMainMvpView, never()).showError();
     }
@@ -62,9 +63,9 @@ public class MainPresenterTest {
         when(mMockDataManager.getRibots())
                 .thenReturn(Observable.just(Collections.<Ribot>emptyList()));
 
-        mMainPresenter.loadRibots();
+        mMainPresenter.loadMärkte();
         verify(mMockMainMvpView).showAdventmaerkteEmpty();
-        verify(mMockMainMvpView, never()).showAdventmaerkte(anyListOf(Ribot.class));
+        verify(mMockMainMvpView, never()).showAdventmaerkte(anyListOf(Weihnachtsmarkt.class));
         verify(mMockMainMvpView, never()).showError();
     }
 
@@ -73,10 +74,10 @@ public class MainPresenterTest {
         when(mMockDataManager.getRibots())
                 .thenReturn(Observable.<List<Ribot>>error(new RuntimeException()));
 
-        mMainPresenter.loadRibots();
+        mMainPresenter.loadMärkte();
         verify(mMockMainMvpView).showError();
         verify(mMockMainMvpView, never()).showAdventmaerkteEmpty();
-        verify(mMockMainMvpView, never()).showAdventmaerkte(anyListOf(Ribot.class));
+        verify(mMockMainMvpView, never()).showAdventmaerkte(anyListOf(Weihnachtsmarkt.class));
     }
 
 }

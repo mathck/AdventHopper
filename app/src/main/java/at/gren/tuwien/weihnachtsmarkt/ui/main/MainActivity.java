@@ -12,13 +12,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import at.gren.tuwien.weihnachtsmarkt.R;
 import at.gren.tuwien.weihnachtsmarkt.data.SyncService;
-import at.gren.tuwien.weihnachtsmarkt.data.model.Ribot;
+import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.ui.base.BaseActivity;
 import at.gren.tuwien.weihnachtsmarkt.util.DialogFactory;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements MainMvpView {
 
@@ -26,7 +26,8 @@ public class MainActivity extends BaseActivity implements MainMvpView {
             "at.gren.tuwien.weihnachtsmarkt.ui.main.MainActivity.EXTRA_TRIGGER_SYNC_FLAG";
 
     @Inject MainPresenter mMainPresenter;
-    @Inject RibotsAdapter mRibotsAdapter;
+    //@Inject RibotsAdapter mRibotsAdapter;
+    @Inject WeihnachtsmarktAdapter mWeihnachtsmarktAdapter;
 
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
 
@@ -48,10 +49,10 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mRecyclerView.setAdapter(mRibotsAdapter);
+        mRecyclerView.setAdapter(mWeihnachtsmarktAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mMainPresenter.attachView(this);
-        mMainPresenter.loadRibots();
+        mMainPresenter.loadMärkte();
 
         if (getIntent().getBooleanExtra(EXTRA_TRIGGER_SYNC_FLAG, true)) {
             startService(SyncService.getStartIntent(this));
@@ -68,9 +69,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     /***** MVP View methods implementation *****/
 
     @Override
-    public void showAdventmaerkte(List<Ribot> ribots) {
-        mRibotsAdapter.setRibots(ribots);
-        mRibotsAdapter.notifyDataSetChanged();
+    public void showAdventmaerkte(List<Weihnachtsmarkt> märkte) {
+        mWeihnachtsmarktAdapter.setWeihnachtsmarkts(märkte);
+        mWeihnachtsmarktAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -81,8 +82,8 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @Override
     public void showAdventmaerkteEmpty() {
-        mRibotsAdapter.setRibots(Collections.<Ribot>emptyList());
-        mRibotsAdapter.notifyDataSetChanged();
+        mWeihnachtsmarktAdapter.setWeihnachtsmarkts(Collections.<Weihnachtsmarkt>emptyList());
+        mWeihnachtsmarktAdapter.notifyDataSetChanged();
         Toast.makeText(this, R.string.empty_list, Toast.LENGTH_LONG).show();
     }
 

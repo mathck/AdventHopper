@@ -76,7 +76,7 @@ public class DatabaseHelper {
                 try {
                     mDb.delete(Db.Weihnachtsmarkt.TABLE_NAME, null);
                     for (at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt weihnachtsmarkt : newMärkte) {
-                        long result = mDb.insert(Db.RibotProfileTable.TABLE_NAME,
+                        long result = mDb.insert(Db.Weihnachtsmarkt.TABLE_NAME,
                                 Db.Weihnachtsmarkt.toContentValues(weihnachtsmarkt),
                                 SQLiteDatabase.CONFLICT_REPLACE);
                         if (result >= 0) subscriber.onNext(weihnachtsmarkt);

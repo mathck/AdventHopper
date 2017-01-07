@@ -1,13 +1,11 @@
 package at.gren.tuwien.weihnachtsmarkt.test.common;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import at.gren.tuwien.weihnachtsmarkt.data.model.Name;
-import at.gren.tuwien.weihnachtsmarkt.data.model.Profile;
-import at.gren.tuwien.weihnachtsmarkt.data.model.Ribot;
+import at.gren.tuwien.weihnachtsmarkt.data.model.Properties;
+import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 
 /**
  * Factory class that makes instances of data models with random field values.
@@ -19,31 +17,27 @@ public class TestDataFactory {
         return UUID.randomUUID().toString();
     }
 
-    public static Ribot makeRibot(String uniqueSuffix) {
-        return Ribot.create(makeProfile(uniqueSuffix));
+    public static Weihnachtsmarkt makeRibot(String uniqueSuffix) {
+        return Weihnachtsmarkt.create("type", randomUuid(), null, "geometry_name", makeProperties(uniqueSuffix));
     }
 
-    public static List<Ribot> makeListRibots(int number) {
-        List<Ribot> ribots = new ArrayList<>();
+    public static List<Weihnachtsmarkt> makeListMärkte(int number) {
+        List<Weihnachtsmarkt> märkte = new ArrayList<>();
         for (int i = 0; i < number; i++) {
-            ribots.add(makeRibot(String.valueOf(i)));
+            märkte.add(makeRibot(String.valueOf(i)));
         }
-        return ribots;
+        return märkte;
     }
 
-    public static Profile makeProfile(String uniqueSuffix) {
-        return Profile.builder()
-                .setName(makeName(uniqueSuffix))
-                .setEmail("email" + uniqueSuffix + "@ribot.co.uk")
-                .setDateOfBirth(new Date())
-                .setHexColor("#0066FF")
-                .setAvatar("http://api.ribot.io/images/" + uniqueSuffix)
-                .setBio(randomUuid())
+    public static Properties makeProperties(String uniqueSuffix) {
+        return Properties.builder()
+                .setBEZEICHNUNG(uniqueSuffix)
+                .setADRESSE("Fancy Adresse Straße 5")
+                .setDATUM("21.11.1991")
+                .setOBJECTID("pikatchu")
+                .setOEFFNUNGSZEIT("Mo - Fr 10:00 - 15:00")
+                .setSILVESTERMARKT(0)
+                .setWEBLINK1("http://www.google.at/")
                 .build();
     }
-
-    public static Name makeName(String uniqueSuffix) {
-        return Name.create("Name-" + uniqueSuffix, "Surname-" + uniqueSuffix);
-    }
-
 }

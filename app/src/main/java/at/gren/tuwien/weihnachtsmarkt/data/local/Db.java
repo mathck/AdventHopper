@@ -66,7 +66,6 @@ public class Db {
         }
     }
 
-    // TODO table cols
     public abstract static class Weihnachtsmarkt {
         public static final String TABLE_NAME = "weihnachtsmarkt";
 
@@ -83,13 +82,13 @@ public class Db {
         public static final String CREATE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         COLUMN_OBJECTID             + " TEXT PRIMARY KEY, " +
-                        COLUMN_BEZEICHNUNG          + " TEXT" +
-                        COLUMN_ADRESSE              + " TEXT" +
-                        COLUMN_DATUM                + " TEXT" +
-                        COLUMN_OEFFNUNGSZEIT        + " TEXT" +
-                        COLUMN_WEBLINK1             + " TEXT" +
-                        COLUMN_SILVESTERMARKT       + " TEXT" +
-                        COLUMN_LATITUDE             + " TEXT" +
+                        COLUMN_BEZEICHNUNG          + " TEXT, " +
+                        COLUMN_ADRESSE              + " TEXT, " +
+                        COLUMN_DATUM                + " TEXT, " +
+                        COLUMN_OEFFNUNGSZEIT        + " TEXT, " +
+                        COLUMN_WEBLINK1             + " TEXT, " +
+                        COLUMN_SILVESTERMARKT       + " INTEGER, " +
+                        COLUMN_LATITUDE             + " TEXT, " +
                         COLUMN_LONGITUDE            + " TEXT" +
                         " ); ";
 
@@ -121,10 +120,10 @@ public class Db {
                 add(Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LONGITUDE))));
             }};
 
-            Point geometry = Point.create("", coordinates);
+            Point geometry = Point.create("POINT", coordinates);
 
             Properties prop = at.gren.tuwien.weihnachtsmarkt.data.model.Properties.builder()
-                    .setOBJECTID(Integer.parseInt(object_id))
+                    .setOBJECTID(object_id)
                     .setBEZEICHNUNG(bezeichnung)
                     .setADRESSE(adresse)
                     .setDATUM(datum)
@@ -135,7 +134,9 @@ public class Db {
 
             return at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt.builder()
                     .setId(object_id)
+                    .setType("Feature")
                     .setGeometry(geometry)
+                    .setGeometry_name("SHAPE")
                     .setProperties(prop)
                     .build();
         }

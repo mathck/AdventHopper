@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,20 +12,21 @@ import java.util.List;
 import javax.inject.Inject;
 
 import at.gren.tuwien.weihnachtsmarkt.R;
-import at.gren.tuwien.weihnachtsmarkt.data.model.Ribot;
+import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RibotsAdapter extends RecyclerView.Adapter<RibotsAdapter.RibotViewHolder> {
+public class WeihnachtsmarktAdapter extends RecyclerView.Adapter<WeihnachtsmarktAdapter.RibotViewHolder> {
 
-    private List<Ribot> mRibots;
+    private List<Weihnachtsmarkt> mWeihnachtsmarkts;
 
     @Inject
-    public RibotsAdapter() {
-        mRibots = new ArrayList<>();
+    public WeihnachtsmarktAdapter() {
+        mWeihnachtsmarkts = new ArrayList<>();
     }
 
-    public void setRibots(List<Ribot> ribots) {
-        mRibots = ribots;
+    public void setWeihnachtsmarkts(List<Weihnachtsmarkt> weihnachtsmarkts) {
+        mWeihnachtsmarkts = weihnachtsmarkts;
     }
 
     @Override
@@ -36,22 +38,21 @@ public class RibotsAdapter extends RecyclerView.Adapter<RibotsAdapter.RibotViewH
 
     @Override
     public void onBindViewHolder(final RibotViewHolder holder, int position) {
-        Ribot ribot = mRibots.get(position);
-        //holder.hexColorView.setBackgroundColor(Color.parseColor(ribot.profile().hexColor()));
-        //holder.title.setText(String.format("%s %s",
-                //ribot.profile().name().first(), ribot.profile().name().last()));
-        //holder.emailTextView.setText(ribot.profile().email());
+        Weihnachtsmarkt markt = mWeihnachtsmarkts.get(position);
+        //holder.hexColorView.setBackgroundColor(Color.parseColor(markt.profile().hexColor()));
+        holder.title.setText(markt.properties().BEZEICHNUNG());
+        //holder.emailTextView.setText(markt.profile().email());
     }
 
     @Override
     public int getItemCount() {
-        return mRibots.size();
+        return mWeihnachtsmarkts.size();
     }
 
     class RibotViewHolder extends RecyclerView.ViewHolder {
 
         //@BindView(R.id.view_hex_color) View hexColorView;
-        //@BindView(R.id.text_name) TextView title;
+        @BindView(R.id.title) TextView title;
         //@BindView(R.id.text_email) TextView emailTextView;
 
         public RibotViewHolder(View itemView) {

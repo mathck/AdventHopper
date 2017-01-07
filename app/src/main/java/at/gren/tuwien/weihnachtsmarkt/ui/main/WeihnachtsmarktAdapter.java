@@ -41,6 +41,12 @@ public class WeihnachtsmarktAdapter extends RecyclerView.Adapter<Weihnachtsmarkt
     @Override
     public void onBindViewHolder(final RibotViewHolder holder, int position) {
         final Weihnachtsmarkt markt = mWeihnachtsmarkts.get(position);
+
+        // TODO: Get values from SharedPreferences Longitude/Latitude
+        double longitudeSharedPreferences = 48.173333333333;
+        double latitudeSharedPreferences = 16.413888888889;
+
+        holder.distance.setText(getDistance(markt.geometry().coordinates().get(0),markt.geometry().coordinates().get(1),longitudeSharedPreferences,latitudeSharedPreferences));
         holder.title.setText(markt.properties().BEZEICHNUNG());
         holder.shareIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,10 +69,27 @@ public class WeihnachtsmarktAdapter extends RecyclerView.Adapter<Weihnachtsmarkt
 
         @BindView(R.id.shareIcon) ImageView shareIcon;
         @BindView(R.id.title) TextView title;
+        @BindView(R.id.distance) TextView distance;
 
         public RibotViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public String getDistance (double lat_a, double lng_a, double lat_b, double lng_b )
+    {
+        double earthRadius = 3958.75;
+        double latDiff = Math.toRadians(lat_b-lat_a);
+        double lngDiff = Math.toRadians(lng_b-lng_a);
+        double a = Math.sin(latDiff /2) * Math.sin(latDiff /2) +
+                Math.cos(Math.toRadians(lat_a)) * Math.cos(Math.toRadians(lat_b)) *
+                        Math.sin(lngDiff /2) * Math.sin(lngDiff /2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double distance = earthRadius * c;
+
+        long meterConversion = Math.round(distance * 1609);
+
+        return Long.toString(meterConversion);
     }
 }

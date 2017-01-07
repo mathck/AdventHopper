@@ -93,11 +93,11 @@
                     android:adjustViewBounds="false" />
 
                 <TextView
-                    android:id="@+id/text_name"
+                    android:id="@+id/distance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_body"
-                    tools:text="250m"
+                    tools:text=""
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical" />
             </LinearLayout>

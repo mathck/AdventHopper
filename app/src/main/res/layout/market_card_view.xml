@@ -133,7 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     card_view:srcCompat="?attr/actionModeShareDrawable"
-                    android:id="@+id/imageView3"
+                    android:id="@+id/shareIcon"
                     android:layout_weight="0.33"
                     android:clickable="true"
                     android:layout_alignParentRight="true"

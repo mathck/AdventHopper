@@ -16,7 +16,7 @@ import static android.content.ContentValues.TAG;
 
 public class FirebaseService {
 
-    FirebaseDatabase mDatabase;
+    private FirebaseDatabase mDatabase;
 
     public FirebaseService() {
         mDatabase = FirebaseDatabase.getInstance();

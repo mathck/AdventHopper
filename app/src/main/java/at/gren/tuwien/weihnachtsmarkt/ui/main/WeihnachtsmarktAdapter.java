@@ -1,9 +1,11 @@
 package at.gren.tuwien.weihnachtsmarkt.ui.main;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -38,10 +40,18 @@ public class WeihnachtsmarktAdapter extends RecyclerView.Adapter<Weihnachtsmarkt
 
     @Override
     public void onBindViewHolder(final RibotViewHolder holder, int position) {
-        Weihnachtsmarkt markt = mWeihnachtsmarkts.get(position);
-        //holder.hexColorView.setBackgroundColor(Color.parseColor(markt.profile().hexColor()));
+        final Weihnachtsmarkt markt = mWeihnachtsmarkts.get(position);
         holder.title.setText(markt.properties().BEZEICHNUNG());
-        //holder.emailTextView.setText(markt.profile().email());
+        holder.shareIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Schau dir diesen tollen Weihnachtsmarkt an " + markt.properties().BEZEICHNUNG());
+                sendIntent.setType("text/plain");
+                holder.itemView.getContext().startActivity(sendIntent);
+            }
+        });
     }
 
     @Override
@@ -51,9 +61,8 @@ public class WeihnachtsmarktAdapter extends RecyclerView.Adapter<Weihnachtsmarkt
 
     class RibotViewHolder extends RecyclerView.ViewHolder {
 
-        //@BindView(R.id.view_hex_color) View hexColorView;
+        @BindView(R.id.shareIcon) ImageView shareIcon;
         @BindView(R.id.title) TextView title;
-        //@BindView(R.id.text_email) TextView emailTextView;
 
         public RibotViewHolder(View itemView) {
             super(itemView);

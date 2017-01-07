@@ -10,8 +10,6 @@ import at.gren.tuwien.weihnachtsmarkt.data.model.Point;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Profile;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Properties;
 
-import static at.gren.tuwien.weihnachtsmarkt.data.local.Db.RibotProfileTable.COLUMN_FIRST_NAME;
-
 public class Db {
 
     public Db() { }

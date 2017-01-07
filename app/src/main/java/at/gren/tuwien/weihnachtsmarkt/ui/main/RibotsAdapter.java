@@ -30,7 +30,7 @@ public class RibotsAdapter extends RecyclerView.Adapter<RibotsAdapter.RibotViewH
     @Override
     public RibotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_ribot, parent, false);
+                .inflate(R.layout.marketcardview, parent, false);
         return new RibotViewHolder(itemView);
     }
 

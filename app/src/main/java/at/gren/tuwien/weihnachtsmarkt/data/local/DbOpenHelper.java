@@ -32,7 +32,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try {
             db.execSQL(Db.RibotProfileTable.CREATE);
-            db.execSQL(Db.FeatureTable.CREATE);
+            db.execSQL(Db.Weihnachtsmarkt.CREATE);
             //Add other tables here
             db.setTransactionSuccessful();
         } finally {

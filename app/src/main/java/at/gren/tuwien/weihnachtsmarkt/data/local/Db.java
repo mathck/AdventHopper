@@ -5,9 +5,14 @@ import android.database.Cursor;
 
 import java.util.Date;
 
-import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Name;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Profile;
+
+import static at.gren.tuwien.weihnachtsmarkt.data.local.Db.RibotProfileTable.COLUMN_DATE_OF_BIRTH;
+import static at.gren.tuwien.weihnachtsmarkt.data.local.Db.RibotProfileTable.COLUMN_EMAIL;
+import static at.gren.tuwien.weihnachtsmarkt.data.local.Db.RibotProfileTable.COLUMN_FIRST_NAME;
+import static at.gren.tuwien.weihnachtsmarkt.data.local.Db.RibotProfileTable.COLUMN_HEX_COLOR;
+import static at.gren.tuwien.weihnachtsmarkt.data.local.Db.RibotProfileTable.COLUMN_LAST_NAME;
 
 public class Db {
 
@@ -65,14 +70,16 @@ public class Db {
     }
 
     // TODO table cols
-    public abstract static class FeatureTable {
-        public static final String TABLE_NAME = "feature";
+    public abstract static class Weihnachtsmarkt {
+        public static final String TABLE_NAME = "weihnachtsmarkt";
 
-        public static final String COLUMN_EMAIL = "email";
-        public static final String COLUMN_FIRST_NAME = "first_name";
-        public static final String COLUMN_LAST_NAME = "last_name";
-        public static final String COLUMN_HEX_COLOR = "hex_color";
-        public static final String COLUMN_DATE_OF_BIRTH = "date_of_birth";
+        public static final String COLUMN_OBJECTID = "object_id";
+        public static final String COLUMN_BEZEICHNUNG = "bezeichnung";
+        public static final String COLUMN_ADRESSE = "adresse";
+        public static final String COLUMN_DATUM = "datum";
+        public static final String COLUMN_OEFFNUNGSZEIT = "oeffnungszeit";
+
+        // in progress here
         public static final String COLUMN_AVATAR = "avatar";
         public static final String COLUMN_BIO = "bio";
 
@@ -87,18 +94,18 @@ public class Db {
                         COLUMN_BIO + " TEXT" +
                         " ); ";
 
-        public static ContentValues toContentValues(Weihnachtsmarkt profile) {
+        public static ContentValues toContentValues(at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt profile) {
             ContentValues values = new ContentValues();
             return values;
         }
 
-        public static Weihnachtsmarkt parseCursor(Cursor cursor) {
+        public static at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt parseCursor(Cursor cursor) {
             Name name = Name.create(
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FIRST_NAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LAST_NAME)));
             long dobTime = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DATE_OF_BIRTH));
 
-            return Weihnachtsmarkt.builder()
+            return at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt.builder()
                     .build();
         }
     }

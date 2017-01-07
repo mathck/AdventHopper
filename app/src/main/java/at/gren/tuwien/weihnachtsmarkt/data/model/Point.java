@@ -9,9 +9,9 @@ import com.google.gson.TypeAdapter;
 @AutoValue
 public abstract class Point implements Parcelable {
     public abstract String type();
-    public abstract int[] coordinates();
+    public abstract double[] coordinates();
 
-    public static Point create(String type, int[] position) {
+    public static Point create(String type, double[] position) {
         return new AutoValue_Point(type, position);
     }
 

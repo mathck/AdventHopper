@@ -8,6 +8,7 @@ import com.google.gson.TypeAdapter;
 
 @AutoValue
 public abstract class Weihnachtsmarkt implements Parcelable {
+
     public abstract String type();
     public abstract String id();
     public abstract Point geometry();

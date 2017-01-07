@@ -8,6 +8,7 @@ import com.google.gson.TypeAdapter;
 
 @AutoValue
 public abstract class Properties implements Parcelable {
+
     public abstract int OBJECTID();
     public abstract String BEZEICHNUNG();
     public abstract String ADRESSE();
@@ -22,5 +23,23 @@ public abstract class Properties implements Parcelable {
 
     public static TypeAdapter<Properties> typeAdapter(Gson gson) {
         return new AutoValue_Properties.GsonTypeAdapter(gson);
+    }
+
+    /*
+    public static Builder builder() {
+        return new AutoValue_Properties.Builder();
+    }
+    */
+
+    @AutoValue.Builder
+    public abstract static class Builder {
+        public abstract Builder OBJECTID(String OBJECTID);
+        public abstract Builder BEZEICHNUNG(String BEZEICHNUNG);
+        public abstract Builder ADRESSE(String ADRESSE);
+        public abstract Builder DATUM(String DATUM);
+        public abstract Builder OEFFNUNGSZEIT(String OEFFNUNGSZEIT);
+        public abstract Builder WEBLINK1(String WEBLINK1);
+        public abstract Builder SILVESTERMARKT(int SILVESTERMARKT);
+        public abstract Properties build();
     }
 }

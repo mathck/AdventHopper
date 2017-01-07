@@ -14,23 +14,19 @@ import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
-/**
- * Created by Andreas on 07.01.2017.
- */
-
 public class FirebaseService {
 
-    FirebaseDatabase database;
+    FirebaseDatabase mDatabase;
 
     public FirebaseService() {
-        database = FirebaseDatabase.getInstance();
+        mDatabase = FirebaseDatabase.getInstance();
     }
 
     public void getAverageRating(String christmasMarketId) {
-        DatabaseReference dbRef = database.getReference("weihnachtsmarkt");
+        DatabaseReference dbRef = mDatabase.getReference("weihnachtsmarkt");
         DatabaseReference ratingDbReference = dbRef.child(christmasMarketId);
 
-        // Read from the database
+        // Read from the mDatabase
         // Alternative: addValueEventListener
         ratingDbReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -46,8 +42,8 @@ public class FirebaseService {
     }
 
     public void getAverageRatings() {
-        DatabaseReference dbRef = database.getReference("weihnachtsmarkt");
-        // Read from the database
+        DatabaseReference dbRef = mDatabase.getReference("weihnachtsmarkt");
+        // Read from the mDatabase
         // Alternative: addValueEventListener
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -75,7 +71,7 @@ public class FirebaseService {
             try {
                 rating = Integer.parseInt((String) ratingData.getValue());
             } catch (NumberFormatException e) {
-                Log.d(TAG, "Non-integer data found in rating database.");
+                Log.d(TAG, "Non-integer data found in rating mDatabase.");
             }
             if ((rating <= 5) && (rating > 0)) {
                 ratingSum += rating;

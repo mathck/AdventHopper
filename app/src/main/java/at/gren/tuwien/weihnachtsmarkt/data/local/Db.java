@@ -3,6 +3,7 @@ package at.gren.tuwien.weihnachtsmarkt.data.local;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import at.gren.tuwien.weihnachtsmarkt.data.model.Name;
@@ -101,13 +102,12 @@ public class Db {
             values.put(COLUMN_OEFFNUNGSZEIT, profile.properties().OEFFNUNGSZEIT());
             values.put(COLUMN_WEBLINK1, profile.properties().WEBLINK1());
             values.put(COLUMN_SILVESTERMARKT, profile.properties().SILVESTERMARKT());
-            values.put(COLUMN_LATITUDE, profile.geometry().coordinates()[0]);
-            values.put(COLUMN_LONGITUDE, profile.geometry().coordinates()[1]);
+            values.put(COLUMN_LATITUDE, profile.geometry().coordinates().get(0));
+            values.put(COLUMN_LONGITUDE, profile.geometry().coordinates().get(1));
             return values;
         }
 
-        public static at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt parseCursor(Cursor cursor) {
-
+        public static at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt parseCursor(final Cursor cursor) {
 
             String object_id = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_OBJECTID));
             String bezeichnung = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BEZEICHNUNG));
@@ -116,9 +116,12 @@ public class Db {
             String oeffnungszeit = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_OEFFNUNGSZEIT));
             String weblink1 = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_WEBLINK1));
             String silvestermarkt = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SILVESTERMARKT));
-            double[] coordinates = {Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LATITUDE))),Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LONGITUDE)))};
+            ArrayList<Double> coordinates =  new ArrayList<Double>() {{
+                add(Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LATITUDE))));
+                add(Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LONGITUDE))));
+            }};
 
-            Point geometry = Point.create("",coordinates);
+            Point geometry = Point.create("", coordinates);
 
             Properties prop = at.gren.tuwien.weihnachtsmarkt.data.model.Properties.builder()
                     .setOBJECTID(Integer.parseInt(object_id))

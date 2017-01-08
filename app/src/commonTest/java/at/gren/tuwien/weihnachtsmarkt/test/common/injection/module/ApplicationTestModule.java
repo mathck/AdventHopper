@@ -43,11 +43,4 @@ public class ApplicationTestModule {
     DataManager provideDataManager() {
         return mock(DataManager.class);
     }
-
-    @Provides
-    @Singleton
-    RibotsService provideRibotsService() {
-        return mock(RibotsService.class);
-    }
-
 }

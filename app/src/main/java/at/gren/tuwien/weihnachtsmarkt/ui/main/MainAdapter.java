@@ -1,5 +1,6 @@
 package at.gren.tuwien.weihnachtsmarkt.ui.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +22,8 @@ import javax.inject.Inject;
 import at.gren.tuwien.weihnachtsmarkt.R;
 import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
+import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
+import at.gren.tuwien.weihnachtsmarkt.ui.detailed.DetailedActivity;
 import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
 import butterknife.BindView;
@@ -30,13 +33,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
 
     private List<Weihnachtsmarkt> mWeihnachtsmärkte;
     private final DataManager mDataManager;
+    private static Context mContext = null;
     private boolean mHasLocation = false;
 
     @Inject
-    public MainAdapter(DataManager dataManager) {
+    public MainAdapter(DataManager dataManager, @ApplicationContext Context context) {
         mWeihnachtsmärkte = new ArrayList<>();
         this.mDataManager = dataManager;
-
+        this.mContext = context;
         this.mHasLocation = mDataManager.getPreferencesHelper().hasLocation();
 
         EventBus.getDefault().register(this);
@@ -68,6 +72,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         }
 
         holder.shareIcon.setOnClickListener(new ShareMarktOnClick(markt, holder));
+        holder.marketImage.setOnClickListener(new ViewMarktOnClick(markt, holder));
     }
 
     private String getDistanceToMarket(Weihnachtsmarkt markt) {
@@ -101,6 +106,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         @BindView(R.id.title) TextView title;
         @BindView(R.id.distance) TextView distance;
         @BindView(R.id.navigationLayout) LinearLayout navigationLayout;
+        @BindView(R.id.marketImage) ImageView marketImage;
 
         public MarktViewHolder(View itemView) {
             super(itemView);
@@ -124,6 +130,23 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
             sendIntent.putExtra(Intent.EXTRA_TEXT, "Schau dir diesen tollen Weihnachtsmarkt an " + mMarkt.properties().BEZEICHNUNG());
             sendIntent.setType("text/plain");
             mHolder.itemView.getContext().startActivity(sendIntent);
+        }
+    }
+
+    private static class ViewMarktOnClick implements View.OnClickListener {
+        private final Weihnachtsmarkt mMarkt;
+        private final MarktViewHolder mHolder;
+
+        public ViewMarktOnClick(Weihnachtsmarkt markt, MarktViewHolder holder) {
+            mMarkt = markt;
+            mHolder = holder;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent viewIntent = new Intent(mContext, DetailedActivity.class);
+            mHolder.itemView.getContext().startActivity(viewIntent);
+
         }
     }
 

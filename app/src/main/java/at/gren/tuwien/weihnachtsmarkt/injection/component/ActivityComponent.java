@@ -1,5 +1,6 @@
 package at.gren.tuwien.weihnachtsmarkt.injection.component;
 
+import at.gren.tuwien.weihnachtsmarkt.ui.detailed.DetailedActivity;
 import dagger.Subcomponent;
 import at.gren.tuwien.weihnachtsmarkt.injection.PerActivity;
 import at.gren.tuwien.weihnachtsmarkt.injection.module.ActivityModule;
@@ -13,5 +14,6 @@ import at.gren.tuwien.weihnachtsmarkt.ui.main.MainActivity;
 public interface ActivityComponent {
 
     void inject(MainActivity mainActivity);
+    void inject(DetailedActivity detailedActivity);
 
 }

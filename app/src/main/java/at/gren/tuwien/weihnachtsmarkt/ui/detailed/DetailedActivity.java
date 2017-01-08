@@ -1,7 +1,11 @@
 package at.gren.tuwien.weihnachtsmarkt.ui.detailed;
 
+import android.os.Bundle;
+
+import at.gren.tuwien.weihnachtsmarkt.R;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.ui.base.BaseActivity;
+import butterknife.ButterKnife;
 
 /**
  * Created by Michael on 08.01.2017.
@@ -9,6 +13,14 @@ import at.gren.tuwien.weihnachtsmarkt.ui.base.BaseActivity;
 
 public class DetailedActivity extends BaseActivity implements DetailedMvpView{
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        activityComponent().inject(this);
+        setContentView(R.layout.detailed_view);
+        ButterKnife.bind(this);
+
+    }
 
     /***** MVP View methods implementation *****/
 

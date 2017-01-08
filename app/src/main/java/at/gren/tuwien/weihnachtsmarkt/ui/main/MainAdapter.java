@@ -26,14 +26,14 @@ import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WeihnachtsmarktAdapter extends RecyclerView.Adapter<WeihnachtsmarktAdapter.MarktViewHolder> {
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolder> {
 
     private List<Weihnachtsmarkt> mWeihnachtsmärkte;
     private final DataManager mDataManager;
     private boolean mHasLocation = false;
 
     @Inject
-    public WeihnachtsmarktAdapter(DataManager dataManager) {
+    public MainAdapter(DataManager dataManager) {
         mWeihnachtsmärkte = new ArrayList<>();
         this.mDataManager = dataManager;
 

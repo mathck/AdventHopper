@@ -46,7 +46,8 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
     private GoogleApiClient mGoogleApiClient = null;
 
     @Inject MainPresenter mMainPresenter;
-    @Inject WeihnachtsmarktAdapter mWeihnachtsmarktAdapter;
+    @Inject
+    MainAdapter mMainAdapter;
 
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
     private LocationRequest mLocationRequest;
@@ -69,7 +70,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mRecyclerView.setAdapter(mWeihnachtsmarktAdapter);
+        mRecyclerView.setAdapter(mMainAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mMainPresenter.attachView(this);
         mMainPresenter.loadMärkte();
@@ -137,8 +138,8 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
 
     @Override
     public void showAdventmaerkte(List<Weihnachtsmarkt> märkte) {
-        mWeihnachtsmarktAdapter.setWeihnachtsmärkte(märkte);
-        mWeihnachtsmarktAdapter.notifyDataSetChanged();
+        mMainAdapter.setWeihnachtsmärkte(märkte);
+        mMainAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -149,8 +150,8 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
 
     @Override
     public void showAdventmaerkteEmpty() {
-        mWeihnachtsmarktAdapter.setWeihnachtsmärkte(Collections.<Weihnachtsmarkt>emptyList());
-        mWeihnachtsmarktAdapter.notifyDataSetChanged();
+        mMainAdapter.setWeihnachtsmärkte(Collections.<Weihnachtsmarkt>emptyList());
+        mMainAdapter.notifyDataSetChanged();
         Toast.makeText(this, R.string.empty_list, Toast.LENGTH_LONG).show();
     }
 

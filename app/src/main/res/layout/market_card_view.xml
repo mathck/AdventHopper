@@ -44,8 +44,6 @@
                 android:id="@+id/title"
                 android:layout_weight="3.23"
                 android:ems="10"
-                android:paddingBottom="16dp"
-                android:paddingLeft="16dp"
                 android:layout_alignLeft="@+id/imageView"
                 android:layout_alignRight="@+id/imageView"
                 android:layout_alignTop="@+id/imageView"
@@ -54,7 +52,10 @@
                 android:gravity="bottom"
                 android:textColor="@color/white"
                 android:textSize="24sp"
-                android:fontFamily="sans-serif" />
+                android:fontFamily="sans-serif"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:padding="16dp" />
 
         </RelativeLayout>
 

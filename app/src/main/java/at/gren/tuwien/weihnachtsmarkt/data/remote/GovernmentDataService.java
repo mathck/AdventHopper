@@ -1,13 +1,7 @@
 package at.gren.tuwien.weihnachtsmarkt.data.remote;
 
-import android.content.Context;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import java.net.URL;
-
-import javax.inject.Inject;
 
 import at.gren.tuwien.weihnachtsmarkt.data.model.FeatureCollection;
 import at.gren.tuwien.weihnachtsmarkt.util.MyGsonTypeAdapterFactory;
@@ -28,7 +22,7 @@ public interface GovernmentDataService {
 
     /******** Helper class that sets up a new services *******/
     class Creator {
-        public static GovernmentDataService newGovernmentDataService(Context context) {
+        public static GovernmentDataService newGovernmentDataService() {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapterFactory(MyGsonTypeAdapterFactory.create())
                     .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")

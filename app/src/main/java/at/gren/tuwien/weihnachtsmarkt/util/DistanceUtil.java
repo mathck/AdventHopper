@@ -15,8 +15,8 @@ public final class DistanceUtil {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double distance = earthRadius * c;
 
-        //long meterConversion = Math.round(distance * 1000);
+        int meterConversion = (int) Math.round(distance * 1000);
 
-        return Double.toString(distance);
+        return Integer.toString(meterConversion);
     }
 }

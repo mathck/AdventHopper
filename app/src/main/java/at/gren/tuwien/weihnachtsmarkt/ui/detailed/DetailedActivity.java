@@ -7,10 +7,6 @@ import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.ui.base.BaseActivity;
 import butterknife.ButterKnife;
 
-/**
- * Created by Michael on 08.01.2017.
- */
-
 public class DetailedActivity extends BaseActivity implements DetailedMvpView{
 
     @Override

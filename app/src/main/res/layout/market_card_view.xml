@@ -91,7 +91,8 @@
                     android:paddingStart="0dp"
                     android:paddingTop="0dp"
                     android:adjustViewBounds="false"
-                    android:alpha="0.54" />
+                    android:alpha="0.54"
+                    android:tint="@color/black" />
 
                 <TextView
                     android:id="@+id/distance"
@@ -139,7 +140,8 @@
                     android:alpha="0.54"
                     android:layout_gravity="right|center_vertical"
                     android:foregroundGravity="right|center_vertical"
-                    android:padding="8dp" />
+                    android:padding="8dp"
+                    android:tint="@color/black" />
 
             </LinearLayout>
 

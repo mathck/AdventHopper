@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -71,6 +72,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
             holder.navigationLayout.setVisibility(View.INVISIBLE);
         }
 
+        holder.ratingBar.setNumStars(markt.getAverageRating());
+
         holder.shareIcon.setOnClickListener(new ShareMarktOnClick(markt, holder));
         holder.marketImage.setOnClickListener(new ViewMarktOnClick(markt, holder));
     }
@@ -107,6 +110,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         @BindView(R.id.distance) TextView distance;
         @BindView(R.id.navigationLayout) LinearLayout navigationLayout;
         @BindView(R.id.marketImage) ImageView marketImage;
+        @BindView(R.id.ratingBar) RatingBar ratingBar;
 
         public MarktViewHolder(View itemView) {
             super(itemView);

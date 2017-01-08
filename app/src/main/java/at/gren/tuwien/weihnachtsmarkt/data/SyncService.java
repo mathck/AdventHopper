@@ -74,6 +74,10 @@ public class SyncService extends Service {
                     }
                 });
 
+        // TODO sync firebase ratings
+        // start Firebase Service
+        // onSuccess -> mDataManager.updateRatings();
+
         return START_STICKY;
     }
 

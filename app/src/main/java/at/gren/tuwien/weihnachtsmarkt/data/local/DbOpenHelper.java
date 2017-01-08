@@ -13,7 +13,7 @@ import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
 public class DbOpenHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "advent_hopper.db";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
 
     @Inject
     public DbOpenHelper(@ApplicationContext Context context) {

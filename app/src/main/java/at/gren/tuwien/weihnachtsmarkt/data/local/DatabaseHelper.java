@@ -1,5 +1,6 @@
 package at.gren.tuwien.weihnachtsmarkt.data.local;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -7,6 +8,7 @@ import com.squareup.sqlbrite.BriteDatabase;
 import com.squareup.sqlbrite.SqlBrite;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +17,7 @@ import javax.inject.Singleton;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -68,8 +71,16 @@ public class DatabaseHelper {
                 });
     }
 
-    public void updateRatings(Map ratings) {
-        // TODO insert ratings into db
-        //mDb.update(Db.Weihnachtsmarkt.TABLE_NAME, )
+    public void updateRatings(HashMap<String, Integer> ratings) {
+        for (String key : ratings.keySet()) {
+            Observable<SqlBrite.Query> updatedDb = mDb.createQuery(Db.Weihnachtsmarkt.TABLE_NAME,
+                "UPDATE " + Db.Weihnachtsmarkt.TABLE_NAME + " SET averageRating = " + ratings.get(key) +
+                "WHERE object_id = " + key);
+            updatedDb.subscribe(new Action1<SqlBrite.Query>() {
+                @Override public void call(SqlBrite.Query query) {
+                    Cursor cursor = query.run();
+                }
+            });
+        }
     }
 }

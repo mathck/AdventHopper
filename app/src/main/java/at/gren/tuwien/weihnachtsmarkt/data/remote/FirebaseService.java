@@ -10,13 +10,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
+import java.util.HashMap;
 import javax.inject.Inject;
 
 import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
 import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
+import rx.Observable;
 
 import static android.content.ContentValues.TAG;
 
@@ -30,7 +29,7 @@ public class FirebaseService {
     public FirebaseService(@ApplicationContext Context context, DataManager dataManager) {
         mDatabase = FirebaseDatabase.getInstance();
         mContext = context;
-        mDataManager = dataManager;
+        mDataManager = dataManager; //TODO - dependency Cycle caused here.
     }
 
     public void getAverageRatings() {
@@ -39,17 +38,13 @@ public class FirebaseService {
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Map ratings = new LinkedHashMap<>();
+                HashMap<String, Integer> ratings = new HashMap();
                 for (DataSnapshot christmasMarketData : dataSnapshot.getChildren()) {
                     String christmasMarketId = christmasMarketData.getKey().replace(".", "");
                     int averageRating = calculateAverageRating(christmasMarketData);
                     ratings.put(christmasMarketId, averageRating);
                 }
-
-                // 1. TODO create column for average rating in sqlDB in DB.java
-
-                // 2. TODO update rating for weihnachtsmarkt in sqlDB
-                mDataManager.updateRatings(ratings);
+                mDataManager.updateRatings(ratings); // TODO this should be called in the data manager directly. How to pass the result?
             }
 
             @Override
@@ -87,7 +82,7 @@ public class FirebaseService {
             try {
                 rating = Integer.parseInt((String) ratingData.getValue());
             } catch (NumberFormatException e) {
-                Log.d(TAG, "Non-integer data found in rating mDatabase.");
+                Log.d(TAG, "Non-integer data found in rating database.");
                 Toast.makeText(mContext, "Fehler beim Lesen der Bewertungen", Toast.LENGTH_LONG).show();
             }
 

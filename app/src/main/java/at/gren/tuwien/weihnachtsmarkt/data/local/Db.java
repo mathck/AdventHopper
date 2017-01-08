@@ -24,6 +24,7 @@ public class Db {
         public static final String COLUMN_SILVESTERMARKT = "silvestermarkt";
         public static final String COLUMN_LATITUDE = "latitude";
         public static final String COLUMN_LONGITUDE = "longitude";
+        public static final String COLUMN_AVERAGE_RATING = "averageRating";
 
         public static final String CREATE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
@@ -35,7 +36,8 @@ public class Db {
                         COLUMN_WEBLINK1             + " TEXT, " +
                         COLUMN_SILVESTERMARKT       + " INTEGER, " +
                         COLUMN_LATITUDE             + " TEXT, " +
-                        COLUMN_LONGITUDE            + " TEXT" +
+                        COLUMN_LONGITUDE            + " TEXT," +
+                        COLUMN_AVERAGE_RATING         + " INTEGER" +
                         " ); ";
 
         public static ContentValues toContentValues(at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt profile) {

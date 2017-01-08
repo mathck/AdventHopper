@@ -9,6 +9,8 @@ import android.os.IBinder;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import at.gren.tuwien.weihnachtsmarkt.BoilerplateApplication;
@@ -75,8 +77,9 @@ public class SyncService extends Service {
                 });
 
         // TODO sync firebase ratings
+        mDataManager.getRatings();
         // start Firebase Service
-        // onSuccess -> mDataManager.updateRatings();
+        // onSuccess -> mDataManager.updateRatings(); //TODO Currently called directly in Firebase Service, should be called here
 
         return START_STICKY;
     }

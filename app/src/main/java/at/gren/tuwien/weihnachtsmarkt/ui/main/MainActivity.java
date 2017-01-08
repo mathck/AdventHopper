@@ -17,6 +17,8 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -27,6 +29,7 @@ import at.gren.tuwien.weihnachtsmarkt.data.SyncService;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.ui.base.BaseActivity;
 import at.gren.tuwien.weihnachtsmarkt.util.DialogFactory;
+import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import permissions.dispatcher.NeedsPermission;
@@ -155,6 +158,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
     public void onLocationChanged(Location location) {
         if (location != null) {
             mMainPresenter.storeLocation(location);
+            EventBus.getDefault().post(new LocationUpdatedEvent());
         }
     }
 }

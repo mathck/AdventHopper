@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +21,10 @@ import javax.inject.Inject;
 import at.gren.tuwien.weihnachtsmarkt.R;
 import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
+import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
+import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 
 public class WeihnachtsmarktAdapter extends RecyclerView.Adapter<WeihnachtsmarktAdapter.MarktViewHolder> {
 
@@ -35,6 +38,8 @@ public class WeihnachtsmarktAdapter extends RecyclerView.Adapter<Weihnachtsmarkt
         this.mDataManager = dataManager;
 
         this.mHasLocation = mDataManager.getPreferencesHelper().hasLocation();
+
+        EventBus.getDefault().register(this);
     }
 
     public void setWeihnachtsmärkte(List<Weihnachtsmarkt> weihnachtsmärkte) {
@@ -83,6 +88,11 @@ public class WeihnachtsmarktAdapter extends RecyclerView.Adapter<Weihnachtsmarkt
     @Override
     public int getItemCount() {
         return mWeihnachtsmärkte.size();
+    }
+
+    @Subscribe
+    public void locationUpdated(LocationUpdatedEvent event) {
+        notifyDataSetChanged();
     }
 
     class MarktViewHolder extends RecyclerView.ViewHolder {

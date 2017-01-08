@@ -10,7 +10,6 @@ import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
 import at.gren.tuwien.weihnachtsmarkt.data.SyncService;
 import at.gren.tuwien.weihnachtsmarkt.data.local.DatabaseHelper;
 import at.gren.tuwien.weihnachtsmarkt.data.local.PreferencesHelper;
-import at.gren.tuwien.weihnachtsmarkt.data.remote.RibotsService;
 import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
 import at.gren.tuwien.weihnachtsmarkt.injection.module.ApplicationModule;
 import at.gren.tuwien.weihnachtsmarkt.util.RxEventBus;
@@ -23,7 +22,6 @@ public interface ApplicationComponent {
 
     @ApplicationContext Context context();
     Application application();
-    RibotsService ribotsService();
     PreferencesHelper preferencesHelper();
     DatabaseHelper databaseHelper();
     DataManager dataManager();

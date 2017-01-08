@@ -1,17 +1,14 @@
 package at.gren.tuwien.weihnachtsmarkt;
 
-import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
-import com.crashlytics.android.Crashlytics;
-
-import io.fabric.sdk.android.Fabric;
-import timber.log.Timber;
 import at.gren.tuwien.weihnachtsmarkt.injection.component.ApplicationComponent;
 import at.gren.tuwien.weihnachtsmarkt.injection.component.DaggerApplicationComponent;
 import at.gren.tuwien.weihnachtsmarkt.injection.module.ApplicationModule;
+import timber.log.Timber;
 
-public class BoilerplateApplication extends Application  {
+public class BoilerplateApplication extends MultiDexApplication {
 
     ApplicationComponent mApplicationComponent;
 
@@ -21,7 +18,7 @@ public class BoilerplateApplication extends Application  {
 
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
-            Fabric.with(this, new Crashlytics());
+            //Fabric.with(this, new Crashlytics());
         }
     }
 

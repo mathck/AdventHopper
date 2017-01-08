@@ -8,7 +8,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
-import at.gren.tuwien.weihnachtsmarkt.data.remote.RibotsService;
 import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
 
 import static org.mockito.Mockito.mock;

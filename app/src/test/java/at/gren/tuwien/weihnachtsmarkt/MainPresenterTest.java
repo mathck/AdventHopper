@@ -14,7 +14,6 @@ import java.util.List;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import rx.Observable;
 import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
-import at.gren.tuwien.weihnachtsmarkt.data.model.Ribot;
 import at.gren.tuwien.weihnachtsmarkt.test.common.TestDataFactory;
 import at.gren.tuwien.weihnachtsmarkt.ui.main.MainMvpView;
 import at.gren.tuwien.weihnachtsmarkt.ui.main.MainPresenter;

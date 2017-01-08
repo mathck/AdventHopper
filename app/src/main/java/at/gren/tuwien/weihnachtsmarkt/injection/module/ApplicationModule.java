@@ -8,7 +8,6 @@ import javax.inject.Singleton;
 import at.gren.tuwien.weihnachtsmarkt.data.remote.GovernmentDataService;
 import dagger.Module;
 import dagger.Provides;
-import at.gren.tuwien.weihnachtsmarkt.data.remote.RibotsService;
 import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
 
 /**
@@ -31,12 +30,6 @@ public class ApplicationModule {
     @ApplicationContext
     Context provideContext() {
         return mApplication;
-    }
-
-    @Provides
-    @Singleton
-    RibotsService provideRibotsService() {
-        return RibotsService.Creator.newRibotsService();
     }
 
     @Provides

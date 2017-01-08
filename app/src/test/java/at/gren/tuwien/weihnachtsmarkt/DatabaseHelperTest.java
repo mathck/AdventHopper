@@ -16,7 +16,6 @@ import rx.observers.TestSubscriber;
 import at.gren.tuwien.weihnachtsmarkt.data.local.DatabaseHelper;
 import at.gren.tuwien.weihnachtsmarkt.data.local.Db;
 import at.gren.tuwien.weihnachtsmarkt.data.local.DbOpenHelper;
-import at.gren.tuwien.weihnachtsmarkt.data.model.Ribot;
 import at.gren.tuwien.weihnachtsmarkt.test.common.TestDataFactory;
 import at.gren.tuwien.weihnachtsmarkt.util.DefaultConfig;
 import at.gren.tuwien.weihnachtsmarkt.util.RxSchedulersOverrideRule;

@@ -15,18 +15,35 @@
       },
       "oauth_client": [
         {
+          "client_id": "589116827012-5eubqq2s62a2503pplmj5upq3gu0fa07.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "at.gren.tuwien.weihnachtsmarkt",
+            "certificate_hash": "1435DD88BE3AB08D17B2EFE65AA80B971838E2FC"
+          }
+        },
+        {
           "client_id": "589116827012-gj55sphp4q9llo1fgc8dp2qld5bkhiq3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
-      "api_key": [ { "current_key": "AIzaSyCdjW_Liz_0JAT_5UTIbs3-K-hut7GVY6E"}],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMg9t6Y4Ii-pEqH2zcVKBYwD1W5HXbHT0"
+        }
+      ],
       "services": {
         "analytics_service": {
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "589116827012-gj55sphp4q9llo1fgc8dp2qld5bkhiq3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

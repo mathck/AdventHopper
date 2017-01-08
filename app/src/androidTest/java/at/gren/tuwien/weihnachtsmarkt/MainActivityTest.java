@@ -15,7 +15,6 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import rx.Observable;
-import at.gren.tuwien.weihnachtsmarkt.data.model.Ribot;
 import at.gren.tuwien.weihnachtsmarkt.test.common.TestComponentRule;
 import at.gren.tuwien.weihnachtsmarkt.test.common.TestDataFactory;
 import at.gren.tuwien.weihnachtsmarkt.ui.main.MainActivity;

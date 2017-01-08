@@ -1,11 +1,13 @@
 package at.gren.tuwien.weihnachtsmarkt.ui.main;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,82 +16,125 @@ import java.util.List;
 import javax.inject.Inject;
 
 import at.gren.tuwien.weihnachtsmarkt.R;
+import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WeihnachtsmarktAdapter extends RecyclerView.Adapter<WeihnachtsmarktAdapter.RibotViewHolder> {
+import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 
-    private List<Weihnachtsmarkt> mWeihnachtsmarkts;
+public class WeihnachtsmarktAdapter extends RecyclerView.Adapter<WeihnachtsmarktAdapter.MarktViewHolder> {
+
+    private List<Weihnachtsmarkt> mWeihnachtsmärkte;
+    private final DataManager mDataManager;
+    private boolean mHasLocation = false;
 
     @Inject
-    public WeihnachtsmarktAdapter() {
-        mWeihnachtsmarkts = new ArrayList<>();
+    public WeihnachtsmarktAdapter(DataManager dataManager) {
+        mWeihnachtsmärkte = new ArrayList<>();
+        this.mDataManager = dataManager;
+
+        this.mHasLocation = mDataManager.getPreferencesHelper().hasLocation();
     }
 
-    public void setWeihnachtsmarkts(List<Weihnachtsmarkt> weihnachtsmarkts) {
-        mWeihnachtsmarkts = weihnachtsmarkts;
+    public void setWeihnachtsmärkte(List<Weihnachtsmarkt> weihnachtsmärkte) {
+        mWeihnachtsmärkte = weihnachtsmärkte;
     }
 
     @Override
-    public RibotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MarktViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.market_card_view, parent, false);
-        return new RibotViewHolder(itemView);
+        return new MarktViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final RibotViewHolder holder, int position) {
-        final Weihnachtsmarkt markt = mWeihnachtsmarkts.get(position);
+    public void onBindViewHolder(final MarktViewHolder holder, int position) {
+        final Weihnachtsmarkt markt = mWeihnachtsmärkte.get(position);
 
-        // TODO: Get values from SharedPreferences Longitude/Latitude
-        double longitudeSharedPreferences = 48.173333333333;
-        double latitudeSharedPreferences = 16.413888888889;
-
-        holder.distance.setText(getDistance(markt.geometry().coordinates().get(0),markt.geometry().coordinates().get(1),longitudeSharedPreferences,latitudeSharedPreferences));
         holder.title.setText(markt.properties().BEZEICHNUNG());
-        holder.shareIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Schau dir diesen tollen Weihnachtsmarkt an " + markt.properties().BEZEICHNUNG());
-                sendIntent.setType("text/plain");
-                holder.itemView.getContext().startActivity(sendIntent);
-            }
-        });
+
+        if (mHasLocation) {
+            holder.distance.setText(getDistanceToMarket(markt));
+            holder.navigationLayout.setOnClickListener(new NavigateToMarktOnClick(markt, holder));
+        }
+        else {
+            holder.navigationLayout.setVisibility(View.INVISIBLE);
+        }
+
+        holder.shareIcon.setOnClickListener(new ShareMarktOnClick(markt, holder));
+    }
+
+    private String getDistanceToMarket(Weihnachtsmarkt markt) {
+
+        double userLocationLatitude = mDataManager.getPreferencesHelper().getLocationLatitude();
+        double userLocationLongitude = mDataManager.getPreferencesHelper().getLocationLongitude();
+
+        double marktLocationLatitude = markt.geometry().coordinates().get(0);
+        double marktLocationLongitude = markt.geometry().coordinates().get(1);
+
+        String distance = DistanceUtil.getDistance( marktLocationLatitude,
+                                                    marktLocationLongitude,
+                                                    userLocationLatitude,
+                                                    userLocationLongitude);
+        return distance + " m";
     }
 
     @Override
     public int getItemCount() {
-        return mWeihnachtsmarkts.size();
+        return mWeihnachtsmärkte.size();
     }
 
-    class RibotViewHolder extends RecyclerView.ViewHolder {
+    class MarktViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.shareIcon) ImageView shareIcon;
         @BindView(R.id.title) TextView title;
         @BindView(R.id.distance) TextView distance;
+        @BindView(R.id.navigationLayout) LinearLayout navigationLayout;
 
-        public RibotViewHolder(View itemView) {
+        public MarktViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
-    public String getDistance (double lat_a, double lng_a, double lat_b, double lng_b )
-    {
-        double earthRadius = 3958.75;
-        double latDiff = Math.toRadians(lat_b-lat_a);
-        double lngDiff = Math.toRadians(lng_b-lng_a);
-        double a = Math.sin(latDiff /2) * Math.sin(latDiff /2) +
-                Math.cos(Math.toRadians(lat_a)) * Math.cos(Math.toRadians(lat_b)) *
-                        Math.sin(lngDiff /2) * Math.sin(lngDiff /2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        double distance = earthRadius * c;
+    private static class ShareMarktOnClick implements View.OnClickListener {
+        private final Weihnachtsmarkt mMarkt;
+        private final MarktViewHolder mHolder;
 
-        long meterConversion = Math.round(distance * 1609);
+        public ShareMarktOnClick(Weihnachtsmarkt markt, MarktViewHolder holder) {
+            mMarkt = markt;
+            mHolder = holder;
+        }
 
-        return Long.toString(meterConversion);
+        @Override
+        public void onClick(View v) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Schau dir diesen tollen Weihnachtsmarkt an " + mMarkt.properties().BEZEICHNUNG());
+            sendIntent.setType("text/plain");
+            mHolder.itemView.getContext().startActivity(sendIntent);
+        }
+    }
+
+    private static class NavigateToMarktOnClick implements View.OnClickListener {
+        private final Weihnachtsmarkt mMarkt;
+        private final MarktViewHolder mHolder;
+
+        public NavigateToMarktOnClick(Weihnachtsmarkt markt, MarktViewHolder holder) {
+            mMarkt = markt;
+            mHolder = holder;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent navigationIntent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("google.navigation:q=" +
+                            mMarkt.geometry().coordinates().get(0) + "," +
+                            mMarkt.geometry().coordinates().get(1) +
+                            "&mode=w"));
+
+            mHolder.itemView.getContext().startActivity(navigationIntent);
+        }
     }
 }

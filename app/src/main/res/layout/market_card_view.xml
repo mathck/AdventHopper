@@ -65,6 +65,7 @@
             android:paddingBottom="5dp">
 
             <LinearLayout
+                android:id="@+id/navigationLayout"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -74,7 +75,7 @@
                 <ImageView
                     android:layout_height="match_parent"
                     card_view:srcCompat="@mipmap/ic_walk"
-                    android:id="@+id/imageView2"
+                    android:id="@+id/walkIcon"
                     android:layout_width="35dp"
                     android:layout_margin="0dp"
                     android:layout_marginBottom="0dp"

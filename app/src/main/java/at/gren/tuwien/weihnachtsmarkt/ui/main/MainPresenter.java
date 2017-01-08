@@ -1,5 +1,7 @@
 package at.gren.tuwien.weihnachtsmarkt.ui.main;
 
+import android.location.Location;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -65,4 +67,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                 });
     }
 
+    void storeLocation(Location lastLocation) {
+        mDataManager.getPreferencesHelper().storeLocation(lastLocation);
+    }
 }

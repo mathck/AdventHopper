@@ -12,6 +12,7 @@
     <style name="NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="displayOptions"></item>
     </style>
 
 </resources>

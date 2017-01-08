@@ -7,6 +7,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +33,7 @@ import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.ui.base.BaseActivity;
 import at.gren.tuwien.weihnachtsmarkt.util.DialogFactory;
 import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
+import at.gren.tuwien.weihnachtsmarkt.util.events.SyncCompletedEvent;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import permissions.dispatcher.NeedsPermission;
@@ -38,18 +42,18 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions
 public class MainActivity extends BaseActivity implements MainMvpView, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
-    private static final String EXTRA_TRIGGER_SYNC_FLAG =
-            "at.gren.tuwien.weihnachtsmarkt.ui.main.MainActivity.EXTRA_TRIGGER_SYNC_FLAG";
-    private static final long UPDATE_INTERVAL = 10;
-    private static final long FASTEST_INTERVAL = 5;
+    private static final String EXTRA_TRIGGER_SYNC_FLAG = "at.gren.tuwien.weihnachtsmarkt.ui.main.MainActivity.EXTRA_TRIGGER_SYNC_FLAG";
+    private static final long UPDATE_INTERVAL = 30;
+    private static final long FASTEST_INTERVAL = 15;
 
     private GoogleApiClient mGoogleApiClient = null;
 
     @Inject MainPresenter mMainPresenter;
-    @Inject
-    MainAdapter mMainAdapter;
+    @Inject MainAdapter mMainAdapter;
 
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
+    @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout mSwipeRefreshLayout;
+
     private LocationRequest mLocationRequest;
 
     /**
@@ -79,6 +83,14 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
             startService(SyncService.getStartIntent(this));
         }
 
+        final Context context = this;
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                startService(SyncService.getStartIntent(context));
+            }
+        });
+
         // Create an instance of GoogleAPIClient.
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -98,12 +110,24 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
     protected void onStart() {
         mGoogleApiClient.connect();
         super.onStart();
+        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
         mGoogleApiClient.disconnect();
         super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void syncCompleted(SyncCompletedEvent event) {
+        MainActivity.this.runOnUiThread(new Runnable() {
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(false);
+                Snackbar.make(mSwipeRefreshLayout, "Weihnachtsmärkte wurden neu geladen", Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

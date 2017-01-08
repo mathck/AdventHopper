@@ -8,6 +8,7 @@ import com.squareup.sqlbrite.SqlBrite;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -65,5 +66,10 @@ public class DatabaseHelper {
                         return at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt.create(weihnachtsmarkt.type(), weihnachtsmarkt.id(), weihnachtsmarkt.geometry(), weihnachtsmarkt.geometry_name(), weihnachtsmarkt.properties());
                     }
                 });
+    }
+
+    public void updateRatings(Map ratings) {
+        // TODO insert ratings into db
+        //mDb.update(Db.Weihnachtsmarkt.TABLE_NAME, )
     }
 }

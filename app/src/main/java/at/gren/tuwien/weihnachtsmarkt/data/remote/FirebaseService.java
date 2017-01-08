@@ -15,6 +15,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
 import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
 
 import static android.content.ContentValues.TAG;
@@ -22,12 +23,14 @@ import static android.content.ContentValues.TAG;
 public class FirebaseService {
 
     private FirebaseDatabase mDatabase;
+    private DataManager mDataManager;
     private Context mContext;
 
     @Inject
-    public FirebaseService(@ApplicationContext Context context) {
+    public FirebaseService(@ApplicationContext Context context, DataManager dataManager) {
         mDatabase = FirebaseDatabase.getInstance();
         mContext = context;
+        mDataManager = dataManager;
     }
 
     public void getAverageRatings() {
@@ -43,8 +46,10 @@ public class FirebaseService {
                     ratings.put(christmasMarketId, averageRating);
                 }
 
-                // TODO create column for average rating in sqlDB
-                // TODO update rating for weihnachtsmarkt in sqlDB
+                // 1. TODO create column for average rating in sqlDB in DB.java
+
+                // 2. TODO update rating for weihnachtsmarkt in sqlDB
+                mDataManager.updateRatings(ratings);
             }
 
             @Override

@@ -1,6 +1,7 @@
 package at.gren.tuwien.weihnachtsmarkt.data;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -44,5 +45,9 @@ public class DataManager {
 
     public Observable<List<Weihnachtsmarkt>> getMärkte() {
         return mDatabaseHelper.getMärkte().distinct();
+    }
+
+    public void updateRatings(Map ratings) {
+        mDatabaseHelper.updateRatings(ratings);
     }
 }

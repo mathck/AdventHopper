@@ -7,12 +7,15 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.IBinder;
 
+import org.greenrobot.eventbus.EventBus;
+
 import javax.inject.Inject;
 
 import at.gren.tuwien.weihnachtsmarkt.BoilerplateApplication;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.util.AndroidComponentUtil;
 import at.gren.tuwien.weihnachtsmarkt.util.NetworkUtil;
+import at.gren.tuwien.weihnachtsmarkt.util.events.SyncCompletedEvent;
 import rx.Observer;
 import rx.Subscription;
 import rx.schedulers.Schedulers;
@@ -48,25 +51,26 @@ public class SyncService extends Service {
             return START_NOT_STICKY;
         }
 
-        if (mSubscription != null && !mSubscription.isUnsubscribed()) mSubscription.unsubscribe();
+        if (mSubscription != null && !mSubscription.isUnsubscribed())
+            mSubscription.unsubscribe();
+
         mSubscription = mDataManager.syncMärkte()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Weihnachtsmarkt>() {
                     @Override
                     public void onCompleted() {
-                        Timber.i("Synced successfully!");
+                        EventBus.getDefault().post(new SyncCompletedEvent());
                         stopSelf(startId);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Timber.w(e, "Error syncing.");
+                        EventBus.getDefault().post(new SyncCompletedEvent());
                         stopSelf(startId);
-
                     }
 
                     @Override
-                    public void onNext(Weihnachtsmarkt ribot) {
+                    public void onNext(Weihnachtsmarkt markt) {
                     }
                 });
 

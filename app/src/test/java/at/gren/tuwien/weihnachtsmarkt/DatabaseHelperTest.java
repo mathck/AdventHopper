@@ -25,6 +25,7 @@ import static junit.framework.Assert.assertEquals;
 /**
  * Unit tests integration with a SQLite Database using Robolectric
  */
+/*
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = DefaultConfig.EMULATE_SDK)
 public class DatabaseHelperTest {
@@ -70,3 +71,4 @@ public class DatabaseHelperTest {
     }
 
 }
+*/

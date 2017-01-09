@@ -29,7 +29,6 @@ import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolder> {
 
@@ -37,6 +36,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
     private final DataManager mDataManager;
     private static Context mContext = null;
     private boolean mHasLocation = false;
+    private double mUserLocationLatitude;
+    private double mUserLocationLongitude;
 
     @Inject
     public MainAdapter(DataManager dataManager, @ApplicationContext Context context) {
@@ -44,6 +45,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         this.mDataManager = dataManager;
         this.mContext = context;
         this.mHasLocation = mDataManager.getPreferencesHelper().hasLocation();
+
+        this.mUserLocationLatitude = mDataManager.getPreferencesHelper().getLocationLatitude();
+        this.mUserLocationLongitude = mDataManager.getPreferencesHelper().getLocationLongitude();
 
         EventBus.getDefault().register(this);
     }
@@ -66,7 +70,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         holder.title.setText(markt.properties().BEZEICHNUNG());
 
         if (mHasLocation) {
-            holder.distance.setText(getDistanceToMarket(markt));
+            holder.distance.setText(DistanceUtil.getDistanceToMarket(mUserLocationLatitude, mUserLocationLongitude, markt));
             holder.navigationLayout.setOnClickListener(new NavigateToMarktOnClick(markt, holder));
         }
         else {
@@ -76,21 +80,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
 
         holder.shareIcon.setOnClickListener(new ShareMarktOnClick(markt, holder));
         holder.marketImage.setOnClickListener(new ViewMarktOnClick(markt, holder));
-    }
-
-    private String getDistanceToMarket(Weihnachtsmarkt markt) {
-
-        double userLocationLatitude = mDataManager.getPreferencesHelper().getLocationLatitude();
-        double userLocationLongitude = mDataManager.getPreferencesHelper().getLocationLongitude();
-
-        double marktLocationLatitude = markt.geometry().coordinates().get(0);
-        double marktLocationLongitude = markt.geometry().coordinates().get(1);
-
-        String distance = DistanceUtil.getDistance( marktLocationLatitude,
-                                                    marktLocationLongitude,
-                                                    userLocationLatitude,
-                                                    userLocationLongitude);
-        return distance + " m";
     }
 
     @Override

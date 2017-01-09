@@ -13,28 +13,23 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import javax.inject.Inject;
 
-import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
 import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
-import rx.Observable;
 
 import static android.content.ContentValues.TAG;
 
 public class FirebaseService {
 
     private FirebaseDatabase mDatabase;
-    private DataManager mDataManager;
     private Context mContext;
 
     @Inject
-    public FirebaseService(@ApplicationContext Context context, DataManager dataManager) {
+    public FirebaseService(@ApplicationContext Context context) {
         mDatabase = FirebaseDatabase.getInstance();
         mContext = context;
-        mDataManager = dataManager; //TODO - dependency Cycle caused here.
     }
 
     public void getAverageRatings() {
         DatabaseReference dbRef = mDatabase.getReference("weihnachtsmarkt");
-
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -44,7 +39,12 @@ public class FirebaseService {
                     int averageRating = calculateAverageRating(christmasMarketData);
                     ratings.put(christmasMarketId, averageRating);
                 }
-                mDataManager.updateRatings(ratings); // TODO this should be called in the data manager directly. How to pass the result?
+                //mDataManager.updateRatings(ratings);
+                // TODO this should be called in the data manager directly. How to pass the result?
+                // Vorschlag:
+                // FirebaseService die dbReferenz exposen lassen
+                // und den Listener im SyncService attachen
+                // und dann so http://stackoverflow.com/a/15544647/2880465
             }
 
             @Override

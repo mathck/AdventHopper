@@ -10,6 +10,7 @@ import at.gren.tuwien.weihnachtsmarkt.data.local.DatabaseHelper;
 import at.gren.tuwien.weihnachtsmarkt.data.local.PreferencesHelper;
 import at.gren.tuwien.weihnachtsmarkt.data.model.FeatureCollection;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
+import at.gren.tuwien.weihnachtsmarkt.data.remote.FirebaseService;
 import at.gren.tuwien.weihnachtsmarkt.data.remote.GovernmentDataService;
 import rx.Observable;
 import rx.functions.Func1;
@@ -18,13 +19,15 @@ import rx.functions.Func1;
 public class DataManager {
 
     private final GovernmentDataService mGovernmentDataService;
+    private final FirebaseService mFirebaseService;
     private final DatabaseHelper mDatabaseHelper;
     private final PreferencesHelper mPreferencesHelper;
 
     @Inject
-    public DataManager(GovernmentDataService governmentDataService, PreferencesHelper preferencesHelper,
+    public DataManager(GovernmentDataService governmentDataService, FirebaseService mFirebaseService, PreferencesHelper preferencesHelper,
                        DatabaseHelper databaseHelper) {
         mGovernmentDataService = governmentDataService;
+        this.mFirebaseService = mFirebaseService;
         mPreferencesHelper = preferencesHelper;
         mDatabaseHelper = databaseHelper;
     }

@@ -95,8 +95,14 @@ public class DataManager {
                 numberOfRatings++;
             }
         }
-
         Double averageRating = Double.valueOf(ratingSum / numberOfRatings);
-        return Math.round( averageRating * 2.0 ) / 2.0 ; // round to next half
+        return (Math.round( averageRating * 2.0 )) / 2.0 ; // round to next half
+    }
+
+    public void setRating (String weihnachtsmarktId, Integer rating){
+        DatabaseReference dbRef = mFirebaseService.getFirebaseReference();
+        if ((rating <= 5) && (rating > 0)) {
+            dbRef.child(weihnachtsmarktId).child("deviceIdX").setValue(rating); // TODO deviceId
+        }
     }
 }

@@ -48,26 +48,4 @@ public class MainActivityTest {
     @Rule
     public final TestRule chain = RuleChain.outerRule(component).around(main);
 
-    @Test
-    public void listOfRibotsShows() {
-        List<Ribot> testDataRibots = TestDataFactory.makeListMärkte(20);
-        when(component.getMockDataManager().getRibots())
-                .thenReturn(Observable.just(testDataRibots));
-
-        main.launchActivity(null);
-
-        int position = 0;
-        for (Ribot ribot : testDataRibots) {
-            onView(withId(R.id.recycler_view))
-                    .perform(RecyclerViewActions.scrollToPosition(position));
-            String name = String.format("%s %s", ribot.profile().name().first(),
-                    ribot.profile().name().last());
-            onView(withText(name))
-                    .check(matches(isDisplayed()));
-            onView(withText(ribot.profile().email()))
-                    .check(matches(isDisplayed()));
-            position++;
-        }
-    }
-
 }

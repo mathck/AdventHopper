@@ -27,11 +27,12 @@
                 android:id="@+id/marketImage" />
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/detailed_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                android:elevation="10dp" />
+                android:elevation="10dp"
+                style="@style/AppTheme" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -46,7 +47,7 @@
         android:id="@+id/floatingActionButton"
         android:layout_marginRight="25dp"
         app:fabSize="normal"
-        android:layout_alignRight="@+id/toolbar"
+        android:layout_alignRight="@+id/detailed_toolbar"
         app:backgroundTint="?attr/colorPrimary"
         android:tint="@color/white"
         app:layout_anchor="@id/app_bar_layout"
@@ -94,22 +95,25 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp">
 
                 <RatingBar
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/ratingBar2"
-                    android:paddingBottom="8dp"
+                    android:id="@+id/ratingBar"
                     android:stepSize="0.5"
                     android:numStars="5"
                     android:rating="3.5"
                     android:clickable="true"
                     android:progressTint="@color/yellow_700"
                     android:secondaryProgressTint="@color/yellow_700"
-                    android:scaleX="0.9"
-                    android:scaleY="0.9"
-                    style="@style/Widget.AppCompat.RatingBar.Indicator" />
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:theme="@style/RatingBar"
+                    android:drawingCacheQuality="high"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:fillViewport="true" />
 
                 <TextView
                     android:text="3.5"
@@ -127,13 +131,15 @@
             <com.google.android.gms.maps.MapView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/mapView" />
+                android:id="@+id/mapView"
+                android:layout_weight="1" />
 
             <TextView
                 android:text="TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView2" />
+                android:id="@+id/textView2"
+                android:layout_weight="1" />
 
         </LinearLayout>
 

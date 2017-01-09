@@ -149,8 +149,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         @Override
         public void onClick(View v) {
             Intent viewIntent = new Intent(mContext, DetailedActivity.class);
+            viewIntent.putExtra("key",mMarkt.id());
             mHolder.itemView.getContext().startActivity(viewIntent);
-
         }
     }
 

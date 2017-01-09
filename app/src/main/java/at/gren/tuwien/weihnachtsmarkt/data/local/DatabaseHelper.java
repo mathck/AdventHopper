@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
@@ -71,11 +72,24 @@ public class DatabaseHelper {
                 });
     }
 
+    public Observable<List<at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt>> getMarkt(String key) {
+        return mDb.createQuery(Db.Weihnachtsmarkt.TABLE_NAME,
+                "SELECT * FROM " + Db.Weihnachtsmarkt.TABLE_NAME +
+                        " WHERE object_id = " + key)
+                .mapToList(new Func1<Cursor, at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt>() {
+                    @Override
+                    public at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt call(Cursor cursor) {
+                        at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt weihnachtsmarkt = Db.Weihnachtsmarkt.parseCursor(cursor);
+                        return at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt.create(weihnachtsmarkt.type(), weihnachtsmarkt.id(), weihnachtsmarkt.geometry(), weihnachtsmarkt.geometry_name(), weihnachtsmarkt.properties());
+                    }
+                });
+    }
+
     public void updateRatings(HashMap<String, Integer> ratings) {
         for (String key : ratings.keySet()) {
             Observable<SqlBrite.Query> updatedDb = mDb.createQuery(Db.Weihnachtsmarkt.TABLE_NAME,
                 "UPDATE " + Db.Weihnachtsmarkt.TABLE_NAME + " SET averageRating = " + ratings.get(key) +
-                "WHERE object_id = " + key);
+                " WHERE object_id = " + key);
             updatedDb.subscribe(new Action1<SqlBrite.Query>() {
                 @Override public void call(SqlBrite.Query query) {
                     Cursor cursor = query.run();

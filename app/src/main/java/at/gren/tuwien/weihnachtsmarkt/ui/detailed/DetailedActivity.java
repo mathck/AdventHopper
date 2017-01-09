@@ -20,6 +20,7 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView{
     Toolbar mdetailed_toolbar;
     @BindView(R.id.ratingBar) RatingBar mratingBar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -27,6 +28,8 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView{
         activityComponent().inject(this);
         setContentView(R.layout.detailed_view);
         ButterKnife.bind(this);
+        Bundle bundle = getIntent().getExtras();
+        String id = bundle.getString("key");
 
         setSupportActionBar(mdetailed_toolbar);
 

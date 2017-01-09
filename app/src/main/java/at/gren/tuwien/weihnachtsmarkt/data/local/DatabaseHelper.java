@@ -91,14 +91,8 @@ public class DatabaseHelper {
         for (String key : ratings.keySet()) {
             String query = "UPDATE " + Db.Weihnachtsmarkt.TABLE_NAME + " SET averageRating = " + ratings.get(key) +
                     " WHERE object_id = 'ADVENTMARKTOGD." + key + "'";
-            Observable<SqlBrite.Query> updatedDb = mDb.createQuery(Db.Weihnachtsmarkt.TABLE_NAME,
-            query);
+            mDb.execute(query);
             Timber.i(query);
-            updatedDb.subscribe(new Action1<SqlBrite.Query>() {
-                @Override public void call(SqlBrite.Query query) {
-                    Cursor cursor = query.run();
-                }
-            });
         }
     }
 }

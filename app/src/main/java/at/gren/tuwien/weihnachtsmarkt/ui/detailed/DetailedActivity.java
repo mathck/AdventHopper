@@ -34,7 +34,7 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Drawable progress = mratingBar.getProgressDrawable();
-        DrawableCompat.setTint(progress, Color.WHITE);
+        DrawableCompat.setTint(progress, Color.YELLOW);
     }
 
     /***** MVP View methods implementation *****/

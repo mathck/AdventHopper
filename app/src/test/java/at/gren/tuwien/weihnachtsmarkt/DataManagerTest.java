@@ -30,6 +30,7 @@ import static org.mockito.Mockito.when;
  * 3. Optionally write a SEPARATE test that verifies that your method is calling the right helper
  * using Mockito.verify()
  */
+/*
 @RunWith(MockitoJUnitRunner.class)
 public class DataManagerTest {
 
@@ -89,3 +90,4 @@ public class DataManagerTest {
     }
 
 }
+*/

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -145,8 +146,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         public void onClick(View v) {
             Intent viewIntent = new Intent(mContext, DetailedActivity.class);
             viewIntent.putExtra("key", mMarkt.properties().OBJECTID());
-            ActivityOptionsCompat options = ActivityOptionsCompat.
-                    makeSceneTransitionAnimation(((MainActivity) mContext), mHolder.marketImage, "marketImage");
+
+            Pair<View, String> p1 = Pair.create((View) mHolder.marketImage, "marketImage");
+            Pair<View, String> p2 = Pair.create((View) mHolder.marketImage, "marketTitle");
+            Pair<View, String> p3 = Pair.create((View) mHolder.marketImage, "ratingBar");
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((MainActivity) mContext, p1, p2, p3);
+
             mHolder.itemView.getContext().startActivity(viewIntent, options.toBundle());
         }
     }

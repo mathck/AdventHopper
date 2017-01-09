@@ -83,6 +83,7 @@
             <TextView
                 android:text="Belvedere"
                 android:layout_width="match_parent"
+                android:transitionName="marketTitle"
                 android:layout_height="wrap_content"
                 android:id="@+id/title"
                 android:textSize="24sp"
@@ -104,6 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/ratingBar"
+                    android:transitionName="ratingBar"
                     android:stepSize="0.5"
                     android:numStars="5"
                     android:rating="3.5"

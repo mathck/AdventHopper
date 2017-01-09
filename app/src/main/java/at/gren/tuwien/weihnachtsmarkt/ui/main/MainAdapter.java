@@ -148,9 +148,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
             viewIntent.putExtra("key", mMarkt.properties().OBJECTID());
 
             Pair<View, String> p1 = Pair.create((View) mHolder.marketImage, "marketImage");
-            Pair<View, String> p2 = Pair.create((View) mHolder.marketImage, "marketTitle");
-            Pair<View, String> p3 = Pair.create((View) mHolder.marketImage, "ratingBar");
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((MainActivity) mContext, p1, p2, p3);
+            //Pair<View, String> p2 = Pair.create((View) mHolder.marketImage, "marketTitle");
+            //Pair<View, String> p3 = Pair.create((View) mHolder.marketImage, "ratingBar");
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((MainActivity) mContext, p1);
 
             mHolder.itemView.getContext().startActivity(viewIntent, options.toBundle());
         }

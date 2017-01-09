@@ -74,17 +74,16 @@ public class DatabaseHelper {
                 });
     }
 
-    public Observable<List<at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt>> getMarkt(String key) {
-        return mDb.createQuery(Db.Weihnachtsmarkt.TABLE_NAME,
+    public Observable<Weihnachtsmarkt> getMarkt(String key) {
+         return mDb.createQuery(Db.Weihnachtsmarkt.TABLE_NAME,
                 "SELECT * FROM " + Db.Weihnachtsmarkt.TABLE_NAME +
-                        " WHERE object_id = " + key)
-                .mapToList(new Func1<Cursor, at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt>() {
-                    @Override
-                    public at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt call(Cursor cursor) {
-                        at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt weihnachtsmarkt = Db.Weihnachtsmarkt.parseCursor(cursor);
-                        return at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt.create(weihnachtsmarkt.type(), weihnachtsmarkt.id(), weihnachtsmarkt.geometry(), weihnachtsmarkt.geometry_name(), weihnachtsmarkt.properties());
-                    }
-                });
+                        " WHERE object_id = '" + key + "'" ).mapToOne(new Func1<Cursor, Weihnachtsmarkt>() {
+            @Override
+            public Weihnachtsmarkt call(Cursor cursor) {
+                Weihnachtsmarkt weihnachtsmarkt = Db.Weihnachtsmarkt.parseCursor(cursor);
+                return Weihnachtsmarkt.create(weihnachtsmarkt.type(), weihnachtsmarkt.id(), weihnachtsmarkt.geometry(), weihnachtsmarkt.geometry_name(), weihnachtsmarkt.properties());
+            }
+        });
     }
 
     public static void updateRatings(HashMap<String, Double> ratings) {

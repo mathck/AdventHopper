@@ -85,7 +85,7 @@
                 android:text="Belvedere"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView"
+                android:id="@+id/title"
                 android:textSize="24sp"
                 android:textColor="@color/black"
                 android:paddingBottom="8dp"
@@ -122,7 +122,7 @@
                     android:text="3.5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/textView1"
+                    android:id="@+id/rating"
                     android:paddingLeft="8dp"
                     android:textSize="20sp"
                     android:gravity="center_vertical"
@@ -130,31 +130,6 @@
                     android:alpha="0.54" />
 
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"
-                android:alpha="0.12" />
-
-            <TextView
-                android:text="Beschreibung"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/description"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:alpha="0.87" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"
-                android:alpha="0.12" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -181,10 +156,11 @@
                     android:layout_weight="1"
                     android:fontFamily="sans-serif"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:layout_gravity="center_vertical"
                     android:paddingLeft="8dp"
-                    android:alpha="0.87" />
+                    android:alpha="0.87"
+                    android:autoLink="map" />
             </LinearLayout>
 
             <LinearLayout
@@ -195,7 +171,7 @@
                 android:paddingRight="16dp"
                 android:paddingLeft="16dp">
 
-            <ImageView
+                <ImageView
                 android:layout_height="wrap_content"
                 app:srcCompat="@mipmap/ic_access_time"
                 android:id="@+id/imageView"
@@ -204,19 +180,41 @@
                 android:minWidth="65dp"
                 android:tint="?attr/colorPrimary" />
 
-            <TextView
-                android:text="Öffnungszeiten"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/openingHours"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="8dp"
-                android:alpha="0.87" />
-        </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                    android:text="Datum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/date"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:alpha="0.87"
+                        android:paddingBottom="8dp" />
+
+                    <TextView
+                        android:text="Öffnungszeiten"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/openingHours"
+                        android:layout_weight="1"
+                        android:paddingLeft="8dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:alpha="0.87"
+                        android:fontFamily="sans-serif"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -242,10 +240,13 @@
                     android:layout_weight="1"
                     android:fontFamily="sans-serif"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:layout_gravity="center_vertical"
                     android:paddingLeft="8dp"
-                    android:alpha="0.87" />
+                    android:alpha="0.87"
+                    android:autoLink="web"
+                    android:textColorLink="@color/black"
+                    android:textColorHighlight="?attr/colorPrimaryDark" />
             </LinearLayout>
 
             <com.google.android.gms.maps.MapView

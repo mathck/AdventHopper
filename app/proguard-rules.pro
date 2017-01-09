@@ -66,7 +66,7 @@
 }
 
 # Some models used by gson are inner classes inside the retrofit service
--keepclassmembers class at.gren.tuwien.weihnachtsmarkt.data.remote.RibotsService$** {
+-keepclassmembers class at.gren.tuwien.weihnachtsmarkt.data.remote.GovernmentDataService** {
     !static !private <fields>;
 }
 

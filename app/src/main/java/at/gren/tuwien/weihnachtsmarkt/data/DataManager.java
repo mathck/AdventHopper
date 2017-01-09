@@ -72,7 +72,6 @@ public class DataManager {
                     Double averageRating = calculateAverageRating(christmasMarketData);
                     ratings.put(christmasMarketId, averageRating);
                 }
-                Timber.i("Ratings: " + ratings.toString());
                 DatabaseHelper.updateRatings(ratings);
             }
 

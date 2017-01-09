@@ -92,7 +92,6 @@ public class DatabaseHelper {
             String query = "UPDATE " + Db.Weihnachtsmarkt.TABLE_NAME + " SET averageRating = " + ratings.get(key) +
                     " WHERE object_id = 'ADVENTMARKTOGD." + key + "'";
             mDb.execute(query);
-            Timber.i(query);
         }
     }
 }

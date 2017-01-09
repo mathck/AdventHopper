@@ -72,7 +72,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         else {
             holder.navigationLayout.setVisibility(View.INVISIBLE);
         }
-        Timber.i("Rating for " + markt.properties().BEZEICHNUNG() + ": " + markt.properties().AVERAGERATING());
         holder.ratingBar.setNumStars(markt.properties().AVERAGERATING().intValue()); //TODO Change Function to accept Double (half stars)
 
         holder.shareIcon.setOnClickListener(new ShareMarktOnClick(markt, holder));

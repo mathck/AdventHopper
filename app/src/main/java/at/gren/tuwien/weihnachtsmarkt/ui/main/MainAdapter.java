@@ -72,7 +72,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         else {
             holder.navigationLayout.setVisibility(View.INVISIBLE);
         }
-        holder.ratingBar.setNumStars(markt.properties().AVERAGERATING().intValue()); //TODO Change Function to accept Double (half stars)
+        holder.ratingBar.setRating(Float.parseFloat(Double.toString(markt.properties().AVERAGERATING())));
 
         holder.shareIcon.setOnClickListener(new ShareMarktOnClick(markt, holder));
         holder.marketImage.setOnClickListener(new ViewMarktOnClick(markt, holder));
@@ -149,7 +149,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         @Override
         public void onClick(View v) {
             Intent viewIntent = new Intent(mContext, DetailedActivity.class);
-            viewIntent.putExtra("key",mMarkt.id());
+            viewIntent.putExtra("key",mMarkt.properties().OBJECTID());
             mHolder.itemView.getContext().startActivity(viewIntent);
         }
     }

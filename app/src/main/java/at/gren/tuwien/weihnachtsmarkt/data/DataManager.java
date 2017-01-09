@@ -1,7 +1,6 @@
 package at.gren.tuwien.weihnachtsmarkt.data;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +21,6 @@ import at.gren.tuwien.weihnachtsmarkt.data.remote.FirebaseService;
 import at.gren.tuwien.weihnachtsmarkt.data.remote.GovernmentDataService;
 import rx.Observable;
 import rx.functions.Func1;
-import timber.log.Timber;
 
 import static android.content.ContentValues.TAG;
 
@@ -61,7 +59,7 @@ public class DataManager {
         return mDatabaseHelper.getMärkte().distinct();
     }
 
-    public void syncRatings(){
+    public void syncRatings() {
         DatabaseReference dbRef = mFirebaseService.getFirebaseReference();
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -104,5 +102,9 @@ public class DataManager {
         if ((rating <= 5) && (rating > 0)) {
             dbRef.child(weihnachtsmarktId).child("deviceIdX").setValue(rating); // TODO deviceId
         }
+    }
+
+    public Observable<Weihnachtsmarkt> getMarkt(String key) {
+        return mDatabaseHelper.getMarkt(key);
     }
 }

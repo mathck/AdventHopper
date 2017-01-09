@@ -29,6 +29,7 @@ import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolder> {
 
@@ -71,8 +72,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         else {
             holder.navigationLayout.setVisibility(View.INVISIBLE);
         }
-
-        holder.ratingBar.setNumStars(markt.getAverageRating());
+        Timber.i("Rating for " + markt.properties().BEZEICHNUNG() + ": " + markt.properties().AVERAGERATING());
+        holder.ratingBar.setNumStars(markt.properties().AVERAGERATING().intValue()); //TODO Change Function to accept Double (half stars)
 
         holder.shareIcon.setOnClickListener(new ShareMarktOnClick(markt, holder));
         holder.marketImage.setOnClickListener(new ViewMarktOnClick(markt, holder));

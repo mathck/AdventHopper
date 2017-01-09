@@ -89,20 +89,16 @@ public class DatabaseHelper {
 
     public static void updateRatings(HashMap<String, Double> ratings) {
         for (String key : ratings.keySet()) {
+            String query = "UPDATE " + Db.Weihnachtsmarkt.TABLE_NAME + " SET averageRating = " + ratings.get(key) +
+                    " WHERE object_id = 'ADVENTMARKTOGD." + key + "'";
             Observable<SqlBrite.Query> updatedDb = mDb.createQuery(Db.Weihnachtsmarkt.TABLE_NAME,
-                "UPDATE " + Db.Weihnachtsmarkt.TABLE_NAME + " SET averageRating = " + ratings.get(key) +
-                " WHERE object_id = " + key);
-            Timber.i("UPDATE " + Db.Weihnachtsmarkt.TABLE_NAME + " SET averageRating = " + ratings.get(key) +
-                    " WHERE object_id = " + key);
+            query);
+            Timber.i(query);
             updatedDb.subscribe(new Action1<SqlBrite.Query>() {
                 @Override public void call(SqlBrite.Query query) {
                     Cursor cursor = query.run();
                 }
             });
-            Observable<SqlBrite.Query> getRatingsFromDB = mDb.createQuery(Db.Weihnachtsmarkt.TABLE_NAME,
-                    "SELECT object_id, averageRating FROM " + Db.Weihnachtsmarkt.TABLE_NAME);
-            Timber.i("UPDATE " + Db.Weihnachtsmarkt.TABLE_NAME + " SET averageRating = " + ratings.get(key) +
-                    " WHERE object_id = " + key);
         }
     }
 }

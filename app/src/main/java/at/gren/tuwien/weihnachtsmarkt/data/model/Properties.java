@@ -16,9 +16,10 @@ public abstract class Properties implements Parcelable {
     public abstract String OEFFNUNGSZEIT();
     public abstract String WEBLINK1();
     public abstract int SILVESTERMARKT();
+    public abstract Double AVERAGERATING();
 
-    public static Properties create(String OBJECTID, String BEZEICHNUNG, String ADRESSE, String DATUM, String OEFFNUNGSZEIT, String WEBLINK1, int SILVESTERMARKT) {
-        return new AutoValue_Properties(OBJECTID, BEZEICHNUNG, ADRESSE, DATUM, OEFFNUNGSZEIT, WEBLINK1, SILVESTERMARKT);
+    public static Properties create(String OBJECTID, String BEZEICHNUNG, String ADRESSE, String DATUM, String OEFFNUNGSZEIT, String WEBLINK1, int SILVESTERMARKT, Double AVERAGERATING) {
+        return new AutoValue_Properties(OBJECTID, BEZEICHNUNG, ADRESSE, DATUM, OEFFNUNGSZEIT, WEBLINK1, SILVESTERMARKT, AVERAGERATING);
     }
 
     public static TypeAdapter<Properties> typeAdapter(Gson gson) {
@@ -38,6 +39,7 @@ public abstract class Properties implements Parcelable {
         public abstract Builder setOEFFNUNGSZEIT(String OEFFNUNGSZEIT);
         public abstract Builder setWEBLINK1(String WEBLINK1);
         public abstract Builder setSILVESTERMARKT(int SILVESTERMARKT);
+        public abstract Builder setAVERAGERATING(Double AVERAGERATING);
         public abstract Properties build();
     }
 }

@@ -67,6 +67,7 @@ public class Db {
                 add(Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LONGITUDE))));
                 add(Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LATITUDE))));
             }};
+            Double averageRating = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_AVERAGE_RATING));
 
             Point geometry = Point.create("POINT", coordinates);
 
@@ -78,6 +79,7 @@ public class Db {
                     .setOEFFNUNGSZEIT(oeffnungszeit)
                     .setWEBLINK1(weblink1)
                     .setSILVESTERMARKT(Integer.parseInt(silvestermarkt))
+                    .setAVERAGERATING(averageRating)
                     .build();
 
             return at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt.builder()

@@ -9,6 +9,7 @@ import android.os.IBinder;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -27,6 +28,7 @@ public class SyncService extends Service {
 
     @Inject DataManager mDataManager;
     private Subscription mSubscription;
+    private Subscription mFirebaseSubscription;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, SyncService.class);
@@ -77,7 +79,26 @@ public class SyncService extends Service {
                 });
 
         // TODO sync firebase ratings
-        mDataManager.getRatings();
+        mFirebaseSubscription = mDataManager.getRatings()
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<HashMap<String, Integer>>() {
+                    @Override
+                    public void onCompleted() {
+                        EventBus.getDefault().post(new SyncCompletedEvent());
+                        stopSelf(startId);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        EventBus.getDefault().post(new SyncCompletedEvent());
+                        stopSelf(startId);
+                    }
+
+                    @Override
+                    public void onNext(Weihnachtsmarkt markt) {
+                    }
+                });
+
         // start Firebase Service
         // onSuccess -> mDataManager.updateRatings(); //TODO Currently called directly in Firebase Service, should be called here
 

@@ -24,10 +24,10 @@ public class DataManager {
     private final PreferencesHelper mPreferencesHelper;
 
     @Inject
-    public DataManager(GovernmentDataService governmentDataService, FirebaseService mFirebaseService, PreferencesHelper preferencesHelper,
+    public DataManager(GovernmentDataService governmentDataService, FirebaseService FirebaseService, PreferencesHelper preferencesHelper,
                        DatabaseHelper databaseHelper) {
         mGovernmentDataService = governmentDataService;
-        this.mFirebaseService = mFirebaseService;
+        mFirebaseService = FirebaseService;
         mPreferencesHelper = preferencesHelper;
         mDatabaseHelper = databaseHelper;
     }

@@ -28,8 +28,13 @@ public class FirebaseService {
         mContext = context;
     }
 
-    public void getAverageRatings() {
+    public DatabaseReference getFirebaseReference(){
         DatabaseReference dbRef = mDatabase.getReference("weihnachtsmarkt");
+        return dbRef;
+    }
+
+    public void getAverageRatings() {
+        DatabaseReference dbRef = getFirebaseReference();
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -39,7 +44,7 @@ public class FirebaseService {
                     int averageRating = calculateAverageRating(christmasMarketData);
                     ratings.put(christmasMarketId, averageRating);
                 }
-                //mDataManager.updateRatings(ratings);
+
                 // TODO this should be called in the data manager directly. How to pass the result?
                 // Vorschlag:
                 // FirebaseService die dbReferenz exposen lassen

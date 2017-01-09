@@ -2,19 +2,17 @@ package at.gren.tuwien.weihnachtsmarkt.data;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
+import at.gren.tuwien.weihnachtsmarkt.data.local.DatabaseHelper;
+import at.gren.tuwien.weihnachtsmarkt.data.local.PreferencesHelper;
 import at.gren.tuwien.weihnachtsmarkt.data.model.FeatureCollection;
-import at.gren.tuwien.weihnachtsmarkt.data.remote.FirebaseService;
+import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.data.remote.GovernmentDataService;
 import rx.Observable;
 import rx.functions.Func1;
-import at.gren.tuwien.weihnachtsmarkt.data.local.DatabaseHelper;
-import at.gren.tuwien.weihnachtsmarkt.data.local.PreferencesHelper;
 
 @Singleton
 public class DataManager {
@@ -22,15 +20,13 @@ public class DataManager {
     private final GovernmentDataService mGovernmentDataService;
     private final DatabaseHelper mDatabaseHelper;
     private final PreferencesHelper mPreferencesHelper;
-    private final FirebaseService mFirebaseService;
 
     @Inject
     public DataManager(GovernmentDataService governmentDataService, PreferencesHelper preferencesHelper,
-                       DatabaseHelper databaseHelper, FirebaseService firebaseService) {
+                       DatabaseHelper databaseHelper) {
         mGovernmentDataService = governmentDataService;
         mPreferencesHelper = preferencesHelper;
         mDatabaseHelper = databaseHelper;
-        mFirebaseService = firebaseService;
     }
 
     public PreferencesHelper getPreferencesHelper() {
@@ -52,7 +48,7 @@ public class DataManager {
     }
 
     public void getRatings(){
-        mFirebaseService.getAverageRatings();
+        //mFirebaseService.getAverageRatings();
     }
 
     public void updateRatings(HashMap<String, Integer> ratings) {

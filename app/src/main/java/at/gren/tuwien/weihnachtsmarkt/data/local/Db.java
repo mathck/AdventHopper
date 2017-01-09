@@ -37,7 +37,7 @@ public class Db {
                         COLUMN_SILVESTERMARKT       + " INTEGER, " +
                         COLUMN_LATITUDE             + " TEXT, " +
                         COLUMN_LONGITUDE            + " TEXT," +
-                        COLUMN_AVERAGE_RATING         + " INTEGER" +
+                        COLUMN_AVERAGE_RATING         + " REAL " +
                         " ); ";
 
         public static ContentValues toContentValues(at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt profile) {

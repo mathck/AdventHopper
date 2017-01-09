@@ -1,5 +1,13 @@
 package at.gren.tuwien.weihnachtsmarkt.data;
 
+import android.util.Log;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,6 +22,9 @@ import at.gren.tuwien.weihnachtsmarkt.data.remote.FirebaseService;
 import at.gren.tuwien.weihnachtsmarkt.data.remote.GovernmentDataService;
 import rx.Observable;
 import rx.functions.Func1;
+import timber.log.Timber;
+
+import static android.content.ContentValues.TAG;
 
 @Singleton
 public class DataManager {
@@ -50,11 +61,43 @@ public class DataManager {
         return mDatabaseHelper.getMärkte().distinct();
     }
 
-    public void getRatings(){
-        //mFirebaseService.getAverageRatings();
+    public void syncRatings(){
+        DatabaseReference dbRef = mFirebaseService.getFirebaseReference();
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                HashMap<String, Double> ratings = new HashMap();
+                for (DataSnapshot christmasMarketData : dataSnapshot.getChildren()) {
+                    String christmasMarketId = christmasMarketData.getKey().replace(".", "");
+                    Double averageRating = calculateAverageRating(christmasMarketData);
+                    ratings.put(christmasMarketId, averageRating);
+                }
+                Timber.i("Ratings: " + ratings.toString());
+                DatabaseHelper.updateRatings(ratings);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
     }
 
-    public void updateRatings(HashMap<String, Integer> ratings) {
-        mDatabaseHelper.updateRatings(ratings);
+    private Double calculateAverageRating (DataSnapshot dataSnapshot) {
+        int rating = 0;
+        int ratingSum = 0;
+        int numberOfRatings = 0;
+
+        for (DataSnapshot ratingData : dataSnapshot.getChildren()) {
+            rating = ((Long)(ratingData.getValue())).intValue();
+
+            if ((rating <= 5) && (rating > 0)) {
+                ratingSum += rating;
+                numberOfRatings++;
+            }
+        }
+
+        Double averageRating = Double.valueOf(ratingSum / numberOfRatings);
+        return Math.round( averageRating * 2.0 ) / 2.0 ; // round to next half
     }
 }

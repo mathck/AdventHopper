@@ -78,29 +78,7 @@ public class SyncService extends Service {
                     }
                 });
 
-        // TODO sync firebase ratings
-        mFirebaseSubscription = mDataManager.getRatings()
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<HashMap<String, Integer>>() {
-                    @Override
-                    public void onCompleted() {
-                        EventBus.getDefault().post(new SyncCompletedEvent());
-                        stopSelf(startId);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        EventBus.getDefault().post(new SyncCompletedEvent());
-                        stopSelf(startId);
-                    }
-
-                    @Override
-                    public void onNext(Weihnachtsmarkt markt) {
-                    }
-                });
-
-        // start Firebase Service
-        // onSuccess -> mDataManager.updateRatings(); //TODO Currently called directly in Firebase Service, should be called here
+        mDataManager.syncRatings();
 
         return START_STICKY;
     }

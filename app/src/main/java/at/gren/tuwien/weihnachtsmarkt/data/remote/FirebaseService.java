@@ -38,10 +38,10 @@ public class FirebaseService {
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                HashMap<String, Integer> ratings = new HashMap();
+                HashMap<String, Double> ratings = new HashMap();
                 for (DataSnapshot christmasMarketData : dataSnapshot.getChildren()) {
                     String christmasMarketId = christmasMarketData.getKey().replace(".", "");
-                    int averageRating = calculateAverageRating(christmasMarketData);
+                    Double averageRating = calculateAverageRating(christmasMarketData);
                     ratings.put(christmasMarketId, averageRating);
                 }
 
@@ -67,7 +67,7 @@ public class FirebaseService {
         ratingDbReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                int averageRating = calculateAverageRating(dataSnapshot);
+                Double averageRating = calculateAverageRating(dataSnapshot);
             }
 
             @Override
@@ -78,7 +78,7 @@ public class FirebaseService {
         });
     }
 
-    private int calculateAverageRating (DataSnapshot dataSnapshot) {
+    private Double calculateAverageRating (DataSnapshot dataSnapshot) {
         int rating = 0;
         int ratingSum = 0;
         int numberOfRatings = 0;
@@ -97,6 +97,7 @@ public class FirebaseService {
             }
         }
 
-        return Math.round(ratingSum / numberOfRatings);
+        Double averageRating = Double.valueOf(ratingSum / numberOfRatings);
+        return Math.round( averageRating * 2 ) / 2.0 ; // round to next half
     }
 }

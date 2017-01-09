@@ -21,11 +21,13 @@ import rx.Subscriber;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 @Singleton
 public class DatabaseHelper {
 
-    private final BriteDatabase mDb;
+    private static BriteDatabase mDb=null;
+
 
     @Inject
     public DatabaseHelper(DbOpenHelper dbOpenHelper) {
@@ -85,16 +87,22 @@ public class DatabaseHelper {
                 });
     }
 
-    public void updateRatings(HashMap<String, Integer> ratings) {
+    public static void updateRatings(HashMap<String, Double> ratings) {
         for (String key : ratings.keySet()) {
             Observable<SqlBrite.Query> updatedDb = mDb.createQuery(Db.Weihnachtsmarkt.TABLE_NAME,
                 "UPDATE " + Db.Weihnachtsmarkt.TABLE_NAME + " SET averageRating = " + ratings.get(key) +
                 " WHERE object_id = " + key);
+            Timber.i("UPDATE " + Db.Weihnachtsmarkt.TABLE_NAME + " SET averageRating = " + ratings.get(key) +
+                    " WHERE object_id = " + key);
             updatedDb.subscribe(new Action1<SqlBrite.Query>() {
                 @Override public void call(SqlBrite.Query query) {
                     Cursor cursor = query.run();
                 }
             });
+            Observable<SqlBrite.Query> getRatingsFromDB = mDb.createQuery(Db.Weihnachtsmarkt.TABLE_NAME,
+                    "SELECT object_id, averageRating FROM " + Db.Weihnachtsmarkt.TABLE_NAME);
+            Timber.i("UPDATE " + Db.Weihnachtsmarkt.TABLE_NAME + " SET averageRating = " + ratings.get(key) +
+                    " WHERE object_id = " + key);
         }
     }
 }

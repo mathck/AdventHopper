@@ -75,6 +75,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
         setTitle(getResources().getString(R.string.title_cardView));
         ButterKnife.bind(this);
 
+        mMainAdapter.setActivity(this);
         mRecyclerView.setAdapter(mMainAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mMainPresenter.attachView(this);

@@ -33,8 +33,11 @@ public class DataManager {
     private final PreferencesHelper mPreferencesHelper;
 
     @Inject
-    public DataManager(GovernmentDataService governmentDataService, FirebaseService FirebaseService, PreferencesHelper preferencesHelper,
+    public DataManager(GovernmentDataService governmentDataService,
+                       FirebaseService FirebaseService,
+                       PreferencesHelper preferencesHelper,
                        DatabaseHelper databaseHelper) {
+
         mGovernmentDataService = governmentDataService;
         mFirebaseService = FirebaseService;
         mPreferencesHelper = preferencesHelper;

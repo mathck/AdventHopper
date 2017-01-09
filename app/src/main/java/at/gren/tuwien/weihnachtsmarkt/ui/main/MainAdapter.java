@@ -3,6 +3,8 @@ package at.gren.tuwien.weihnachtsmarkt.ui.main;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,6 +94,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         notifyDataSetChanged();
     }
 
+    public void setActivity(Context mainActivity) {
+        this.mContext = mainActivity;
+    }
+
     class MarktViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.shareIcon) ImageView shareIcon;
@@ -138,8 +144,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         @Override
         public void onClick(View v) {
             Intent viewIntent = new Intent(mContext, DetailedActivity.class);
-            viewIntent.putExtra("key",mMarkt.properties().OBJECTID());
-            mHolder.itemView.getContext().startActivity(viewIntent);
+            viewIntent.putExtra("key", mMarkt.properties().OBJECTID());
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(((MainActivity) mContext), mHolder.marketImage, "marketImage");
+            mHolder.itemView.getContext().startActivity(viewIntent, options.toBundle());
         }
     }
 

@@ -69,7 +69,7 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView{
         mTitle.setText(markt.properties().BEZEICHNUNG());
         mAddress.setText(markt.properties().ADRESSE());
 
-        mOpeningHours.setText(markt.properties().OEFFNUNGSZEIT().replace(",<br />","\n"));
+        mOpeningHours.setText(markt.properties().OEFFNUNGSZEIT().replace(",<br />", "\n"));
         mWeblink.setText(markt.properties().WEBLINK1());
         mDate.setText(markt.properties().DATUM());
         mRatingBar.setRating(Float.parseFloat(Double.toString(markt.properties().AVERAGERATING())));

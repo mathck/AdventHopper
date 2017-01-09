@@ -83,19 +83,19 @@ public class DataManager {
     }
 
     private Double calculateAverageRating (DataSnapshot dataSnapshot) {
-        int rating = 0;
-        int ratingSum = 0;
-        int numberOfRatings = 0;
+        Double rating = 0.0;
+        Double ratingSum = 0.0;
+        Double numberOfRatings = 0.0;
 
         for (DataSnapshot ratingData : dataSnapshot.getChildren()) {
-            rating = ((Long)(ratingData.getValue())).intValue();
+            rating = ((Long)(ratingData.getValue())).doubleValue();
 
             if ((rating <= 5) && (rating > 0)) {
                 ratingSum += rating;
                 numberOfRatings++;
             }
         }
-        Double averageRating = Double.valueOf(ratingSum / numberOfRatings);
+        Double averageRating = ratingSum / numberOfRatings;
         return (Math.round( averageRating * 2.0 )) / 2.0 ; // round to next half
     }
 

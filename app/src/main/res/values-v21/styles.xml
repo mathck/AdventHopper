@@ -1,10 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/blue_500</item>
         <item name="colorPrimaryDark">@color/blue_700</item>
         <item name="colorAccent">@color/red_500</item>
         <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="NoActionBar" parent="AppTheme">
@@ -15,5 +16,4 @@
     <style name="RatingBar" parent="Theme.AppCompat.Light">
         <item name="colorAccent">@color/yellow_700</item>
     </style>
-
 </resources>

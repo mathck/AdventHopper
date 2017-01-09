@@ -33,8 +33,11 @@ public class DataManager {
     private final PreferencesHelper mPreferencesHelper;
 
     @Inject
-    public DataManager(GovernmentDataService governmentDataService, FirebaseService FirebaseService, PreferencesHelper preferencesHelper,
+    public DataManager(GovernmentDataService governmentDataService,
+                       FirebaseService FirebaseService,
+                       PreferencesHelper preferencesHelper,
                        DatabaseHelper databaseHelper) {
+
         mGovernmentDataService = governmentDataService;
         mFirebaseService = FirebaseService;
         mPreferencesHelper = preferencesHelper;
@@ -97,7 +100,7 @@ public class DataManager {
         return (Math.round( averageRating * 2.0 )) / 2.0 ; // round to next half
     }
 
-    public void setRating (String weihnachtsmarktId, Integer rating){
+    public void setRating (String weihnachtsmarktId, Integer rating) {
         DatabaseReference dbRef = mFirebaseService.getFirebaseReference();
         if ((rating <= 5) && (rating > 0)) {
             dbRef.child(weihnachtsmarktId).child("deviceIdX").setValue(rating); // TODO deviceId

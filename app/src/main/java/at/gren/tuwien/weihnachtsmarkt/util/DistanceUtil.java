@@ -1,5 +1,7 @@
 package at.gren.tuwien.weihnachtsmarkt.util;
 
+import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
+
 public final class DistanceUtil {
 
     public static String getDistance (double lat_a, double lng_a, double lat_b, double lng_b)
@@ -18,5 +20,18 @@ public final class DistanceUtil {
         int meterConversion = (int) Math.round(distance * 1000);
 
         return Integer.toString(meterConversion);
+    }
+
+    public static String getDistanceToMarket(double userLat, double userLong, Weihnachtsmarkt markt) {
+
+        double marktLocationLatitude = markt.geometry().coordinates().get(0);
+        double marktLocationLongitude = markt.geometry().coordinates().get(1);
+
+        String distance = DistanceUtil.getDistance( marktLocationLatitude,
+                                                    marktLocationLongitude,
+                                                    userLat,
+                                                    userLong);
+
+        return distance + " m";
     }
 }

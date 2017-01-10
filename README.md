@@ -3,9 +3,9 @@
 ## Übung 2: Erste Iteration
 
 **Kernfunktionen implementieren**
-- [ ] Adventmarkt Liste
-- [ ] Bewertung über Firebase
-- [ ] Sharen und Navigation
+- [x] Adventmarkt Liste
+- [x] Bewertung über Firebase
+- [x] Sharen und Navigation
 
 **[Projektbericht](https://docs.google.com/document/d/12vxkChPlguH4lb9czO-s94EkusvL7Bw8J4epfCDfBG4/edit?usp=sharing)**
 

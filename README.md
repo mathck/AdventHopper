@@ -1,5 +1,12 @@
 # Advent Hopper
 
+## Übung 3: Zweite Iteration
+- [ ] Einbinden des Navigation Drawers
+- [ ] Einbinden der Kartenansicht (als selbstständige View und als Teil der Detailview)
+- [ ] Ordnen der Märkte nach Distanz und Bewertungen (Option “Beliebteste”)
+- [ ] Abgeben von Bewertungen (Firebase Funktionalität bereits implementiert)
+- [ ] Platzhalter Animation (Schneekugel Icon)
+
 ## Übung 2: Erste Iteration
 
 **Kernfunktionen implementieren**

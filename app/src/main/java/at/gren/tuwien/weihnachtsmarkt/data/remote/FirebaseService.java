@@ -44,12 +44,6 @@ public class FirebaseService {
                     Double averageRating = calculateAverageRating(christmasMarketData);
                     ratings.put(christmasMarketId, averageRating);
                 }
-
-                // TODO this should be called in the data manager directly. How to pass the result?
-                // Vorschlag:
-                // FirebaseService die dbReferenz exposen lassen
-                // und den Listener im SyncService attachen
-                // und dann so http://stackoverflow.com/a/15544647/2880465
             }
 
             @Override

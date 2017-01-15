@@ -1,5 +1,6 @@
 package at.gren.tuwien.weihnachtsmarkt.data;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -19,8 +20,11 @@ import at.gren.tuwien.weihnachtsmarkt.data.model.FeatureCollection;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.data.remote.FirebaseService;
 import at.gren.tuwien.weihnachtsmarkt.data.remote.GovernmentDataService;
+import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
+import at.gren.tuwien.weihnachtsmarkt.util.DeviceIdUtils;
 import rx.Observable;
 import rx.functions.Func1;
+import timber.log.Timber;
 
 import static android.content.ContentValues.TAG;
 
@@ -31,17 +35,20 @@ public class DataManager {
     private final FirebaseService mFirebaseService;
     private final DatabaseHelper mDatabaseHelper;
     private final PreferencesHelper mPreferencesHelper;
+    private final Context mContext;
 
     @Inject
     public DataManager(GovernmentDataService governmentDataService,
                        FirebaseService FirebaseService,
                        PreferencesHelper preferencesHelper,
-                       DatabaseHelper databaseHelper) {
+                       DatabaseHelper databaseHelper,
+                       @ApplicationContext Context context) {
 
         mGovernmentDataService = governmentDataService;
         mFirebaseService = FirebaseService;
         mPreferencesHelper = preferencesHelper;
         mDatabaseHelper = databaseHelper;
+        mContext = context;
     }
 
     public PreferencesHelper getPreferencesHelper() {
@@ -102,8 +109,12 @@ public class DataManager {
 
     public void setRating (String weihnachtsmarktId, Integer rating) {
         DatabaseReference dbRef = mFirebaseService.getFirebaseReference();
+        String deviceId;
+        deviceId=DeviceIdUtils.getDeviceID(mContext, this);
+
+
         if ((rating <= 5) && (rating > 0)) {
-            dbRef.child(weihnachtsmarktId).child("deviceIdX").setValue(rating); // TODO deviceId
+            dbRef.child(weihnachtsmarktId).child(deviceId).setValue(rating);
         }
     }
 

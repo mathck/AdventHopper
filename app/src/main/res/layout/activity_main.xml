@@ -19,4 +19,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <!--
+    TODO this is for GitHub issue #21, wait for Michi to finish #14
+    http://stackoverflow.com/questions/27414173/equivalent-of-listview-setemptyview-in-recyclerview
+    <TextView
+        android:text="Hier gibt es nichts."
+        android:visibility="@{dataset.size() > 0 ? View.GONE : View.VISIBLE}" />
+    -->
+
 </android.support.v4.widget.SwipeRefreshLayout>

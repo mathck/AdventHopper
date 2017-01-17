@@ -79,7 +79,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         else {
             holder.navigationLayout.setVisibility(View.INVISIBLE);
         }
-        holder.ratingBar.setRating(Float.parseFloat(Double.toString(markt.properties().AVERAGERATING())));
+
+        if(markt.properties().AVERAGERATING() != null && markt.properties().AVERAGERATING().doubleValue() != 0)
+            holder.ratingBar.setRating(Float.parseFloat(Double.toString(markt.properties().AVERAGERATING().doubleValue())));
+        else
+            holder.ratingBar.setVisibility(View.INVISIBLE);
 
         holder.shareIcon.setOnClickListener(new ShareMarktOnClick(markt, holder));
         holder.marketImage.setOnClickListener(new ViewMarktOnClick(markt, holder));

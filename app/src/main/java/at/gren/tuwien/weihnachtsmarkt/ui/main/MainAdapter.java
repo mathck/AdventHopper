@@ -32,6 +32,7 @@ import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Optional;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolder> {
 

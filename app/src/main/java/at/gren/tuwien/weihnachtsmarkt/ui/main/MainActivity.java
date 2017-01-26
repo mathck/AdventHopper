@@ -3,14 +3,22 @@ package at.gren.tuwien.weihnachtsmarkt.ui.main;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -32,6 +40,7 @@ import at.gren.tuwien.weihnachtsmarkt.data.SyncService;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.ui.base.BaseActivity;
 import at.gren.tuwien.weihnachtsmarkt.util.DialogFactory;
+import at.gren.tuwien.weihnachtsmarkt.util.NavigationDrawerOnClick;
 import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
 import at.gren.tuwien.weihnachtsmarkt.util.events.SyncCompletedEvent;
 import butterknife.BindView;
@@ -53,6 +62,10 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
 
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
     @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
+    @BindView(R.id.my_toolbar) Toolbar mToolbar;
+    @BindView(R.id.navigationCardView) TextView navigationCardView;
+    @BindView(R.id.navigationMap) TextView navigationMap;
 
     private LocationRequest mLocationRequest;
 
@@ -72,7 +85,6 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
         setContentView(R.layout.activity_main);
-        setTitle(getResources().getString(R.string.title_cardView));
         ButterKnife.bind(this);
 
         mMainAdapter.setActivity(this);
@@ -80,6 +92,23 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mMainPresenter.attachView(this);
         mMainPresenter.loadMärkte();
+
+        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_drawer, this.getTheme());
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,mToolbar,R.string.app_name,R.string.app_name);
+        mDrawerToggle.setDrawerIndicatorEnabled(false);
+        mDrawerToggle.setHomeAsUpIndicator(drawable);
+        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDrawerLayout.isDrawerVisible(GravityCompat.START)) {
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
+        navigationCardView.setOnClickListener(new NavigationDrawerOnClick(navigationCardView,this));
+        navigationMap.setOnClickListener(new NavigationDrawerOnClick(navigationCardView,this));
 
         if (getIntent().getBooleanExtra(EXTRA_TRIGGER_SYNC_FLAG, true)) {
             startService(SyncService.getStartIntent(this));

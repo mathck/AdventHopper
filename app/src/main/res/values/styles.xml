@@ -1,13 +1,13 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="NoActionBar" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/blue_500</item>
         <item name="colorPrimaryDark">@color/blue_700</item>
         <item name="colorAccent">@color/red_500</item>
         <item name="android:textColorPrimary">@color/white</item>
-    </style>
-
-    <style name="NoActionBar" parent="AppTheme">
+        <item name="android:background">@color/white</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

@@ -2,6 +2,7 @@
     <string name="app_name">Advent Hopper</string>
 
     <string name="title_cardView">In deiner Nähe</string>
+    <string name="title_map">Karte</string>
 
     <string name="action_settings">Einstellungen</string>
 
@@ -11,4 +12,6 @@
 
     <string name="empty_list">Alle Adventmärkte haben geschlossen</string>
     <string name="error_loading_list">Es gab ein Problem beim Laden der Adventmärkte</string>
+
+    <string name="image_launcher">Advent Hopper Icon</string>
 </resources>

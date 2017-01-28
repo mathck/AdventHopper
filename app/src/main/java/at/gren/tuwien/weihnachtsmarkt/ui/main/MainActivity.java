@@ -40,6 +40,7 @@ import at.gren.tuwien.weihnachtsmarkt.data.SyncService;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.ui.base.BaseActivity;
 import at.gren.tuwien.weihnachtsmarkt.util.DialogFactory;
+import at.gren.tuwien.weihnachtsmarkt.util.NavigationDrawer;
 import at.gren.tuwien.weihnachtsmarkt.util.NavigationDrawerOnClick;
 import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
 import at.gren.tuwien.weihnachtsmarkt.util.events.SyncCompletedEvent;
@@ -93,22 +94,11 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
         mMainPresenter.attachView(this);
         mMainPresenter.loadMärkte();
 
-        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_drawer, this.getTheme());
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,mToolbar,R.string.app_name,R.string.app_name);
-        mDrawerToggle.setDrawerIndicatorEnabled(false);
-        mDrawerToggle.setHomeAsUpIndicator(drawable);
-        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mDrawerLayout.isDrawerVisible(GravityCompat.START)) {
-                    mDrawerLayout.closeDrawer(GravityCompat.START);
-                } else {
-                    mDrawerLayout.openDrawer(GravityCompat.START);
-                }
-            }
-        });
+        NavigationDrawer navigationDrawer = new NavigationDrawer(this,mDrawerLayout,mToolbar);
+        navigationDrawer.setNavigationDrawer();
+
+        navigationMap.setOnClickListener(new NavigationDrawerOnClick(navigationMap,this));
         navigationCardView.setOnClickListener(new NavigationDrawerOnClick(navigationCardView,this));
-        navigationMap.setOnClickListener(new NavigationDrawerOnClick(navigationCardView,this));
 
         if (getIntent().getBooleanExtra(EXTRA_TRIGGER_SYNC_FLAG, true)) {
             startService(SyncService.getStartIntent(this));

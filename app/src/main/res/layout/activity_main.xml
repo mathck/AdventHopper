@@ -64,20 +64,40 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:background="#111"
-        android:layout_gravity="start"
-        android:clickable="true">
+        android:clickable="true"
+        android:layout_gravity="start">
 
-        <ImageView
-            app:srcCompat="@mipmap/ic_launcher"
-            android:id="@+id/imageView4"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/image_launcher"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="false"
-            android:cropToPadding="false"
-            android:layout_height="100dp"
-            android:layout_width="100dp"
-            android:padding="6dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_blue_900"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                app:srcCompat="@mipmap/ic_launcher"
+                android:id="@+id/imageView4"
+                android:contentDescription="@string/image_launcher"
+                android:scaleType="fitStart"
+                android:layout_height="100dp"
+                android:layout_width="wrap_content"
+                android:padding="6dp"
+                android:baselineAlignBottom="false"
+                android:fadeScrollbars="false"
+                android:adjustViewBounds="true"
+                android:layout_weight="0.08" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/white"
+                android:text="@string/app_name"
+                android:textSize="18sp"
+                android:paddingRight="6dp" />
+        </LinearLayout>
 
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/navigationCardView"
@@ -88,11 +108,18 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:textColor="#fff"
-            android:background="?android:attr/activatedBackgroundIndicator"
+            android:background="@color/grey_900"
             android:minHeight="?android:attr/listPreferredItemHeightSmall"
             android:text="@string/title_cardView"
             android:tag="1"
-            android:clickable="true" />
+            android:clickable="true"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp" />
+
+        <View
+            android:layout_height="1dp"
+            android:background="@drawable/gradient"
+            android:layout_width="match_parent" />
 
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/navigationMap"
@@ -103,13 +130,18 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:textColor="#fff"
-            android:background="?android:attr/activatedBackgroundIndicator"
+            android:background="#111"
             android:minHeight="?android:attr/listPreferredItemHeightSmall"
             android:text="@string/title_map"
             android:tag="2"
-            android:clickable="true" />
+            android:clickable="true"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp" />
 
-
+        <View
+            android:layout_height="1dp"
+            android:background="@drawable/gradient"
+            android:layout_width="match_parent" />
 
     </LinearLayout>
 

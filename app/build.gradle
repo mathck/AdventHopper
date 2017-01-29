@@ -77,10 +77,6 @@ android {
     lintOptions {
         warning 'InvalidPackage'
     }
-
-    dataBinding {
-        enabled = true
-    }
 }
 
 play {

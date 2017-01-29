@@ -152,6 +152,10 @@ dependencies {
     testAnnotationProcessor daggerCompiler
     androidTestAnnotationProcessor daggerCompiler
 
+    compile('com.mikepenz:materialdrawer:5.8.1@aar') {
+        transitive = true
+    }
+
     // Instrumentation test dependencies
     androidTestCompile jUnit
     androidTestCompile mockito

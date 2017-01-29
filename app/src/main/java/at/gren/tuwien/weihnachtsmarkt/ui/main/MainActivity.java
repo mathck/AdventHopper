@@ -13,6 +13,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,16 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -35,8 +47,6 @@ import at.gren.tuwien.weihnachtsmarkt.data.SyncService;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.ui.base.BaseActivity;
 import at.gren.tuwien.weihnachtsmarkt.util.DialogFactory;
-import at.gren.tuwien.weihnachtsmarkt.util.NavigationDrawer;
-import at.gren.tuwien.weihnachtsmarkt.util.NavigationDrawerOnClick;
 import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
 import at.gren.tuwien.weihnachtsmarkt.util.events.SyncCompletedEvent;
 import butterknife.BindView;
@@ -58,10 +68,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
 
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
     @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
-    @BindView(R.id.my_toolbar) Toolbar mToolbar;
-    @BindView(R.id.navigationCardView) TextView navigationCardView;
-    @BindView(R.id.navigationMap) TextView navigationMap;
+    @BindView(R.id.toolbar) Toolbar mToolbar;
 
     private LocationRequest mLocationRequest;
 
@@ -81,19 +88,16 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
         setContentView(R.layout.activity_main);
+        setTitle(R.string.title_cardView);
         ButterKnife.bind(this);
+
+        setSupportActionBar(mToolbar);
 
         mMainAdapter.setActivity(this);
         mRecyclerView.setAdapter(mMainAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mMainPresenter.attachView(this);
         mMainPresenter.loadMärkte();
-
-        NavigationDrawer navigationDrawer = new NavigationDrawer(this,mDrawerLayout,mToolbar);
-        navigationDrawer.setNavigationDrawer();
-
-        navigationMap.setOnClickListener(new NavigationDrawerOnClick(navigationMap,this));
-        navigationCardView.setOnClickListener(new NavigationDrawerOnClick(navigationCardView,this));
 
         if (getIntent().getBooleanExtra(EXTRA_TRIGGER_SYNC_FLAG, true)) {
             startService(SyncService.getStartIntent(this));
@@ -115,6 +119,40 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
         mLocationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
         mLocationRequest.setInterval(UPDATE_INTERVAL);
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+
+        Drawer result = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(mToolbar)
+                .withHeader(R.layout.drawer_header)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withIdentifier(1).withName(R.string.title_cardView).withIcon(R.drawable.ic_place_black_24dp),
+                        new PrimaryDrawerItem().withIdentifier(2).withName(R.string.title_map).withIcon(R.drawable.ic_map_black_24dp)
+                )
+                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
+
+                    Intent intent;
+
+                    switch (position) {
+
+                        case 1:
+                            intent = new Intent(context, MainActivity.class);
+                            break;
+                        case 2:
+                            intent = new Intent(context, MainActivity.class);
+                            //TODO: Navigation to MapView
+                            break;
+                        default:
+                            intent = new Intent(context, MainActivity.class);
+                            break;
+                    }
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    context.startActivity(intent);
+
+                    return true;
+                })
+                .build();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
     }
 
     @Override
@@ -135,7 +173,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
     public void syncCompleted(SyncCompletedEvent event) {
         MainActivity.this.runOnUiThread(() -> {
             mSwipeRefreshLayout.setRefreshing(false);
-            Snackbar.make(mSwipeRefreshLayout, "Lade Weihnachtsm\u00E4rkte...", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(mSwipeRefreshLayout, "Lade Weihnachtsmärkte...", Snackbar.LENGTH_LONG).show();
         });
     }
 

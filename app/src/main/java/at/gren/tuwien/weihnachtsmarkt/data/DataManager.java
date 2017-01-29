@@ -73,7 +73,7 @@ public class DataManager {
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                HashMap<String, Double> ratings = new HashMap();
+                HashMap<String, Double> ratings = new HashMap<>();
                 for (DataSnapshot christmasMarketData : dataSnapshot.getChildren()) {
                     String christmasMarketId = christmasMarketData.getKey().replace(".", "");
                     Double averageRating = calculateAverageRating(christmasMarketData);

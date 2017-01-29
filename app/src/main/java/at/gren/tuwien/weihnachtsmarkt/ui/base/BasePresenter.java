@@ -19,15 +19,15 @@ public class BasePresenter<T extends MvpView> implements Presenter<T> {
         mMvpView = null;
     }
 
-    public boolean isViewAttached() {
+    private boolean isViewAttached() {
         return mMvpView != null;
     }
 
-    public T getMvpView() {
+    protected T getMvpView() {
         return mMvpView;
     }
 
-    public void checkViewAttached() {
+    protected void checkViewAttached() {
         if (!isViewAttached()) throw new MvpViewNotAttachedException();
     }
 

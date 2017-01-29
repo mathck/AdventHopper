@@ -13,10 +13,10 @@ import at.gren.tuwien.weihnachtsmarkt.R;
 
 public class NavigationDrawer {
 
-    private Activity mActivity;
-    private DrawerLayout mDrawerLayout;
-    private Toolbar mToolbar;
-    private Drawable mDrawable;
+    private final Activity mActivity;
+    private final DrawerLayout mDrawerLayout;
+    private final Toolbar mToolbar;
+    private final Drawable mDrawable;
 
     public NavigationDrawer(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar){
         this.mActivity = activity;
@@ -29,15 +29,12 @@ public class NavigationDrawer {
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(mActivity,mDrawerLayout,mToolbar,R.string.app_name,R.string.app_name);
         mDrawerToggle.setDrawerIndicatorEnabled(false);
         mDrawerToggle.setHomeAsUpIndicator(mDrawable);
-        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mDrawerToggle.setToolbarNavigationClickListener((View v) -> {
                 if (mDrawerLayout.isDrawerVisible(GravityCompat.START)) {
                     mDrawerLayout.closeDrawer(GravityCompat.START);
                 } else {
                     mDrawerLayout.openDrawer(GravityCompat.START);
                 }
-            }
         });
     }
 }

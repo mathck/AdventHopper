@@ -35,21 +35,19 @@ import butterknife.ButterKnife;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolder> {
 
     private List<Weihnachtsmarkt> mWeihnachtsmärkte;
-    private final DataManager mDataManager;
     private Context mContext = null;
     private boolean mHasLocation = false;
-    private double mUserLocationLatitude;
-    private double mUserLocationLongitude;
+    private final double mUserLocationLatitude;
+    private final double mUserLocationLongitude;
 
     @Inject
     public MainAdapter(DataManager dataManager, @ApplicationContext Context context) {
         mWeihnachtsmärkte = new ArrayList<>();
-        this.mDataManager = dataManager;
         this.mContext = context;
-        this.mHasLocation = mDataManager.getPreferencesHelper().hasLocation();
+        this.mHasLocation = dataManager.getPreferencesHelper().hasLocation();
 
-        this.mUserLocationLatitude = mDataManager.getPreferencesHelper().getLocationLatitude();
-        this.mUserLocationLongitude = mDataManager.getPreferencesHelper().getLocationLongitude();
+        this.mUserLocationLatitude = dataManager.getPreferencesHelper().getLocationLatitude();
+        this.mUserLocationLongitude = dataManager.getPreferencesHelper().getLocationLongitude();
 
         EventBus.getDefault().register(this);
     }
@@ -87,8 +85,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
             holder.navigationLayout.setVisibility(View.INVISIBLE);
         }
 
-        if(markt.properties().AVERAGERATING() != null && markt.properties().AVERAGERATING().doubleValue() != 0)
-            holder.ratingBar.setRating(Float.parseFloat(Double.toString(markt.properties().AVERAGERATING().doubleValue())));
+        if(markt.properties().AVERAGERATING() != null && markt.properties().AVERAGERATING() != 0)
+            holder.ratingBar.setRating(Float.parseFloat(Double.toString(markt.properties().AVERAGERATING())));
         else
             holder.ratingBar.setVisibility(View.INVISIBLE);
 

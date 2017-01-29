@@ -100,12 +100,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
         }
 
         final Context context = this;
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                startService(SyncService.getStartIntent(context));
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> startService(SyncService.getStartIntent(context)));
 
         // Create an instance of GoogleAPIClient.
         if (mGoogleApiClient == null) {
@@ -138,11 +133,9 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
 
     @Subscribe
     public void syncCompleted(SyncCompletedEvent event) {
-        MainActivity.this.runOnUiThread(new Runnable() {
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(false);
-                Snackbar.make(mSwipeRefreshLayout, "Weihnachtsmärkte wurden neu geladen", Snackbar.LENGTH_LONG).show();
-            }
+        MainActivity.this.runOnUiThread(() -> {
+            mSwipeRefreshLayout.setRefreshing(false);
+            Snackbar.make(mSwipeRefreshLayout, "Lade Weihnachtsm\u00E4rkte...", Snackbar.LENGTH_LONG).show();
         });
     }
 

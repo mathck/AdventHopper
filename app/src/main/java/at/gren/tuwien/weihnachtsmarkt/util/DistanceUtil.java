@@ -4,7 +4,7 @@ import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 
 public final class DistanceUtil {
 
-    public static String getDistance (double lat_a, double lng_a, double lat_b, double lng_b)
+    private static String getDistance (double lat_a, double lng_a, double lat_b, double lng_b)
     {
         double earthRadius = 6371;
         double latDiff = Math.toRadians(lat_b - lat_a);

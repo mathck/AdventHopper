@@ -9,8 +9,8 @@ import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
 
 public class FirebaseService {
 
-    private FirebaseDatabase mDatabase;
-    private Context mContext;
+    private final FirebaseDatabase mDatabase;
+    private final Context mContext;
 
     @Inject
     public FirebaseService(@ApplicationContext Context context) {
@@ -19,8 +19,7 @@ public class FirebaseService {
     }
 
     public DatabaseReference getFirebaseReference(){
-        DatabaseReference dbRef = mDatabase.getReference("weihnachtsmarkt");
-        return dbRef;
+        return mDatabase.getReference("weihnachtsmarkt");
     }
     /*
     public void getAverageRatings() {

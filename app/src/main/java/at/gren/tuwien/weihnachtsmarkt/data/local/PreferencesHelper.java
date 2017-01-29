@@ -12,14 +12,12 @@ import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
 @Singleton
 public class PreferencesHelper {
 
-    public static final String PREF_FILE_NAME = "android_boilerplate_pref_file";
+    private static final String PREF_FILE_NAME = "android_boilerplate_pref_file";
 
     private final SharedPreferences mPref;
-    private final Context mContext;
 
     @Inject
     public PreferencesHelper(@ApplicationContext Context context) {
-        mContext = context;
         mPref = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
     }
 

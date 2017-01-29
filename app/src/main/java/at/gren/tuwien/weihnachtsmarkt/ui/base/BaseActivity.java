@@ -65,7 +65,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public ActivityComponent activityComponent() {
+    protected ActivityComponent activityComponent() {
         return mActivityComponent;
     }
 }

@@ -10,7 +10,7 @@ import timber.log.Timber;
 
 public class BoilerplateApplication extends MultiDexApplication {
 
-    ApplicationComponent mApplicationComponent;
+    private ApplicationComponent mApplicationComponent;
 
     @Override
     public void onCreate() {

@@ -2,15 +2,11 @@ package at.gren.tuwien.weihnachtsmarkt.util;
 
 import android.content.Context;
 import android.provider.Settings;
-import android.telephony.TelephonyManager;
 
 import java.util.UUID;
 
-import javax.inject.Inject;
 
 import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
-import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
-import timber.log.Timber;
 
 
 public final class DeviceIdUtils {

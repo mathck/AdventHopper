@@ -2,7 +2,6 @@ package at.gren.tuwien.weihnachtsmarkt.ui.detailed;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,7 +23,6 @@ import at.gren.tuwien.weihnachtsmarkt.util.DialogFactory;
 import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class DetailedActivity extends BaseActivity implements DetailedMvpView{
 

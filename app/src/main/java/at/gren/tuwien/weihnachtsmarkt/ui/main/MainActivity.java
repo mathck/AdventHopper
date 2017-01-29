@@ -3,21 +3,16 @@ package at.gren.tuwien.weihnachtsmarkt.ui.main;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -195,7 +190,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
 
     @Override
     public void showAdventmaerkteEmpty() {
-        mMainAdapter.setWeihnachtsmärkte(Collections.<Weihnachtsmarkt>emptyList());
+        mMainAdapter.setWeihnachtsmärkte(Collections.emptyList());
         mMainAdapter.notifyDataSetChanged();
         Toast.makeText(this, R.string.empty_list, Toast.LENGTH_LONG).show();
     }

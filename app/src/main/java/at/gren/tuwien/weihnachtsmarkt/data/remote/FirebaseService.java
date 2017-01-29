@@ -1,21 +1,11 @@
 package at.gren.tuwien.weihnachtsmarkt.data.remote;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
 import javax.inject.Inject;
 
 import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
-
-import static android.content.ContentValues.TAG;
 
 public class FirebaseService {
 
@@ -32,7 +22,7 @@ public class FirebaseService {
         DatabaseReference dbRef = mDatabase.getReference("weihnachtsmarkt");
         return dbRef;
     }
-
+    /*
     public void getAverageRatings() {
         DatabaseReference dbRef = getFirebaseReference();
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -94,4 +84,5 @@ public class FirebaseService {
         Double averageRating = Double.valueOf(ratingSum / numberOfRatings);
         return Math.round( averageRating * 2 ) / 2.0 ; // round to next half
     }
+    */
 }

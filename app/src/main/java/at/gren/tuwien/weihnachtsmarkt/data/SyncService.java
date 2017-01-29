@@ -9,9 +9,6 @@ import android.os.IBinder;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import at.gren.tuwien.weihnachtsmarkt.BoilerplateApplication;

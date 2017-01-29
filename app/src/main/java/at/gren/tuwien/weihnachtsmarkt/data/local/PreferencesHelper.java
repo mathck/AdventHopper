@@ -7,9 +7,7 @@ import android.location.Location;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
 import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
-import at.gren.tuwien.weihnachtsmarkt.util.DeviceIdUtils;
 
 @Singleton
 public class PreferencesHelper {
@@ -36,7 +34,7 @@ public class PreferencesHelper {
     }
 
     public boolean hasDeviceId(){
-        return mPref.getString("deviceId", "null") != "null";
+        return !mPref.getString("deviceId", "null").equals("null");
     }
 
     public String getDeviceId(){

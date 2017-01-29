@@ -3,7 +3,6 @@ package at.gren.tuwien.weihnachtsmarkt.ui.main;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
@@ -32,13 +31,12 @@ import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Optional;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolder> {
 
     private List<Weihnachtsmarkt> mWeihnachtsmärkte;
     private final DataManager mDataManager;
-    private static Context mContext = null;
+    private Context mContext = null;
     private boolean mHasLocation = false;
     private double mUserLocationLatitude;
     private double mUserLocationLongitude;
@@ -106,7 +104,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
             Intent viewIntent = new Intent(mContext, DetailedActivity.class);
             viewIntent.putExtra("key", markt.properties().OBJECTID());
 
-            Pair<View, String> p1 = Pair.create((View) holder.marketImage, "marketImage");
+            Pair<View, String> p1 = Pair.create(holder.marketImage, "marketImage");
             //Pair<View, String> p2 = Pair.create((View) mHolder.marketImage, "marketTitle");
             //Pair<View, String> p3 = Pair.create((View) mHolder.marketImage, "ratingBar");
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((MainActivity) mContext, p1);

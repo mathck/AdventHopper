@@ -24,7 +24,6 @@ import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
 import at.gren.tuwien.weihnachtsmarkt.util.DeviceIdUtils;
 import rx.Observable;
 import rx.functions.Func1;
-import timber.log.Timber;
 
 import static android.content.ContentValues.TAG;
 
@@ -91,7 +90,7 @@ public class DataManager {
     }
 
     private Double calculateAverageRating (DataSnapshot dataSnapshot) {
-        Double rating = 0.0;
+        Double rating;
         Double ratingSum = 0.0;
         Double numberOfRatings = 0.0;
 

@@ -1,9 +1,5 @@
 package at.gren.tuwien.weihnachtsmarkt.util;
 
-/**
- * Created by Michael on 26.01.2017.
- */
-
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;

@@ -1,6 +1,5 @@
 package at.gren.tuwien.weihnachtsmarkt.data.local;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -10,7 +9,6 @@ import com.squareup.sqlbrite.SqlBrite;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -18,10 +16,8 @@ import javax.inject.Singleton;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-import timber.log.Timber;
 
 @Singleton
 public class DatabaseHelper {

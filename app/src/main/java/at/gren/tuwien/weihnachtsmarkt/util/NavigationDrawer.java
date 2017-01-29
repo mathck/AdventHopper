@@ -11,10 +11,6 @@ import android.view.View;
 
 import at.gren.tuwien.weihnachtsmarkt.R;
 
-/**
- * Created by Michael on 26.01.2017.
- */
-
 public class NavigationDrawer {
 
     private Activity mActivity;

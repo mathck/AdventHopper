@@ -86,9 +86,7 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView{
         }
 
         final Context context = this;
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mFloatingActionButton.setOnClickListener((View v) -> {
                 Intent navigationIntent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse("google.navigation:q=" +
                                 markt.geometry().coordinates().get(0) + "," +
@@ -96,7 +94,6 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView{
                                 "&mode=w"));
 
                 context.startActivity(navigationIntent);
-            }
         });
     }
 

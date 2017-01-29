@@ -75,7 +75,15 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
 
         if (mHasLocation) {
             holder.distance.setText(DistanceUtil.getDistanceToMarket(mUserLocationLatitude, mUserLocationLongitude, markt));
-            holder.navigationLayout.setOnClickListener(new NavigateToMarktOnClick(markt, holder));
+            holder.navigationLayout.setOnClickListener((View v) -> {
+                Intent navigationIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("google.navigation:q=" +
+                                markt.geometry().coordinates().get(0) + "," +
+                                markt.geometry().coordinates().get(1) +
+                                "&mode=w"));
+
+                holder.itemView.getContext().startActivity(navigationIntent);
+            });
         }
         else {
             holder.navigationLayout.setVisibility(View.INVISIBLE);
@@ -86,8 +94,25 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         else
             holder.ratingBar.setVisibility(View.INVISIBLE);
 
-        holder.shareIcon.setOnClickListener(new ShareMarktOnClick(markt, holder));
-        holder.marketImage.setOnClickListener(new ViewMarktOnClick(markt, holder));
+        holder.shareIcon.setOnClickListener((View v) -> {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Schau dir diesen tollen Weihnachtsmarkt an " + markt.properties().BEZEICHNUNG());
+            sendIntent.setType("text/plain");
+            holder.itemView.getContext().startActivity(sendIntent);
+        });
+
+        holder.marketImage.setOnClickListener((View v) -> {
+            Intent viewIntent = new Intent(mContext, DetailedActivity.class);
+            viewIntent.putExtra("key", markt.properties().OBJECTID());
+
+            Pair<View, String> p1 = Pair.create((View) holder.marketImage, "marketImage");
+            //Pair<View, String> p2 = Pair.create((View) mHolder.marketImage, "marketTitle");
+            //Pair<View, String> p3 = Pair.create((View) mHolder.marketImage, "ratingBar");
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((MainActivity) mContext, p1);
+
+            holder.itemView.getContext().startActivity(viewIntent, options.toBundle());
+        });
     }
 
     @Override
@@ -116,69 +141,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         public MarktViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-        }
-    }
-
-    private static class ShareMarktOnClick implements View.OnClickListener {
-        private final Weihnachtsmarkt mMarkt;
-        private final MarktViewHolder mHolder;
-
-        public ShareMarktOnClick(Weihnachtsmarkt markt, MarktViewHolder holder) {
-            mMarkt = markt;
-            mHolder = holder;
-        }
-
-        @Override
-        public void onClick(View v) {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "Schau dir diesen tollen Weihnachtsmarkt an " + mMarkt.properties().BEZEICHNUNG());
-            sendIntent.setType("text/plain");
-            mHolder.itemView.getContext().startActivity(sendIntent);
-        }
-    }
-
-    private static class ViewMarktOnClick implements View.OnClickListener {
-        private final Weihnachtsmarkt mMarkt;
-        private final MarktViewHolder mHolder;
-
-        public ViewMarktOnClick(Weihnachtsmarkt markt, MarktViewHolder holder) {
-            mMarkt = markt;
-            mHolder = holder;
-        }
-
-        @Override
-        public void onClick(View v) {
-            Intent viewIntent = new Intent(mContext, DetailedActivity.class);
-            viewIntent.putExtra("key", mMarkt.properties().OBJECTID());
-
-            Pair<View, String> p1 = Pair.create((View) mHolder.marketImage, "marketImage");
-            //Pair<View, String> p2 = Pair.create((View) mHolder.marketImage, "marketTitle");
-            //Pair<View, String> p3 = Pair.create((View) mHolder.marketImage, "ratingBar");
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((MainActivity) mContext, p1);
-
-            mHolder.itemView.getContext().startActivity(viewIntent, options.toBundle());
-        }
-    }
-
-    private static class NavigateToMarktOnClick implements View.OnClickListener {
-        private final Weihnachtsmarkt mMarkt;
-        private final MarktViewHolder mHolder;
-
-        public NavigateToMarktOnClick(Weihnachtsmarkt markt, MarktViewHolder holder) {
-            mMarkt = markt;
-            mHolder = holder;
-        }
-
-        @Override
-        public void onClick(View v) {
-            Intent navigationIntent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("google.navigation:q=" +
-                            mMarkt.geometry().coordinates().get(0) + "," +
-                            mMarkt.geometry().coordinates().get(1) +
-                            "&mode=w"));
-
-            mHolder.itemView.getContext().startActivity(navigationIntent);
         }
     }
 }

@@ -26,7 +26,7 @@ public class NavigationDrawer {
         this.mActivity = activity;
         this.mDrawerLayout = drawerLayout;
         this.mToolbar = toolbar;
-        this.mDrawable = ResourcesCompat.getDrawable(activity.getResources(), R.mipmap.ic_drawer, activity.getTheme());
+        this.mDrawable = ResourcesCompat.getDrawable(activity.getResources(), R.mipmap.ic_launcher, activity.getTheme());
     }
 
     public void setNavigationDrawer(){

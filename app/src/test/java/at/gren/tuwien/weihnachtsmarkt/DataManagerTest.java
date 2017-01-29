@@ -15,7 +15,6 @@ import rx.observers.TestSubscriber;
 import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
 import at.gren.tuwien.weihnachtsmarkt.data.local.DatabaseHelper;
 import at.gren.tuwien.weihnachtsmarkt.data.local.PreferencesHelper;
-import at.gren.tuwien.weihnachtsmarkt.test.common.TestDataFactory;
 
 import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Mockito.never;

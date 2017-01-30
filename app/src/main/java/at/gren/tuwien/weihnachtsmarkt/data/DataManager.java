@@ -134,8 +134,6 @@ public class DataManager {
                 }
                 RatingBar dialogRatingBar = (RatingBar)rankDialog.findViewById(R.id.dialog_ratingbar);
                 dialogRatingBar.setRating(ownRating);
-                syncRatings();
-                syncMärkte();
             }
             @Override
             public void onCancelled(DatabaseError error) {

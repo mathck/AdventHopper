@@ -130,6 +130,9 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
                 Button updateButton = (Button) rankDialog.findViewById(R.id.rank_dialog_button);
                 updateButton.setOnClickListener((View w) -> {
                     mDataManager.setRating(christmasMarktId, Math.round(dialogRatingBar.getRating()));
+                    mDataManager.syncRatings();
+                    mDataManager.syncMärkte();
+                    showAdventmarkt(markt);
                     rankDialog.dismiss();
                 });
                 rankDialog.show();

@@ -16,12 +16,9 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
-import at.gren.tuwien.weihnachtsmarkt.util.RxUtil;
 import at.gren.tuwien.weihnachtsmarkt.util.events.SyncCompletedEvent;
 import rx.Observable;
 import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 @Singleton

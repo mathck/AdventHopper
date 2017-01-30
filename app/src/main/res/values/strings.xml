@@ -4,6 +4,10 @@
     <string name="title_cardView">In deiner Nähe</string>
     <string name="title_bestRated">Beliebte</string>
     <string name="title_map">Karte</string>
+    <string name="others">Sonstiges</string>
+    <string name="settings">Einstellungen</string>
+    <string name="opensource">Open Source</string>
+    <string name="contact">Kontakt</string>
 
     <string name="action_settings">Einstellungen</string>
 

@@ -17,7 +17,7 @@
         android:background="@color/grey_200"
         tools:context=".MainActivity">
 
-        <android.support.v7.widget.RecyclerView
+        <at.gren.tuwien.weihnachtsmarkt.widgets.EmptyRecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -29,13 +29,11 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
-        <!--
-        TODO this is for GitHub issue #21, wait for Michi to finish #14
-        http://stackoverflow.com/questions/27414173/equivalent-of-listview-setemptyview-in-recyclerview
         <TextView
+            android:id="@+id/emptyView"
             android:text="Hier gibt es nichts."
-            android:visibility="@{dataset.size() > 0 ? View.GONE : View.VISIBLE}" />
-        -->
+            android:layout_height="match_parent"
+            android:layout_width="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

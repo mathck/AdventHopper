@@ -3,13 +3,16 @@ package at.gren.tuwien.weihnachtsmarkt.ui.main;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +28,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -51,6 +56,7 @@ import at.gren.tuwien.weihnachtsmarkt.ui.base.BaseActivity;
 import at.gren.tuwien.weihnachtsmarkt.util.DialogFactory;
 import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
 import at.gren.tuwien.weihnachtsmarkt.util.events.SyncCompletedEvent;
+import at.gren.tuwien.weihnachtsmarkt.widgets.EmptyRecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import permissions.dispatcher.NeedsPermission;
@@ -68,7 +74,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
     @Inject MainPresenter mMainPresenter;
     @Inject MainAdapter mMainAdapter;
 
-    @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
+    @BindView(R.id.recycler_view) EmptyRecyclerView mRecyclerView;
     @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.toolbar) Toolbar mToolbar;
 
@@ -98,6 +104,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
         mMainAdapter.setActivity(this);
         mRecyclerView.setAdapter(mMainAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setEmptyView(findViewById(R.id.emptyView));
         mMainPresenter.attachView(this);
         mMainPresenter.loadMärkte();
 
@@ -127,32 +134,58 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
                 .withToolbar(mToolbar)
                 .withHeader(R.layout.drawer_header)
                 .addDrawerItems(
-                    createNavbarItem(R.string.title_cardView, R.drawable.ic_place_black_24dp),
-                    createNavbarItem(R.string.title_bestRated, R.drawable.ic_star_black_24dp),
-                    createNavbarItem(R.string.title_map, R.drawable.ic_map_black_24dp)
+                    createNavbarItem(R.string.title_cardView, new IconicsDrawable(this).icon(GoogleMaterial.Icon.gmd_place)),
+                    createNavbarItem(R.string.title_bestRated, new IconicsDrawable(this).icon(GoogleMaterial.Icon.gmd_star)),
+                    createNavbarItem(R.string.title_map, new IconicsDrawable(this).icon(GoogleMaterial.Icon.gmd_map)),
+                    new DividerDrawerItem(),
+                    new SecondaryDrawerItem().withName(R.string.others),
+                    createNavbarItem(R.string.settings, new IconicsDrawable(this).icon(GoogleMaterial.Icon.gmd_settings)).withEnabled(false).withBadge("bald verfügbar!"),
+                    createNavbarItem(R.string.opensource, new IconicsDrawable(this).icon(GoogleMaterial.Icon.gmd_code)),
+                    createNavbarItem(R.string.contact, new IconicsDrawable(this).icon(GoogleMaterial.Icon.gmd_mail))
                 )
                 .withOnDrawerItemClickListener((view, position, drawerItem) -> {
 
                     Intent intent;
 
-                    switch (position) {
+                    switch ((int) drawerItem.getIdentifier()) {
 
                         case 1:
                             intent = new Intent(context, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            context.startActivity(intent);
                             break;
                         case 2:
                             intent = new Intent(context, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            context.startActivity(intent);
                             break;
                         case 3:
                             intent = new Intent(context, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            context.startActivity(intent);
                             //TODO: Navigation to MapView
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/mathck/AdventHopper"));
+                            startActivity(intent);
+                            break;
+                        case 6:
+                            ShareCompat.IntentBuilder.from(this)
+                                .setType("message/rfc822")
+                                .addEmailTo("mateusz@gren.at")
+                                .setSubject("Weihnachtsmarkt App")
+                                .setChooserTitle("E-Mail versenden mit ...")
+                                .startChooser();
                             break;
                         default:
                             intent = new Intent(context, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            context.startActivity(intent);
+
                             break;
                     }
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    context.startActivity(intent);
 
                     return true;
                 })
@@ -246,6 +279,16 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
                 .withIdentifier(mNavbarItemId++)
                 .withName(stringId)
                 .withIcon(iconId)
+                .withIconTintingEnabled(true)
+                .withIconColor(getResources().getColor(R.color.grey_600))
+                .withSelectedIconColor(getResources().getColor(R.color.blue_500));
+    }
+
+    private PrimaryDrawerItem createNavbarItem(@StringRes int stringId, Drawable drawable) {
+        return new PrimaryDrawerItem()
+                .withIdentifier(mNavbarItemId++)
+                .withName(stringId)
+                .withIcon(drawable)
                 .withIconTintingEnabled(true)
                 .withIconColor(getResources().getColor(R.color.grey_600))
                 .withSelectedIconColor(getResources().getColor(R.color.blue_500));

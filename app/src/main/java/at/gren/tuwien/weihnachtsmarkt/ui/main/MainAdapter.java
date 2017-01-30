@@ -14,6 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -40,6 +45,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
     private final double mUserLocationLatitude;
     private final double mUserLocationLongitude;
 
+    private FirebaseStorage mStorage;
+    private StorageReference mStorageRef;
+
     @Inject
     public MainAdapter(DataManager dataManager, @ApplicationContext Context context) {
         mWeihnachtsmärkte = new ArrayList<>();
@@ -48,6 +56,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
 
         this.mUserLocationLatitude = dataManager.getPreferencesHelper().getLocationLatitude();
         this.mUserLocationLongitude = dataManager.getPreferencesHelper().getLocationLongitude();
+
+        mStorage = FirebaseStorage.getInstance();
+        mStorageRef = mStorage.getReferenceFromUrl("gs://advent-hopper.appspot.com");
 
         EventBus.getDefault().register(this);
     }
@@ -68,6 +79,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         final Weihnachtsmarkt markt = mWeihnachtsmärkte.get(position);
 
         holder.title.setText(markt.properties().BEZEICHNUNG());
+
+        Glide.with(holder.itemView.getContext())
+                .using(new FirebaseImageLoader())
+                .load(mStorageRef.child("images/" + markt.id() + ".jpg"))
+                .placeholder(R.mipmap.snow_backdrop)
+                .error(R.mipmap.snow_backdrop)
+                .crossFade()
+                .into(holder.marketImage);
 
         if (mHasLocation) {
             holder.distance.setText(DistanceUtil.getDistanceToMarket(mUserLocationLatitude, mUserLocationLongitude, markt));

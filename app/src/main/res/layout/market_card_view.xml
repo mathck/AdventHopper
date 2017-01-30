@@ -33,7 +33,7 @@
                 android:contextClickable="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                card_view:srcCompat="@mipmap/belvedere"
+                card_view:srcCompat="@mipmap/snow_backdrop"
                 android:cropToPadding="false"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter" />

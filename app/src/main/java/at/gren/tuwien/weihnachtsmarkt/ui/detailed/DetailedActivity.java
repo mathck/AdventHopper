@@ -13,11 +13,13 @@ import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import javax.inject.Inject;
@@ -46,8 +48,6 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
     @BindView(R.id.rating) TextView mRating;
     @BindView(R.id.distance) TextView mDistance;
     @BindView(R.id.floatingActionButton) FloatingActionButton mFloatingActionButton;
-
-    private GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,8 +115,9 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        map.addMarker(new MarkerOptions()
-                .position(new LatLng(0, 0))
+        Marker marker = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(48.220122, 16.366115))
                 .title("Marker"));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 14));
     }
 }

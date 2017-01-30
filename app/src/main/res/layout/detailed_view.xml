@@ -248,7 +248,16 @@
                     android:autoLink="web"
                     android:textColorLink="@color/black"
                     android:textColorHighlight="?attr/colorPrimaryDark" />
+
             </LinearLayout>
+
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/map"
+                tools:context=".ui.detailed.DetailedActivity"
+                android:name="com.google.android.gms.maps.MapFragment" />
 
         </LinearLayout>
 

@@ -13,6 +13,13 @@ import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import javax.inject.Inject;
 
 import at.gren.tuwien.weihnachtsmarkt.R;
@@ -24,7 +31,7 @@ import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailedActivity extends BaseActivity implements DetailedMvpView{
+public class DetailedActivity extends BaseActivity implements DetailedMvpView,OnMapReadyCallback {
 
     @Inject DetailedPresenter mDetailedPresenter;
     @Inject DataManager mDataManager;
@@ -40,11 +47,14 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView{
     @BindView(R.id.distance) TextView mDistance;
     @BindView(R.id.floatingActionButton) FloatingActionButton mFloatingActionButton;
 
+    private GoogleMap map;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
         setContentView(R.layout.detailed_view);
+
         mDetailedPresenter.attachView(this);
         ButterKnife.bind(this);
 
@@ -58,6 +68,9 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView{
 
         Drawable progress = mRatingBar.getProgressDrawable();
         DrawableCompat.setTint(progress, getResources().getColor(R.color.yellow_700));
+
+        MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
+        mapFragment.getMapAsync(this);
     }
 
     /***** MVP View methods implementation *****/
@@ -98,5 +111,12 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView{
     @Override
     public void showError() {
         DialogFactory.createGenericErrorDialog(this, "Es gab ein Problem beim Laden des Adventmarkts").show();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(0, 0))
+                .title("Marker"));
     }
 }

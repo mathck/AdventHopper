@@ -19,4 +19,5 @@
     <string name="error_loading_list">Es gab ein Problem beim Laden der Adventmärkte</string>
 
     <string name="image_launcher">Advent Hopper Icon</string>
+    <string name="action_search">Suchen</string>
 </resources>

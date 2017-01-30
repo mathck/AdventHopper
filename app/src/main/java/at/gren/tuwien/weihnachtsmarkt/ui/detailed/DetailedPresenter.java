@@ -15,7 +15,6 @@ public class DetailedPresenter extends BasePresenter<DetailedMvpView>{
     private final DataManager mDataManager;
     private Subscription mSubscription;
 
-
     @Inject
     public DetailedPresenter(DataManager dataManager) {
         this.mDataManager = dataManager;

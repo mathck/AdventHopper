@@ -96,6 +96,7 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
     @Override
     public void showAdventmarkt(final Weihnachtsmarkt markt) {
         this.mMarkt = markt;
+
         Glide.with(this)
                 .using(new FirebaseImageLoader())
                 .load(mStorageRef.child("images/" + markt.id() + ".jpg"))
@@ -156,6 +157,14 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
 
                 context.startActivity(navigationIntent);
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        Glide.get(this).clearMemory();
+        super.onDestroy();
+
+        mDetailedPresenter.detachView();
     }
 
     @Override

@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.squareup.sqlbrite.BriteDatabase;
 import com.squareup.sqlbrite.SqlBrite;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -14,14 +16,18 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
+import at.gren.tuwien.weihnachtsmarkt.util.RxUtil;
+import at.gren.tuwien.weihnachtsmarkt.util.events.SyncCompletedEvent;
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 @Singleton
 public class DatabaseHelper {
 
-    private static BriteDatabase mDb=null;
+    private static BriteDatabase mDb = null;
 
 
     @Inject
@@ -81,5 +87,7 @@ public class DatabaseHelper {
                     " WHERE object_id = 'ADVENTMARKTOGD." + key + "'";
             mDb.execute(query);
         }
+
+        EventBus.getDefault().post(new SyncCompletedEvent());
     }
 }

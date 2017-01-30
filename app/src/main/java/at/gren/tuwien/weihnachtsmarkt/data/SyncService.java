@@ -25,7 +25,6 @@ public class SyncService extends Service {
 
     @Inject DataManager mDataManager;
     private Subscription mSubscription;
-    private Subscription mFirebaseSubscription;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, SyncService.class);
@@ -60,7 +59,7 @@ public class SyncService extends Service {
                 .subscribe(new Observer<Weihnachtsmarkt>() {
                     @Override
                     public void onCompleted() {
-                        EventBus.getDefault().post(new SyncCompletedEvent());
+                        mDataManager.syncRatings();
                         stopSelf(startId);
                     }
 
@@ -74,8 +73,6 @@ public class SyncService extends Service {
                     public void onNext(Weihnachtsmarkt markt) {
                     }
                 });
-
-        mDataManager.syncRatings();
 
         return START_STICKY;
     }

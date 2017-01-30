@@ -109,7 +109,7 @@ public class DataManager {
     public void setRating (String weihnachtsmarktId, Integer rating) {
         DatabaseReference dbRef = mFirebaseService.getFirebaseReference();
         String deviceId;
-        deviceId=DeviceIdUtils.getDeviceID(mContext, this);
+        deviceId = DeviceIdUtils.getDeviceID(mContext, this);
 
 
         if ((rating <= 5) && (rating > 0)) {

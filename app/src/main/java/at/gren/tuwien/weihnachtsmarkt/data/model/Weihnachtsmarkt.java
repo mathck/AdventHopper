@@ -9,8 +9,6 @@ import com.google.gson.TypeAdapter;
 @AutoValue
 public abstract class Weihnachtsmarkt implements Parcelable {
 
-    private double mAverageRating;
-
     public abstract String type();
     public abstract String id();
     public abstract Point geometry();
@@ -28,14 +26,6 @@ public abstract class Weihnachtsmarkt implements Parcelable {
     public static Builder builder() {
         return new AutoValue_Weihnachtsmarkt.Builder();
     }
-
-    /*public double getAverageRating() {
-        return averageRating;
-    }
-
-    public void setAverageRating(double averageRating) {
-        averageRating = averageRating;
-    }*/
 
     @AutoValue.Builder
     public abstract static class Builder {

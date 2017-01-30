@@ -210,9 +210,10 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
 
     @Subscribe
     public void syncCompleted(SyncCompletedEvent event) {
+        mMainPresenter.loadMärkte();
         MainActivity.this.runOnUiThread(() -> {
             mSwipeRefreshLayout.setRefreshing(false);
-            Snackbar.make(mSwipeRefreshLayout, "Lade Weihnachtsmärkte...", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(mSwipeRefreshLayout, "Weihnachtsmärkte wurden geladen!", Snackbar.LENGTH_LONG).show();
         });
     }
 
@@ -249,7 +250,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
     @Override
     public void showAdventmaerkte(List<Weihnachtsmarkt> märkte) {
         mMainAdapter.setWeihnachtsmärkte(märkte);
-        mMainAdapter.notifyDataSetChanged();
+        runOnUiThread(() -> mMainAdapter.notifyDataSetChanged());
     }
 
     @Override

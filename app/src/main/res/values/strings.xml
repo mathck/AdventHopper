@@ -13,7 +13,7 @@
 
     <string name="dialog_action_ok">OK</string>
     <string name="dialog_action_cancel">Abbrechen</string>
-    <string name="dialog_error_title">Ups...</string>
+    <string name="dialog_error_title">Ups&#8230;</string>
 
     <string name="empty_list">Alle Adventmärkte haben geschlossen</string>
     <string name="error_loading_list">Es gab ein Problem beim Laden der Adventmärkte</string>

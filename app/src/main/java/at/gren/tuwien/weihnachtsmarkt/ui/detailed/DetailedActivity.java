@@ -44,7 +44,7 @@ import static at.gren.tuwien.weihnachtsmarkt.R.id.ratingBar;
 
 public class DetailedActivity extends BaseActivity implements DetailedMvpView,OnMapReadyCallback {
 
-    private FirebaseStorage mStorage;
+    FirebaseStorage mStorage;
     private StorageReference mStorageRef;
 
     @Inject DetailedPresenter mDetailedPresenter;

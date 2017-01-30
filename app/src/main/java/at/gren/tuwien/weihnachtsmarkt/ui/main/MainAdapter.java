@@ -45,7 +45,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
     private final double mUserLocationLatitude;
     private final double mUserLocationLongitude;
 
-    private FirebaseStorage mStorage;
+    FirebaseStorage mStorage;
     private StorageReference mStorageRef;
 
     private final Comparator<Weihnachtsmarkt> mComparator;

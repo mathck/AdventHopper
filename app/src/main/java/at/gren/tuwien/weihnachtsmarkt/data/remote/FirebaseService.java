@@ -10,7 +10,7 @@ import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
 public class FirebaseService {
 
     private final FirebaseDatabase mDatabase;
-    private final Context mContext;
+    final Context mContext;
 
     @Inject
     public FirebaseService(@ApplicationContext Context context) {

@@ -164,9 +164,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
         mMärkte = märkte;
 
         mMärkte = new ArrayList<>();
-        for (Weihnachtsmarkt markt : märkte) {
-            mMärkte.add(markt);
-        }
+        mMärkte.addAll(märkte);
 
         mMainAdapter.replaceAll(märkte);
     }

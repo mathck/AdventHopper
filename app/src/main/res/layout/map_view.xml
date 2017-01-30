@@ -82,7 +82,6 @@
                     style="@style/Widget.AppCompat.RatingBar.Indicator"
                     android:theme="@style/RatingBar"
                     android:drawingCacheQuality="high"
-                    android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
                     android:fillViewport="true" />
 

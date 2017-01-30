@@ -162,13 +162,13 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
 
     @Override
     public void showAdventmaerkteOnMap(List<Weihnachtsmarkt> märkte) {
-        mMarkerMap = new HashMap();
+        mMarkerMap = new HashMap<>();
         for(Weihnachtsmarkt weihnachtsmarkt : märkte) {
             Marker marker = mGoogleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(weihnachtsmarkt.geometry().coordinates().get(0), weihnachtsmarkt.geometry().coordinates().get(1)))
                     .title(weihnachtsmarkt.properties().BEZEICHNUNG()));
-            Timber.i(marker.toString()+"---------------------------------------------");
-            Timber.i(weihnachtsmarkt.toString()+"---------------------------------------------");
+            Timber.i(marker.toString(),"---------------------------------------------");
+            Timber.i(weihnachtsmarkt.toString(),"---------------------------------------------");
             mMarkerMap.put(marker,weihnachtsmarkt);
         }
     }

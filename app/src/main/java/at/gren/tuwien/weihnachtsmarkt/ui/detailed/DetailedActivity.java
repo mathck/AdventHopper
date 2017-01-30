@@ -10,9 +10,12 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -21,6 +24,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import javax.inject.Inject;
 
@@ -35,6 +40,9 @@ import butterknife.ButterKnife;
 
 public class DetailedActivity extends BaseActivity implements DetailedMvpView,OnMapReadyCallback {
 
+    private FirebaseStorage mStorage;
+    private StorageReference mStorageRef;
+
     @Inject DetailedPresenter mDetailedPresenter;
     @Inject DataManager mDataManager;
 
@@ -48,6 +56,7 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
     @BindView(R.id.rating) TextView mRating;
     @BindView(R.id.distance) TextView mDistance;
     @BindView(R.id.floatingActionButton) FloatingActionButton mFloatingActionButton;
+    @BindView(R.id.marketImage) ImageView mMarketImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +80,24 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
 
         MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
         mapFragment.getMapAsync(this);
+
+        mStorage = FirebaseStorage.getInstance();
+        mStorageRef = mStorage.getReferenceFromUrl("gs://advent-hopper.appspot.com");
     }
 
     /***** MVP View methods implementation *****/
 
     @Override
     public void showAdventmarkt(final Weihnachtsmarkt markt) {
+
+        Glide.with(this)
+                .using(new FirebaseImageLoader())
+                .load(mStorageRef.child("images/" + markt.id() + ".jpg"))
+                .placeholder(R.mipmap.snow_backdrop)
+                .error(R.mipmap.snow_backdrop)
+                .crossFade()
+                .into(mMarketImage);
+
         mTitle.setText(markt.properties().BEZEICHNUNG());
         mAddress.setText(markt.properties().ADRESSE());
 

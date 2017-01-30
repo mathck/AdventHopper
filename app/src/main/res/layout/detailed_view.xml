@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:transitionName="marketImage"
-                android:background="@mipmap/market_placeholder"
+                android:background="@mipmap/snow_backdrop"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
                 android:id="@+id/marketImage" />

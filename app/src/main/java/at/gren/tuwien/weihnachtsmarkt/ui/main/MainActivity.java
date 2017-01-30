@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -125,8 +127,9 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
                 .withToolbar(mToolbar)
                 .withHeader(R.layout.drawer_header)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withIdentifier(1).withName(R.string.title_cardView).withIcon(R.drawable.ic_place_black_24dp),
-                        new PrimaryDrawerItem().withIdentifier(2).withName(R.string.title_map).withIcon(R.drawable.ic_map_black_24dp)
+                    createNavbarItem(R.string.title_cardView, R.drawable.ic_place_black_24dp),
+                    createNavbarItem(R.string.title_bestRated, R.drawable.ic_star_black_24dp),
+                    createNavbarItem(R.string.title_map, R.drawable.ic_map_black_24dp)
                 )
                 .withOnDrawerItemClickListener((view, position, drawerItem) -> {
 
@@ -138,6 +141,9 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
                             intent = new Intent(context, MainActivity.class);
                             break;
                         case 2:
+                            intent = new Intent(context, MainActivity.class);
+                            break;
+                        case 3:
                             intent = new Intent(context, MainActivity.class);
                             //TODO: Navigation to MapView
                             break;
@@ -232,5 +238,16 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
             mMainPresenter.storeLocation(location);
             EventBus.getDefault().post(new LocationUpdatedEvent());
         }
+    }
+
+    private int mNavbarItemId = 1;
+    private PrimaryDrawerItem createNavbarItem(@StringRes int stringId, @DrawableRes int iconId) {
+        return new PrimaryDrawerItem()
+                .withIdentifier(mNavbarItemId++)
+                .withName(stringId)
+                .withIcon(iconId)
+                .withIconTintingEnabled(true)
+                .withIconColor(getResources().getColor(R.color.grey_600))
+                .withSelectedIconColor(getResources().getColor(R.color.blue_500));
     }
 }

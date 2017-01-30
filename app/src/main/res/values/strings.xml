@@ -2,6 +2,7 @@
     <string name="app_name">Advent Hopper</string>
 
     <string name="title_cardView">In deiner Nähe</string>
+    <string name="title_bestRated">Beliebte</string>
     <string name="title_map">Karte</string>
 
     <string name="action_settings">Einstellungen</string>

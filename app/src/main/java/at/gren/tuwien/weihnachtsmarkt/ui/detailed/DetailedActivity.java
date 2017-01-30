@@ -1,5 +1,6 @@
 package at.gren.tuwien.weihnachtsmarkt.ui.detailed;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -9,7 +10,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.graphics.drawable.DrawableCompat;
 
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -20,7 +23,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -38,6 +40,8 @@ import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static at.gren.tuwien.weihnachtsmarkt.R.id.ratingBar;
+
 public class DetailedActivity extends BaseActivity implements DetailedMvpView,OnMapReadyCallback {
 
     private FirebaseStorage mStorage;
@@ -47,7 +51,7 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
     @Inject DataManager mDataManager;
 
     @BindView(R.id.detailed_toolbar) Toolbar mdetailed_toolbar;
-    @BindView(R.id.ratingBar) RatingBar mRatingBar;
+    @BindView(ratingBar) RatingBar mRatingBar;
     @BindView(R.id.title) TextView mTitle;
     @BindView(R.id.address) TextView mAddress;
     @BindView(R.id.openingHours) TextView mOpeningHours;
@@ -108,6 +112,29 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
         mDate.setText(markt.properties().DATUM());
         mRatingBar.setRating(Float.parseFloat(Double.toString(markt.properties().AVERAGERATING())));
         mRating.setText(Double.toString(markt.properties().AVERAGERATING()));
+
+        mRatingBar.setOnTouchListener((View v, MotionEvent event)->{
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                String christmasMarktId = markt.id().substring(15);
+                Dialog rankDialog = new Dialog(DetailedActivity.this, R.style.FullHeightDialog);
+                rankDialog.setContentView(R.layout.rank_dialog);
+                rankDialog.setCancelable(true);
+                RatingBar dialogRatingBar = (RatingBar) rankDialog.findViewById(R.id.dialog_ratingbar);
+                dialogRatingBar.setRating(2);
+                mDataManager.getOwnRating(christmasMarktId, rankDialog);
+
+                TextView text = (TextView) rankDialog.findViewById(R.id.rank_dialog_text);
+                text.setText("Bewerte ".concat(markt.properties().BEZEICHNUNG()));
+
+                Button updateButton = (Button) rankDialog.findViewById(R.id.rank_dialog_button);
+                updateButton.setOnClickListener((View w) -> {
+                    mDataManager.setRating(christmasMarktId, Math.round(dialogRatingBar.getRating()));
+                    rankDialog.dismiss();
+                });
+                rankDialog.show();
+            }
+            return true;
+        });
 
         if(mDataManager.getPreferencesHelper().hasLocation()) {
 

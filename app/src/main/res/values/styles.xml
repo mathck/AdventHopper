@@ -21,4 +21,8 @@
         <item name="colorAccent">@color/yellow_700</item>
     </style>
 
+    <style name="FullHeightDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
 </resources>

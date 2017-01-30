@@ -1,7 +1,9 @@
 package at.gren.tuwien.weihnachtsmarkt.data;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
+import android.widget.RatingBar;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -14,6 +16,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import at.gren.tuwien.weihnachtsmarkt.R;
 import at.gren.tuwien.weihnachtsmarkt.data.local.DatabaseHelper;
 import at.gren.tuwien.weihnachtsmarkt.data.local.PreferencesHelper;
 import at.gren.tuwien.weihnachtsmarkt.data.model.FeatureCollection;
@@ -108,13 +111,37 @@ public class DataManager {
 
     public void setRating (String weihnachtsmarktId, Integer rating) {
         DatabaseReference dbRef = mFirebaseService.getFirebaseReference();
-        String deviceId;
-        deviceId = DeviceIdUtils.getDeviceID(mContext, this);
-
+        String deviceId = DeviceIdUtils.getDeviceID(mContext, this);
 
         if ((rating <= 5) && (rating > 0)) {
             dbRef.child(weihnachtsmarktId).child(deviceId).setValue(rating);
         }
+    }
+
+    public void getOwnRating (String weihnachtsmarktId, Dialog rankDialog){
+        String deviceId = DeviceIdUtils.getDeviceID(mContext, this);
+
+        DatabaseReference dbRef = mFirebaseService.getFirebaseReference()
+            .child(weihnachtsmarktId)
+            .child(deviceId);
+
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            Integer ownRating = 0;
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue()!=null) {
+                    ownRating=((Long)dataSnapshot.getValue()).intValue();
+                }
+                RatingBar dialogRatingBar = (RatingBar)rankDialog.findViewById(R.id.dialog_ratingbar);
+                dialogRatingBar.setRating(ownRating);
+                syncRatings();
+                syncMärkte();
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
     }
 
     public Observable<Weihnachtsmarkt> getMarkt(String key) {

@@ -59,7 +59,7 @@ public class SyncService extends Service {
                 .subscribe(new Observer<Weihnachtsmarkt>() {
                     @Override
                     public void onCompleted() {
-                        mDataManager.syncRatings();
+                        EventBus.getDefault().post(new SyncCompletedEvent());
                         stopSelf(startId);
                     }
 
@@ -73,6 +73,8 @@ public class SyncService extends Service {
                     public void onNext(Weihnachtsmarkt markt) {
                     }
                 });
+
+        mDataManager.syncRatings();
 
         return START_STICKY;
     }

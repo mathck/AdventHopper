@@ -53,6 +53,7 @@ import at.gren.tuwien.weihnachtsmarkt.R;
 import at.gren.tuwien.weihnachtsmarkt.data.SyncService;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.ui.base.BaseActivity;
+import at.gren.tuwien.weihnachtsmarkt.ui.map.MapActivity;
 import at.gren.tuwien.weihnachtsmarkt.util.DialogFactory;
 import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
 import at.gren.tuwien.weihnachtsmarkt.util.events.SyncCompletedEvent;
@@ -160,10 +161,9 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
                             context.startActivity(intent);
                             break;
                         case 3:
-                            intent = new Intent(context, MainActivity.class);
+                            intent = new Intent(context, MapActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(intent);
-                            //TODO: Navigation to MapView
                             break;
                         case 4:
                             break;

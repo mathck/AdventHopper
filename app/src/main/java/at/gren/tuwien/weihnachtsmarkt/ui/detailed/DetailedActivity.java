@@ -58,6 +58,8 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
     @BindView(R.id.floatingActionButton) FloatingActionButton mFloatingActionButton;
     @BindView(R.id.marketImage) ImageView mMarketImage;
 
+    private Weihnachtsmarkt mMarkt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +91,7 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
 
     @Override
     public void showAdventmarkt(final Weihnachtsmarkt markt) {
-
+        this.mMarkt = markt;
         Glide.with(this)
                 .using(new FirebaseImageLoader())
                 .load(mStorageRef.child("images/" + markt.id() + ".jpg"))
@@ -137,8 +139,8 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Marker marker = googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(48.220122, 16.366115))
-                .title("Marker"));
+                .position(new LatLng(mMarkt.geometry().coordinates().get(0), mMarkt.geometry().coordinates().get(1)))
+                .title(mMarkt.properties().BEZEICHNUNG()));
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 14));
     }
 }

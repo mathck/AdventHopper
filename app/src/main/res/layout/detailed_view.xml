@@ -1,6 +1,7 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -251,14 +252,22 @@
 
             </LinearLayout>
 
-            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:id="@+id/map"
-                android:layout_marginTop="12dp"
-                tools:context=".ui.detailed.DetailedActivity"
-                android:name="com.google.android.gms.maps.MapFragment" />
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+                <fragment
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:id="@+id/map"
+                    android:layout_marginTop="12dp"
+                    tools:context=".ui.detailed.DetailedActivity"
+                    android:name="com.google.android.gms.maps.MapFragment"
+                    android:padding="8dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
         </LinearLayout>
 

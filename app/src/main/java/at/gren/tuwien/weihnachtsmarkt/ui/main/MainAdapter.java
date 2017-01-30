@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,7 @@ import com.google.firebase.storage.StorageReference;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,7 +40,6 @@ import butterknife.ButterKnife;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolder> {
 
-    private List<Weihnachtsmarkt> mWeihnachtsmärkte;
     private Context mContext = null;
     private boolean mHasLocation = false;
     private final double mUserLocationLatitude;
@@ -48,9 +48,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
     private FirebaseStorage mStorage;
     private StorageReference mStorageRef;
 
+    private final Comparator<Weihnachtsmarkt> mComparator;
+
     @Inject
     public MainAdapter(DataManager dataManager, @ApplicationContext Context context) {
-        mWeihnachtsmärkte = new ArrayList<>();
         this.mContext = context;
         this.mHasLocation = dataManager.getPreferencesHelper().hasLocation();
 
@@ -60,11 +61,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         mStorage = FirebaseStorage.getInstance();
         mStorageRef = mStorage.getReferenceFromUrl("gs://advent-hopper.appspot.com");
 
-        EventBus.getDefault().register(this);
-    }
+        mComparator = (a, b) -> a.properties().BEZEICHNUNG().compareTo(b.properties().BEZEICHNUNG());
 
-    public void setWeihnachtsmärkte(List<Weihnachtsmarkt> weihnachtsmärkte) {
-        mWeihnachtsmärkte = weihnachtsmärkte;
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -153,9 +152,79 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         @BindView(R.id.marketImage) ImageView marketImage;
         @BindView(R.id.ratingBar) RatingBar ratingBar;
 
-        public MarktViewHolder(View itemView) {
+        MarktViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
+
+    void replaceAll(List<Weihnachtsmarkt> models) {
+        mWeihnachtsmärkte.beginBatchedUpdates();
+        for (int i = mWeihnachtsmärkte.size() - 1; i >= 0; i--) {
+            final Weihnachtsmarkt model = mWeihnachtsmärkte.get(i);
+            if (!models.contains(model)) {
+                mWeihnachtsmärkte.remove(model);
+            }
+        }
+        mWeihnachtsmärkte.addAll(models);
+        mWeihnachtsmärkte.endBatchedUpdates();
+    }
+
+    public void add(Weihnachtsmarkt model) {
+        mWeihnachtsmärkte.add(model);
+    }
+
+    public void remove(Weihnachtsmarkt model) {
+        mWeihnachtsmärkte.remove(model);
+    }
+
+    public void add(List<Weihnachtsmarkt> models) {
+        mWeihnachtsmärkte.addAll(models);
+    }
+
+    public void remove(List<Weihnachtsmarkt> models) {
+        mWeihnachtsmärkte.beginBatchedUpdates();
+        for (Weihnachtsmarkt model : models) {
+            mWeihnachtsmärkte.remove(model);
+        }
+        mWeihnachtsmärkte.endBatchedUpdates();
+    }
+
+    private final SortedList<Weihnachtsmarkt> mWeihnachtsmärkte = new SortedList<>(Weihnachtsmarkt.class, new SortedList.Callback<Weihnachtsmarkt>() {
+
+        @Override
+        public void onInserted(int position, int count) {
+            notifyItemRangeInserted(position, count);
+        }
+
+        @Override
+        public void onRemoved(int position, int count) {
+            notifyItemRangeRemoved(position, count);
+        }
+
+        @Override
+        public void onMoved(int fromPosition, int toPosition) {
+            notifyItemMoved(fromPosition, toPosition);
+        }
+
+        @Override
+        public void onChanged(int position, int count) {
+            notifyItemRangeChanged(position, count);
+        }
+
+        @Override
+        public int compare(Weihnachtsmarkt a, Weihnachtsmarkt b) {
+            return mComparator.compare(a, b);
+        }
+
+        @Override
+        public boolean areContentsTheSame(Weihnachtsmarkt oldItem, Weihnachtsmarkt newItem) {
+            return oldItem.equals(newItem);
+        }
+
+        @Override
+        public boolean areItemsTheSame(Weihnachtsmarkt item1, Weihnachtsmarkt item2) {
+            return item1.id().equals(item2.id());
+        }
+    });
 }

@@ -84,6 +84,7 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
         mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
         mBottomSheetBehavior.setHideable(true);
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        mBottomSheetBehavior.setPeekHeight(450);
     }
 
     @Override
@@ -104,8 +105,6 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
             Marker marker = mGoogleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(weihnachtsmarkt.geometry().coordinates().get(0), weihnachtsmarkt.geometry().coordinates().get(1)))
                     .title(weihnachtsmarkt.properties().BEZEICHNUNG()));
-            Timber.i(marker.toString(),"---------------------------------------------");
-            Timber.i(weihnachtsmarkt.toString(),"---------------------------------------------");
             mMarkerMap.put(marker,weihnachtsmarkt);
         }
     }
@@ -138,7 +137,7 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mBottom_sheet_title.setText(mMarkerMap.get(marker).properties().BEZEICHNUNG());
         mBottom_sheet_ratingBar.setRating(Float.parseFloat(Double.toString(mMarkerMap.get(marker).properties().AVERAGERATING())));
         mBottom_sheet_rating.setText(Double.toString(mMarkerMap.get(marker).properties().AVERAGERATING()));
@@ -152,7 +151,7 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
     @Override
     public boolean dispatchTouchEvent(MotionEvent event){
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (mBottomSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED) {
+            if (mBottomSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED || mBottomSheetBehavior.getState()==BottomSheetBehavior.STATE_COLLAPSED) {
 
                 Rect outRect = new Rect();
                 mBottomSheet.getGlobalVisibleRect(outRect);

@@ -3,7 +3,7 @@
     <style name="AppTheme" parent="MaterialDrawerTheme.Light">
         <item name="colorPrimary">@color/blue_500</item>
         <item name="colorPrimaryDark">@color/blue_700</item>
-        <item name="colorAccent">@color/red_500</item>
+        <item name="colorAccent">@color/grey_600</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="actionMenuTextColor">@color/black</item>
@@ -19,6 +19,14 @@
     <style name="NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="ActionBar" parent="AppTheme">
+        <item name="actionMenuTextColor">@color/grey_600</item>
+        <item name="android:itemTextAppearance">@color/grey_600</item>
+        <item name="android:textColor">@color/grey_600</item>
+        <item name="android:textCursorDrawable">@color/grey_600</item>
+        <item name="android:shadowColor">@color/grey_600</item>
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat.Light">

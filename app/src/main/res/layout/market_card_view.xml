@@ -110,21 +110,38 @@
                     android:alpha="0.54" />
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:orientation="horizontal"
                 android:layout_height="match_parent"
                 android:layout_weight="3.23"
                 android:layout_width="wrap_content"
                 android:gravity="right">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    card_view:srcCompat="?attr/actionModeShareDrawable"
+                    android:id="@+id/shareIcon"
+                    android:clickable="true"
+                    android:alpha="0.54"
+                    android:layout_alignParentRight="true"
+                    android:padding="8dp"
+                    android:tint="@color/black"
+                    android:contentDescription="Teile den Weihnachtsmarkt mit Freunden"/>
+
                 <RatingBar
                     android:layout_height="wrap_content"
                     android:id="@+id/ratingBar"
                     android:transitionName="ratingBar"
+                    android:layout_toLeftOf="@id/shareIcon"
+                    android:scaleX="1.5"
+                    android:scaleY="1.5"
                     android:numStars="5"
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:rating="3.5"
                     android:isIndicator="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="32dp"
                     android:stepSize="0.5"
                     android:clickable="true"
                     android:layout_width="wrap_content"
@@ -135,20 +152,7 @@
                     android:layoutDirection="rtl"
                     android:theme="@style/RatingBar"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    card_view:srcCompat="?attr/actionModeShareDrawable"
-                    android:id="@+id/shareIcon"
-                    android:clickable="true"
-                    android:alpha="0.54"
-                    android:layout_gravity="right|center_vertical"
-                    android:foregroundGravity="right|center_vertical"
-                    android:padding="8dp"
-                    android:tint="@color/black"
-                    android:contentDescription="Teile den Weihnachtsmarkt mit Freunden"/>
-
-            </LinearLayout>
+            </RelativeLayout>
 
         </LinearLayout>
 

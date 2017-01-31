@@ -23,6 +23,6 @@
     <string name="action_search">Suchen</string>
     <string name="rate">Bewerten</string>
     <string name="your_rating">Deine Bewertung</string>
-    <string name="recommend_txt">Mit Advent Hopper hast du eine Übersicht über alle Adventmärkte in Wien:</string>
-    <string name="send_mail">\"E-Mail versenden mit ...\"</string>
+    <string name="recommend_txt">Mit Advent Hopper hast du eine Übersicht über alle Adventmärkte in Wien: </string>
+    <string name="send_mail">E-Mail versenden mit …</string>
 </resources>

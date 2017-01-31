@@ -113,8 +113,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
 
         holder.shareIcon.setOnClickListener((View v) -> {
             Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "Schau dir diesen tollen Weihnachtsmarkt an " + markt.properties().BEZEICHNUNG());
+
+            sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT,
+                    markt.properties().BEZEICHNUNG() + "\n" +
+                    holder.itemView.getContext().getString(R.string.recommend_txt) +
+                    "https://play.google.com/store/apps/details?id=at.gren.tuwien.weihnachtsmarkt");
             sendIntent.setType("text/plain");
             holder.itemView.getContext().startActivity(sendIntent);
         });

@@ -20,6 +20,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -63,6 +64,7 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
     private GoogleMap mGoogleMap;
     private BottomSheetBehavior mBottomSheetBehavior;
     private HashMap<Marker, Weihnachtsmarkt> mMarkerMap;
+    private Marker mCurrentMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,15 +138,20 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
     }
 
     @Override
-    public boolean onMarkerClick(Marker marker) {
+    public boolean onMarkerClick(Marker newMarker) {
+        if(mCurrentMarker != null){
+            mCurrentMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        }
+        mCurrentMarker = newMarker;
+        mCurrentMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        mBottom_sheet_title.setText(mMarkerMap.get(marker).properties().BEZEICHNUNG());
-        mBottom_sheet_ratingBar.setRating(Float.parseFloat(Double.toString(mMarkerMap.get(marker).properties().AVERAGERATING())));
-        mBottom_sheet_rating.setText(Double.toString(mMarkerMap.get(marker).properties().AVERAGERATING()));
-        mBottom_sheet_address.setText(mMarkerMap.get(marker).properties().ADRESSE());
-        mBottom_sheet_date.setText(mMarkerMap.get(marker).properties().DATUM());
-        mBottom_sheet_openingHours.setText(mMarkerMap.get(marker).properties().OEFFNUNGSZEIT());
-        mBottom_sheet_weblink.setText(mMarkerMap.get(marker).properties().WEBLINK1());
+        mBottom_sheet_title.setText(mMarkerMap.get(mCurrentMarker).properties().BEZEICHNUNG());
+        mBottom_sheet_ratingBar.setRating(Float.parseFloat(Double.toString(mMarkerMap.get(mCurrentMarker).properties().AVERAGERATING())));
+        mBottom_sheet_rating.setText(Double.toString(mMarkerMap.get(mCurrentMarker).properties().AVERAGERATING()));
+        mBottom_sheet_address.setText(mMarkerMap.get(mCurrentMarker).properties().ADRESSE());
+        mBottom_sheet_date.setText(mMarkerMap.get(mCurrentMarker).properties().DATUM());
+        mBottom_sheet_openingHours.setText(mMarkerMap.get(mCurrentMarker).properties().OEFFNUNGSZEIT());
+        mBottom_sheet_weblink.setText(mMarkerMap.get(mCurrentMarker).properties().WEBLINK1());
         return true;
     }
 
@@ -156,8 +163,10 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
                 Rect outRect = new Rect();
                 mBottomSheet.getGlobalVisibleRect(outRect);
 
-                if(!outRect.contains((int)event.getRawX(), (int)event.getRawY()))
+                if(!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
                     mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                    mCurrentMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                }
             }
         }
 

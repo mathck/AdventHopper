@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/emptyView"
-            android:text="Hier gibt es nichts."
+            android:text="@string/div_nothing_there"
             android:layout_height="match_parent"
             android:layout_width="match_parent" />
 

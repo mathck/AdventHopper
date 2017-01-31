@@ -16,9 +16,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
-/**
- * Created by Michael on 30.01.2017.
- */
 public class MapPresenter  extends BasePresenter<MapMvpView> {
 
     private final DataManager mDataManager;

@@ -25,4 +25,19 @@
     <string name="your_rating">Deine Bewertung</string>
     <string name="recommend_txt">Mit Advent Hopper hast du eine Übersicht über alle Adventmärkte in Wien: </string>
     <string name="send_mail">E-Mail versenden mit …</string>
+
+    <string name="content_desc_address">Adresse</string>
+    <string name="content_desc_date">Öffnungszeiten</string>
+    <string name="content_desc_link">Link</string>
+    <string name="content_desc_market_picture">Symbolbild Weihnachtsmarkt</string>
+    <string name="content_desc_calculate_route">Route berechnen</string>
+    <string name="content_desc_share_market">Teile den Weihnachtsmarkt mit Freunden</string>
+
+
+    <string name="div_nothing_there">Hier gibt es nichts.</string>
+    <string name="default_market_name">Weihnachtsmarkt</string>
+    <string name="default_rating">3.0</string>
+    <string name="default_market_address">Adresse</string>
+    <string name="default_market_hours">Öffnungszeiten</string>
+    <string name="default_market_link">Link</string>
 </resources>

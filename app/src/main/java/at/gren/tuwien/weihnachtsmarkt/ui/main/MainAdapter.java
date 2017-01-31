@@ -10,8 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -37,7 +35,6 @@ import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
 import at.gren.tuwien.weihnachtsmarkt.ui.detailed.DetailedActivity;
 import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
-import at.gren.tuwien.weihnachtsmarkt.util.sort.CompareName;
 import at.gren.tuwien.weihnachtsmarkt.util.sort.CompareRating;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,7 +46,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
     private final double mUserLocationLatitude;
     private final double mUserLocationLongitude;
 
-    private StorageReference mStorageRef;
+    private final StorageReference mStorageRef;
 
     private Comparator<Weihnachtsmarkt> mComparator;
 

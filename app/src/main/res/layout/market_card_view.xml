@@ -36,17 +36,19 @@
                 android:cropToPadding="false"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:contentDescription="Symbolbild Weihnachtsmarkt" />
+                android:contentDescription="@string/content_desc_market_picture" />
 
             <TextView
-                android:text="Belvedere"
+                android:text="@string/default_market_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/title"
                 android:transitionName="marketTitle"
                 android:ems="10"
                 android:layout_alignLeft="@+id/marketImage"
+                android:layout_alignStart="@+id/marketImage"
                 android:layout_alignRight="@+id/marketImage"
+                android:layout_alignEnd="@+id/marketImage"
                 android:layout_alignTop="@+id/marketImage"
                 android:layout_below="@+id/marketImage"
                 android:layout_alignBottom="@+id/marketImage"
@@ -97,7 +99,7 @@
                     android:alpha="0.54"
                     android:tint="@color/black"
                     android:adjustViewBounds="true"
-                    android:contentDescription="Wegstrecke zu Fuß"/>
+                    android:contentDescription="@string/content_desc_calculate_route"/>
 
                 <TextView
                     android:id="@+id/distance"
@@ -115,7 +117,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3.23"
                 android:layout_width="wrap_content"
-                android:gravity="right">
+                android:gravity="end">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -125,15 +127,17 @@
                     android:clickable="true"
                     android:alpha="0.54"
                     android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:padding="8dp"
                     android:tint="@color/black"
-                    android:contentDescription="Teile den Weihnachtsmarkt mit Freunden"/>
+                    android:contentDescription="@string/content_desc_share_market"/>
 
                 <RatingBar
                     android:layout_height="wrap_content"
                     android:id="@+id/ratingBar"
                     android:transitionName="ratingBar"
                     android:layout_toLeftOf="@id/shareIcon"
+                    android:layout_toStartOf="@id/shareIcon"
                     android:scaleX="1.5"
                     android:scaleY="1.5"
                     android:numStars="5"
@@ -142,6 +146,7 @@
                     android:isIndicator="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="32dp"
+                    android:layout_marginEnd="32dp"
                     android:stepSize="0.5"
                     android:clickable="true"
                     android:layout_width="wrap_content"

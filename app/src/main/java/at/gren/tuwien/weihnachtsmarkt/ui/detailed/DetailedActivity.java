@@ -114,7 +114,7 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
         mWeblink.setText(markt.properties().WEBLINK1());
         mDate.setText(markt.properties().DATUM());
         mRatingBar.setRating(Float.parseFloat(Double.toString(markt.properties().AVERAGERATING())));
-        mRating.setText(Double.toString(markt.properties().AVERAGERATING()));
+        mRating.setText(String.format("%.1f", markt.properties().AVERAGERATING()));
 
         mRatingBar.setOnTouchListener((View v, MotionEvent event)->{
             if (event.getAction() == MotionEvent.ACTION_UP) {

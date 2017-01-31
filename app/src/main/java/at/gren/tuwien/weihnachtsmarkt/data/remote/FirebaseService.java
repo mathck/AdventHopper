@@ -1,21 +1,16 @@
 package at.gren.tuwien.weihnachtsmarkt.data.remote;
 
-import android.content.Context;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import javax.inject.Inject;
 
-import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
-
 public class FirebaseService {
 
-    private final FirebaseDatabase mDatabase;
-    final Context mContext;
+    final FirebaseDatabase mDatabase;
 
     @Inject
-    public FirebaseService(@ApplicationContext Context context) {
+    public FirebaseService() {
         mDatabase = FirebaseDatabase.getInstance();
-        mContext = context;
     }
 
     public DatabaseReference getFirebaseReference(){

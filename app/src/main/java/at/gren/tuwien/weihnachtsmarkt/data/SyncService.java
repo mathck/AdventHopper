@@ -7,15 +7,12 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.IBinder;
 
-import org.greenrobot.eventbus.EventBus;
-
 import javax.inject.Inject;
 
 import at.gren.tuwien.weihnachtsmarkt.BoilerplateApplication;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.util.AndroidComponentUtil;
 import at.gren.tuwien.weihnachtsmarkt.util.NetworkUtil;
-import at.gren.tuwien.weihnachtsmarkt.util.events.SyncCompletedEvent;
 import rx.Observer;
 import rx.Subscription;
 import rx.schedulers.Schedulers;

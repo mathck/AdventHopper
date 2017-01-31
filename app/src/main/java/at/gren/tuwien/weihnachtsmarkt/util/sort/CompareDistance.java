@@ -10,7 +10,7 @@ import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 
 public class CompareDistance implements Comparator<Weihnachtsmarkt> {
 
-    private DataManager mDataManager;
+    private final DataManager mDataManager;
 
     @Inject
     public CompareDistance(DataManager dataManager) {

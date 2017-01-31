@@ -48,7 +48,7 @@
             android:paddingTop="24dp">
 
             <TextView
-                android:text="Belvedere"
+                android:text="@string/default_market_name"
                 android:layout_width="match_parent"
                 android:transitionName="marketTitle"
                 android:layout_height="wrap_content"
@@ -86,11 +86,12 @@
                     android:fillViewport="true" />
 
                 <TextView
-                    android:text="3.5"
+                    android:text="@string/default_rating"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/bottom_sheet_rating"
                     android:paddingLeft="8dp"
+                    android:paddingStart="8dp"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
                     android:alpha="0.54"
@@ -113,10 +114,11 @@
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:minWidth="65dp"
-                    android:tint="?attr/colorPrimary" />
+                    android:tint="?attr/colorPrimary"
+                    android:contentDescription="@string/content_desc_address"/>
 
                 <TextView
-                    android:text="Adresse"
+                    android:text="@string/default_market_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/bottom_sheet_address"
@@ -126,6 +128,7 @@
                     android:textSize="16sp"
                     android:layout_gravity="center_vertical"
                     android:paddingLeft="8dp"
+                    android:paddingStart="8dp"
                     android:alpha="0.87"
                     android:autoLink="map" />
             </LinearLayout>
@@ -145,7 +148,8 @@
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:minWidth="65dp"
-                    android:tint="?attr/colorPrimary" />
+                    android:tint="?attr/colorPrimary"
+                    android:contentDescription="@string/content_desc_date"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -154,7 +158,7 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:text="Datum"
+                        android:text="@string/default_market_hours"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/bottom_sheet_date"
@@ -164,16 +168,18 @@
                         android:textSize="16sp"
                         android:layout_gravity="center_vertical"
                         android:paddingLeft="8dp"
+                        android:paddingStart="8dp"
                         android:alpha="0.87"
                         android:paddingBottom="8dp" />
 
                     <TextView
-                        android:text="Öffnungszeiten"
+                        android:text="@string/default_market_hours"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/bottom_sheet_openingHours"
                         android:layout_weight="1"
                         android:paddingLeft="8dp"
+                        android:paddingStart="8dp"
                         android:textSize="16sp"
                         android:textColor="@color/black"
                         android:alpha="0.87"
@@ -197,10 +203,11 @@
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:minWidth="65dp"
-                    android:tint="?attr/colorPrimary" />
+                    android:tint="?attr/colorPrimary"
+                    android:contentDescription="@string/content_desc_link"/>
 
                 <TextView
-                    android:text="Weblink"
+                    android:text="@string/default_market_link"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/bottom_sheet_weblink"
@@ -210,6 +217,7 @@
                     android:textSize="16sp"
                     android:layout_gravity="center_vertical"
                     android:paddingLeft="8dp"
+                    android:paddingStart="8dp"
                     android:alpha="0.87"
                     android:autoLink="web"
                     android:textColorLink="@color/black"

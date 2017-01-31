@@ -1,15 +1,11 @@
 package at.gren.tuwien.weihnachtsmarkt.ui.map;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
@@ -23,13 +19,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.mikepenz.google_material_typeface_library.GoogleMaterial;
-import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,12 +30,10 @@ import javax.inject.Inject;
 import at.gren.tuwien.weihnachtsmarkt.R;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.ui.base.BaseActivity;
-import at.gren.tuwien.weihnachtsmarkt.ui.main.MainActivity;
 import at.gren.tuwien.weihnachtsmarkt.ui.navigation.NavigationDrawer;
 import at.gren.tuwien.weihnachtsmarkt.util.DialogFactory;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -140,7 +129,7 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mBottom_sheet_title.setText(mMarkerMap.get(marker).properties().BEZEICHNUNG());
         mBottom_sheet_ratingBar.setRating(Float.parseFloat(Double.toString(mMarkerMap.get(marker).properties().AVERAGERATING())));
-        mBottom_sheet_rating.setText(Double.toString(mMarkerMap.get(marker).properties().AVERAGERATING()));
+        mBottom_sheet_rating.setText(String.format("%.1f", mMarkerMap.get(marker).properties().AVERAGERATING()));
         mBottom_sheet_address.setText(mMarkerMap.get(marker).properties().ADRESSE());
         mBottom_sheet_date.setText(mMarkerMap.get(marker).properties().DATUM());
         mBottom_sheet_openingHours.setText(mMarkerMap.get(marker).properties().OEFFNUNGSZEIT());

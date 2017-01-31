@@ -42,6 +42,6 @@
     <string name="default_market_hours">Öffnungszeiten</string>
     <string name="default_market_link">Link</string>
     <string name="action_sort">Sortieren</string>
-    <string name="action_sort_distance">Distanz</string>
-    <string name="action_sort_rating">Bewertung</string>
+    <string name="action_sort_distance">Sortiere nach Distanz</string>
+    <string name="action_sort_rating">Sortiere nach Bewertung</string>
 </resources>

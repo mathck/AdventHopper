@@ -70,7 +70,7 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
 
         Drawer drawer = new NavigationDrawer().build(this, mToolbar);
         drawer.deselect();
-        drawer.getDrawerItem(3).withSetSelected(true);
+        drawer.getDrawerItem(2).withSetSelected(true);
 
         mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
         mBottomSheetBehavior.setHideable(true);

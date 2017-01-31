@@ -80,7 +80,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
         super.onCreate(savedInstanceState);
 
         activityComponent().inject(this);
-        setTitle(R.string.title_cardView);
+        setTitle(R.string.title_near);
 
         mMainAdapter.setActivity(this);
         mRecyclerView.setAdapter(mMainAdapter);
@@ -130,7 +130,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
     @Subscribe
     public void syncCompleted(SyncCompletedEvent event) {
         mMainPresenter.loadMärkte();
-        MainActivity.this.runOnUiThread(() -> {
+        this.runOnUiThread(() -> {
             mSwipeRefreshLayout.setRefreshing(false);
             Snackbar.make(mSwipeRefreshLayout, "Weihnachtsmärkte wurden geladen!", Snackbar.LENGTH_LONG).show();
         });
@@ -203,11 +203,13 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
                 mMainAdapter.setComparator(new CompareDistance(mMainPresenter.dataManager.getPreferencesHelper().hasLocation(),
                         mMainPresenter.dataManager.getPreferencesHelper().getLocationLatitude(),
                         mMainPresenter.dataManager.getPreferencesHelper().getLocationLongitude()));
-                mMainAdapter.notifyDataSetChanged();
+                mMainAdapter.reshuffle();
+                setTitle(R.string.title_near);
                 return true;
             case R.id.action_sort_rating:
                 mMainAdapter.setComparator(new CompareRating());
-                mMainAdapter.notifyDataSetChanged();
+                mMainAdapter.reshuffle();
+                setTitle(R.string.title_bestRated);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

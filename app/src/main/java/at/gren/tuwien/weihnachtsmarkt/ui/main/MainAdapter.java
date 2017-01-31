@@ -23,6 +23,7 @@ import com.google.firebase.storage.StorageReference;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -35,6 +36,7 @@ import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
 import at.gren.tuwien.weihnachtsmarkt.ui.detailed.DetailedActivity;
 import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
+import at.gren.tuwien.weihnachtsmarkt.util.sort.CompareDistance;
 import at.gren.tuwien.weihnachtsmarkt.util.sort.CompareRating;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +63,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         FirebaseStorage mStorage = FirebaseStorage.getInstance();
         mStorageRef = mStorage.getReferenceFromUrl("gs://advent-hopper.appspot.com");
 
-        mComparator = new CompareRating();
+        mComparator = new CompareDistance(dataManager.getPreferencesHelper().hasLocation(),
+                dataManager.getPreferencesHelper().getLocationLatitude(),
+                dataManager.getPreferencesHelper().getLocationLongitude());
 
         EventBus.getDefault().register(this);
     }
@@ -152,6 +156,17 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
 
     public void setActivity(Context mainActivity) {
         this.mContext = mainActivity;
+    }
+
+    public void reshuffle() {
+        mWeihnachtsmärkte.beginBatchedUpdates();
+        List<Weihnachtsmarkt> itemsCopy = new ArrayList<>();
+        for (int i = 0; i < mWeihnachtsmärkte.size(); i++) {
+            itemsCopy.add(mWeihnachtsmärkte.get(i));
+        }
+        mWeihnachtsmärkte.clear();
+        mWeihnachtsmärkte.addAll(itemsCopy);
+        mWeihnachtsmärkte.endBatchedUpdates();
     }
 
     class MarktViewHolder extends RecyclerView.ViewHolder {

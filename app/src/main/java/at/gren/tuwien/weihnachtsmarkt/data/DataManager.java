@@ -57,7 +57,7 @@ public class DataManager {
         return mPreferencesHelper;
     }
 
-    public Observable<Weihnachtsmarkt> syncMärkte() {
+    Observable<Weihnachtsmarkt> syncMärkte() {
         return mGovernmentDataService.getWeihnachtsmärkteUndSilvesterständeWien()
                 .concatMap(new Func1<FeatureCollection, Observable<Weihnachtsmarkt>>() {
                     @Override
@@ -71,7 +71,7 @@ public class DataManager {
         return mDatabaseHelper.getMärkte().distinct();
     }
 
-    public void syncRatings() {
+    void syncRatings() {
         DatabaseReference dbRef = mFirebaseService.getFirebaseReference();
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

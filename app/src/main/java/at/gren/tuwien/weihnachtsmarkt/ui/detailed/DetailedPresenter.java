@@ -31,30 +31,30 @@ public class DetailedPresenter extends BasePresenter<DetailedMvpView>{
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void loadMarkt(String key) {
+    void loadMarkt(String key) {
         checkViewAttached();
         RxUtil.unsubscribe(mSubscription);
         mSubscription = mDataManager.getMarkt(key)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<Weihnachtsmarkt>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                        getMvpView().showError();
-                    }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(new Subscriber<Weihnachtsmarkt>() {
+                @Override
+                public void onCompleted() {
+                }
+                @Override
+                public void onError(Throwable e) {
+                    getMvpView().showError();
+                }
 
-                    @Override
-                    public void onNext(Weihnachtsmarkt markt) {
-                        if (markt == null) {
-                            getMvpView().showError();
-                        } else {
-                            getMvpView().showAdventmarkt(markt);
-                        }
+                @Override
+                public void onNext(Weihnachtsmarkt markt) {
+                    if (markt == null) {
+                        getMvpView().showError();
+                    } else {
+                        getMvpView().showAdventmarkt(markt);
                     }
-                });
+                }
+            });
     }
 
 }

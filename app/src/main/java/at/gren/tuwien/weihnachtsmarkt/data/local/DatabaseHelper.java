@@ -26,7 +26,6 @@ public class DatabaseHelper {
 
     private static BriteDatabase mDb = null;
 
-
     @Inject
     public DatabaseHelper(DbOpenHelper dbOpenHelper) {
         SqlBrite.Builder briteBuilder = new SqlBrite.Builder();

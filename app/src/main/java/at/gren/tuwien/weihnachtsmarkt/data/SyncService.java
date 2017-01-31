@@ -59,13 +59,11 @@ public class SyncService extends Service {
                 .subscribe(new Observer<Weihnachtsmarkt>() {
                     @Override
                     public void onCompleted() {
-                        EventBus.getDefault().post(new SyncCompletedEvent());
                         stopSelf(startId);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        EventBus.getDefault().post(new SyncCompletedEvent());
                         stopSelf(startId);
                     }
 

@@ -39,32 +39,32 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void loadMärkte() {
+    void loadMärkte() {
         checkViewAttached();
         RxUtil.unsubscribe(mSubscription);
         mSubscription = mDataManager.getMärkte()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<Weihnachtsmarkt>>() {
-                    @Override
-                    public void onCompleted() {
-                    }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(new Subscriber<List<Weihnachtsmarkt>>() {
+                @Override
+                public void onCompleted() {
+                }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Timber.e(e, "Fehler beim Laden der Weihnachtsmärkte.");
-                        getMvpView().showError();
-                    }
+                @Override
+                public void onError(Throwable e) {
+                    Timber.e(e, "Fehler beim Laden der Weihnachtsmärkte.");
+                    getMvpView().showError();
+                }
 
-                    @Override
-                    public void onNext(List<Weihnachtsmarkt> märkte) {
-                        if (märkte.isEmpty()) {
-                            getMvpView().showAdventmaerkteEmpty();
-                        } else {
-                            getMvpView().showAdventmaerkte(märkte);
-                        }
+                @Override
+                public void onNext(List<Weihnachtsmarkt> märkte) {
+                    if (märkte.isEmpty()) {
+                        getMvpView().showAdventmaerkteEmpty();
+                    } else {
+                        getMvpView().showAdventmaerkte(märkte);
                     }
-                });
+                }
+            });
     }
 
     void storeLocation(Location lastLocation) {

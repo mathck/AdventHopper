@@ -123,6 +123,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
 
     @Subscribe
     public void syncCompleted(SyncCompletedEvent event) {
+        mMainPresenter.loadMärkte();
         MainActivity.this.runOnUiThread(() -> {
             mSwipeRefreshLayout.setRefreshing(false);
             Snackbar.make(mSwipeRefreshLayout, "Weihnachtsmärkte wurden geladen!", Snackbar.LENGTH_LONG).show();
@@ -172,7 +173,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
     @Override
     public void showError() {
         DialogFactory.createGenericErrorDialog(this, getString(R.string.error_loading_list))
-                .show();
+            .show();
     }
 
     @Override

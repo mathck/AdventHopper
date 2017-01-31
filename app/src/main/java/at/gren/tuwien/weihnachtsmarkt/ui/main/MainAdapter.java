@@ -104,8 +104,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
             holder.navigationLayout.setVisibility(View.INVISIBLE);
         }
 
-        if(markt.properties().AVERAGERATING() != null && markt.properties().AVERAGERATING() != 0)
+        if(markt.properties().AVERAGERATING() != null && markt.properties().AVERAGERATING() != 0) {
             holder.ratingBar.setRating(Float.parseFloat(Double.toString(markt.properties().AVERAGERATING())));
+            holder.ratingBar.setVisibility(View.VISIBLE);
+        }
         else
             holder.ratingBar.setVisibility(View.INVISIBLE);
 

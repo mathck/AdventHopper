@@ -55,22 +55,22 @@ public class SyncService extends Service {
             mSubscription.unsubscribe();
 
         mSubscription = mDataManager.syncMärkte()
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Weihnachtsmarkt>() {
-                    @Override
-                    public void onCompleted() {
-                        stopSelf(startId);
-                    }
+            .subscribeOn(Schedulers.io())
+            .subscribe(new Observer<Weihnachtsmarkt>() {
+                @Override
+                public void onCompleted() {
+                    stopSelf(startId);
+                }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        stopSelf(startId);
-                    }
+                @Override
+                public void onError(Throwable e) {
+                    stopSelf(startId);
+                }
 
-                    @Override
-                    public void onNext(Weihnachtsmarkt markt) {
-                    }
-                });
+                @Override
+                public void onNext(Weihnachtsmarkt markt) {
+                }
+            });
 
         mDataManager.syncRatings();
 

@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
@@ -130,6 +131,7 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
 
                 Button updateButton = (Button) rankDialog.findViewById(R.id.rank_dialog_button);
                 updateButton.setOnClickListener((View w) -> {
+                    Toast.makeText(w.getContext(), "Sie haben " + (int) dialogRatingBar.getRating() + " Sterne vergeben!", Toast.LENGTH_LONG).show();
                     mDataManager.setRating(christmasMarktId, Math.round(dialogRatingBar.getRating()));
                     rankDialog.dismiss();
                 });

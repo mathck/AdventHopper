@@ -4,7 +4,7 @@ import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 
 public final class DistanceUtil {
 
-    private static String getDistance (double lat_a, double lng_a, double lat_b, double lng_b)
+    public static int getDistance (double lat_a, double lng_a, double lat_b, double lng_b)
     {
         double earthRadius = 6371;
         double latDiff = Math.toRadians(lat_b - lat_a);
@@ -17,9 +17,7 @@ public final class DistanceUtil {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double distance = earthRadius * c;
 
-        int meterConversion = (int) Math.round(distance * 1000);
-
-        return Integer.toString(meterConversion);
+        return (int) Math.round(distance * 1000);
     }
 
     public static String getDistanceToMarket(double userLat, double userLong, Weihnachtsmarkt markt) {
@@ -27,7 +25,7 @@ public final class DistanceUtil {
         double marktLocationLatitude = markt.geometry().coordinates().get(0);
         double marktLocationLongitude = markt.geometry().coordinates().get(1);
 
-        String distance = DistanceUtil.getDistance( marktLocationLatitude,
+        int distance = DistanceUtil.getDistance( marktLocationLatitude,
                                                     marktLocationLongitude,
                                                     userLat,
                                                     userLong);

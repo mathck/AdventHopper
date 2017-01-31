@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -35,6 +37,8 @@ import at.gren.tuwien.weihnachtsmarkt.injection.ApplicationContext;
 import at.gren.tuwien.weihnachtsmarkt.ui.detailed.DetailedActivity;
 import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
+import at.gren.tuwien.weihnachtsmarkt.util.sort.CompareName;
+import at.gren.tuwien.weihnachtsmarkt.util.sort.CompareRating;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -45,10 +49,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
     private final double mUserLocationLatitude;
     private final double mUserLocationLongitude;
 
-    FirebaseStorage mStorage;
     private StorageReference mStorageRef;
 
-    private final Comparator<Weihnachtsmarkt> mComparator;
+    private Comparator<Weihnachtsmarkt> mComparator;
 
     @Inject
     public MainAdapter(DataManager dataManager, @ApplicationContext Context context) {
@@ -58,12 +61,16 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         this.mUserLocationLatitude = dataManager.getPreferencesHelper().getLocationLatitude();
         this.mUserLocationLongitude = dataManager.getPreferencesHelper().getLocationLongitude();
 
-        mStorage = FirebaseStorage.getInstance();
+        FirebaseStorage mStorage = FirebaseStorage.getInstance();
         mStorageRef = mStorage.getReferenceFromUrl("gs://advent-hopper.appspot.com");
 
-        mComparator = (a, b) -> a.properties().BEZEICHNUNG().compareTo(b.properties().BEZEICHNUNG());
+        mComparator = new CompareRating();
 
         EventBus.getDefault().register(this);
+    }
+
+    public void setComparator(Comparator<Weihnachtsmarkt> comparator) {
+        this.mComparator = comparator;
     }
 
     @Override

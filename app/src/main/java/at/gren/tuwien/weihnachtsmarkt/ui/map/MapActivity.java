@@ -136,7 +136,7 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mBottom_sheet_title.setText(mMarkerMap.get(mCurrentMarker).properties().BEZEICHNUNG());
         mBottom_sheet_ratingBar.setRating(Float.parseFloat(Double.toString(mMarkerMap.get(mCurrentMarker).properties().AVERAGERATING())));
-        mBottom_sheet_rating.setText(Double.toString(mMarkerMap.get(mCurrentMarker).properties().AVERAGERATING()));
+        mBottom_sheet_rating.setText(String.format("%.1f",mMarkerMap.get(mCurrentMarker).properties().AVERAGERATING()));
         mBottom_sheet_address.setText(mMarkerMap.get(mCurrentMarker).properties().ADRESSE());
         mBottom_sheet_date.setText(mMarkerMap.get(mCurrentMarker).properties().DATUM());
         mBottom_sheet_openingHours.setText(mMarkerMap.get(mCurrentMarker).properties().OEFFNUNGSZEIT());

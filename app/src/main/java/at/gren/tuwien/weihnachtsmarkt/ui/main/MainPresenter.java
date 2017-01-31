@@ -20,12 +20,12 @@ import timber.log.Timber;
 @ConfigPersistent
 public class MainPresenter extends BasePresenter<MainMvpView> {
 
-    private final DataManager mDataManager;
+    public final DataManager dataManager;
     private Subscription mSubscription;
 
     @Inject
     public MainPresenter(DataManager dataManager) {
-        mDataManager = dataManager;
+        this.dataManager = dataManager;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
     void loadMärkte() {
         checkViewAttached();
         RxUtil.unsubscribe(mSubscription);
-        mSubscription = mDataManager.getMärkte()
+        mSubscription = dataManager.getMärkte()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<List<Weihnachtsmarkt>>() {
@@ -68,6 +68,6 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
     }
 
     void storeLocation(Location lastLocation) {
-        mDataManager.getPreferencesHelper().storeLocation(lastLocation);
+        dataManager.getPreferencesHelper().storeLocation(lastLocation);
     }
 }

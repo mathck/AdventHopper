@@ -23,7 +23,7 @@ public final class DeviceIdUtils {
         final String try1 = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
         if(try1 != null && !try1.isEmpty()) {
             Timber.d("DeviceId: Try 1");
-            mDataManager.getPreferencesHelper().storeDeviceId(try1);
+            dataManager.getPreferencesHelper().storeDeviceId(try1);
             return try1;
         }*/
 

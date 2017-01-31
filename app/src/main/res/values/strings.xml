@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Advent Hopper</string>
 
-    <string name="title_cardView">In deiner Nähe</string>
+    <string name="title_cardView">Märkte</string>
     <string name="title_bestRated">Beliebte</string>
-    <string name="title_map">Karte</string>
+    <string name="title_map">Kartenansicht</string>
     <string name="others">Sonstiges</string>
     <string name="settings">Einstellungen</string>
     <string name="opensource">Open Source</string>
@@ -40,4 +40,7 @@
     <string name="default_market_address">Adresse</string>
     <string name="default_market_hours">Öffnungszeiten</string>
     <string name="default_market_link">Link</string>
+    <string name="action_sort">Sortieren</string>
+    <string name="action_sort_distance">Distanz</string>
+    <string name="action_sort_rating">Bewertung</string>
 </resources>

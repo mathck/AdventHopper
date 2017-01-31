@@ -37,11 +37,11 @@ public class DataManagerTest {
     @Mock PreferencesHelper mMockPreferencesHelper;
     @Mock RibotsService mMockRibotsService;
     @Mock GovernmentDataService mMockGovernmentDataService;
-    private DataManager mDataManager;
+    private DataManager dataManager;
 
     @Before
     public void setUp() {
-        mDataManager = new DataManager(mMockRibotsService, mMockGovernmentDataService, mMockPreferencesHelper,
+        dataManager = new DataManager(mMockRibotsService, mMockGovernmentDataService, mMockPreferencesHelper,
                 mMockDatabaseHelper);
     }
 
@@ -52,7 +52,7 @@ public class DataManagerTest {
         stubSyncRibotsHelperCalls(ribots);
 
         TestSubscriber<Ribot> result = new TestSubscriber<>();
-        mDataManager.syncRibots().subscribe(result);
+        dataManager.syncRibots().subscribe(result);
         result.assertNoErrors();
         result.assertReceivedOnNext(ribots);
     }
@@ -63,7 +63,7 @@ public class DataManagerTest {
                 TestDataFactory.makeRibot("r2"));
         stubSyncRibotsHelperCalls(ribots);
 
-        mDataManager.syncRibots().subscribe();
+        dataManager.syncRibots().subscribe();
         // Verify right calls to helper methods
         verify(mMockRibotsService).getRibots();
         verify(mMockDatabaseHelper).setRibots(ribots);
@@ -74,7 +74,7 @@ public class DataManagerTest {
         when(mMockRibotsService.getRibots())
                 .thenReturn(Observable.<List<Ribot>>error(new RuntimeException()));
 
-        mDataManager.syncRibots().subscribe(new TestSubscriber<Ribot>());
+        dataManager.syncRibots().subscribe(new TestSubscriber<Ribot>());
         // Verify right calls to helper methods
         verify(mMockRibotsService).getRibots();
         verify(mMockDatabaseHelper, never()).setRibots(anyListOf(Ribot.class));

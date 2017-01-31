@@ -10,20 +10,21 @@ import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 
 public class CompareDistance implements Comparator<Weihnachtsmarkt> {
 
-    private final DataManager mDataManager;
 
-    @Inject
-    public CompareDistance(DataManager dataManager) {
-        mDataManager = dataManager;
+    private boolean hasLocation;
+    private double userLat;
+    private double userLong;
+
+    public CompareDistance(boolean hasLocation, double userLat, double userLong) {
+        this.hasLocation = hasLocation;
+        this.userLat = userLat;
+        this.userLong = userLong;
     }
 
     @Override
     public int compare(Weihnachtsmarkt markt1, Weihnachtsmarkt markt2) {
 
-        if(mDataManager.getPreferencesHelper().hasLocation()) {
-
-            double userLat = mDataManager.getPreferencesHelper().getLocationLatitude();
-            double userLong = mDataManager.getPreferencesHelper().getLocationLongitude();
+        if(hasLocation) {
 
             Double distance1 = (double) DistanceUtil.getDistance(
                     userLat,
@@ -34,8 +35,8 @@ public class CompareDistance implements Comparator<Weihnachtsmarkt> {
             Double distance2 = (double) DistanceUtil.getDistance(
                     userLat,
                     userLong,
-                    markt1.geometry().coordinates().get(0),
-                    markt1.geometry().coordinates().get(1));
+                    markt2.geometry().coordinates().get(0),
+                    markt2.geometry().coordinates().get(1));
 
             return distance1.compareTo(distance2);
         }

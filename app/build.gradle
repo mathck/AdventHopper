@@ -1,3 +1,5 @@
+import junit.framework.Test
+
 apply plugin: 'com.android.application'
 apply from: '../config/quality/quality.gradle'
 apply plugin: 'com.github.triplet.play'
@@ -89,7 +91,7 @@ play {
 
 dependencies {
     final PLAY_SERVICES_VERSION = '10.0.1'
-    final SUPPORT_LIBRARY_VERSION = '25.1.1'
+    final SUPPORT_LIBRARY_VERSION = '25.1.0'
     final RETROFIT_VERSION = '2.1.0'
     final DAGGER_VERSION = '2.5'
     final DEXMAKER_VERSION = '1.4'
@@ -194,7 +196,7 @@ dependencies {
     annotationProcessor 'com.ryanharter.auto.value:auto-value-parcel:0.2.4-rc2'
     annotationProcessor 'com.squareup:javapoet:1.7.0'
     provided 'org.glassfish:javax.annotation:10.0-b28'
-    compile 'com.android.support:design:25.1.1'
+    compile "com.android.support:design:$SUPPORT_LIBRARY_VERSION"
     compile 'com.google.android.gms:play-services-maps:10.0.1'
 
     // FirebaseUI Storage only

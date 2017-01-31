@@ -1,6 +1,8 @@
 package at.gren.tuwien.weihnachtsmarkt.ui.main;
 
 import android.Manifest;
+import android.app.SearchManager;
+import android.app.SearchableInfo;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
@@ -14,6 +16,8 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -39,6 +43,8 @@ import at.gren.tuwien.weihnachtsmarkt.ui.navigation.NavigationDrawer;
 import at.gren.tuwien.weihnachtsmarkt.util.DialogFactory;
 import at.gren.tuwien.weihnachtsmarkt.util.events.LocationUpdatedEvent;
 import at.gren.tuwien.weihnachtsmarkt.util.events.SyncCompletedEvent;
+import at.gren.tuwien.weihnachtsmarkt.util.sort.CompareDistance;
+import at.gren.tuwien.weihnachtsmarkt.util.sort.CompareRating;
 import at.gren.tuwien.weihnachtsmarkt.widgets.EmptyRecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -191,6 +197,24 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_sort_distance:
+                mMainAdapter.setComparator(new CompareDistance(mMainPresenter.dataManager.getPreferencesHelper().hasLocation(),
+                        mMainPresenter.dataManager.getPreferencesHelper().getLocationLatitude(),
+                        mMainPresenter.dataManager.getPreferencesHelper().getLocationLongitude()));
+                mMainAdapter.notifyDataSetChanged();
+                return true;
+            case R.id.action_sort_rating:
+                mMainAdapter.setComparator(new CompareRating());
+                mMainAdapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
@@ -199,6 +223,32 @@ public class MainActivity extends BaseActivity implements MainMvpView, GoogleApi
         searchView.setOnQueryTextListener(this);
 
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+        SearchView searchViewAction = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchableInfo searchableInfo = searchManager.getSearchableInfo(getComponentName());
+
+        searchViewAction.setSearchableInfo(searchableInfo);
+        searchViewAction.setIconifiedByDefault(true);
+
+        EditText searchEditText = (EditText)searchViewAction.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchEditText.setTextColor(getResources().getColor(R.color.white));
+        searchEditText.setHintTextColor(getResources().getColor(R.color.white));
+
+        ImageView searchMagIcon = (ImageView)searchViewAction.findViewById(android.support.v7.appcompat.R.id.search_button);
+        searchMagIcon.setImageResource(R.drawable.ic_search_white_24dp);
+
+        //TextView action_sort_distance = (TextView) menu.findItem(R.id.action_sort_distance).getActionView();
+        //TextView action_sort_rating = (TextView) menu.findItem(R.id.action_sort_rating).getActionView();
+        //action_sort_distance.setTextColor(Color.BLACK);
+        //action_sort_rating.setTextColor(Color.BLACK);
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override

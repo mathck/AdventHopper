@@ -29,9 +29,10 @@ public class NavigationDrawer {
             .withActivity(context)
             .withToolbar(toolbar)
             .withHeader(R.layout.drawer_header)
+            .withActionBarDrawerToggleAnimated(true)
+            .withActionBarDrawerToggle(true)
             .addDrawerItems(
-                    createNavbarItem(context, R.string.title_cardView, new IconicsDrawable(context).icon(GoogleMaterial.Icon.gmd_place)),
-                    createNavbarItem(context, R.string.title_bestRated, new IconicsDrawable(context).icon(GoogleMaterial.Icon.gmd_star)),
+                    createNavbarItem(context, R.string.title_cardView, new IconicsDrawable(context).icon(GoogleMaterial.Icon.gmd_home)),
                     createNavbarItem(context, R.string.title_map, new IconicsDrawable(context).icon(GoogleMaterial.Icon.gmd_map)),
                     new DividerDrawerItem(),
                     new SecondaryDrawerItem().withName(R.string.others),
@@ -52,29 +53,24 @@ public class NavigationDrawer {
                         context.startActivity(intent);
                         break;
                     case 2:
-                        intent = new Intent(context, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        context.startActivity(intent);
-                        break;
-                    case 3:
                         intent = new Intent(context, MapActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(intent);
                         break;
-                    case 4:
+                    case 3:
                         break;
-                    case 5:
+                    case 4:
                         intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/mathck/AdventHopper"));
                         context.startActivity(intent);
                         break;
-                    case 6:
+                    case 5:
                         intent = new Intent(Intent.ACTION_SEND);
                         intent.putExtra(Intent.EXTRA_TEXT,
                                 context.getString(R.string.recommend_txt) + "https://play.google.com/store/apps/details?id=at.gren.tuwien.weihnachtsmarkt");
                         intent.setType("text/plain");
                         context.startActivity(intent);
                         break;
-                    case 7:
+                    case 6:
                         ShareCompat.IntentBuilder.from(context)
                                 .setType("message/rfc822")
                                 .addEmailTo("mateusz@gren.at")

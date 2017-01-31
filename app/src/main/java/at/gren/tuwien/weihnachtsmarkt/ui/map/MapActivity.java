@@ -1,11 +1,11 @@
 package at.gren.tuwien.weihnachtsmarkt.ui.map;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.StringRes;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
@@ -18,10 +18,10 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,20 +35,24 @@ import at.gren.tuwien.weihnachtsmarkt.ui.navigation.NavigationDrawer;
 import at.gren.tuwien.weihnachtsmarkt.util.DialogFactory;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.RuntimePermissions;
 
+@RuntimePermissions
 public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
-    @Inject MapPresenter mMapPresenter;
+    @Inject
+    MapPresenter mMapPresenter;
 
-    @BindView(R.id.map_toolbar) Toolbar mToolbar;
-    @BindView(R.id.bottom_sheet) NestedScrollView mBottomSheet;
-    @BindView(R.id.bottom_sheet_title) TextView mBottom_sheet_title;
-    @BindView(R.id.bottom_sheet_ratingBar) RatingBar mBottom_sheet_ratingBar;
-    @BindView(R.id.bottom_sheet_rating) TextView mBottom_sheet_rating;
-    @BindView(R.id.bottom_sheet_address) TextView mBottom_sheet_address;
-    @BindView(R.id.bottom_sheet_date) TextView mBottom_sheet_date;
-    @BindView(R.id.bottom_sheet_openingHours) TextView mBottom_sheet_openingHours;
-    @BindView(R.id.bottom_sheet_weblink) TextView mBottom_sheet_weblink;
+    @BindView(R.id.map_toolbar)    Toolbar mToolbar;
+    @BindView(R.id.bottom_sheet)    NestedScrollView mBottomSheet;
+    @BindView(R.id.bottom_sheet_title)    TextView mBottom_sheet_title;
+    @BindView(R.id.bottom_sheet_ratingBar)    RatingBar mBottom_sheet_ratingBar;
+    @BindView(R.id.bottom_sheet_rating)    TextView mBottom_sheet_rating;
+    @BindView(R.id.bottom_sheet_address)    TextView mBottom_sheet_address;
+    @BindView(R.id.bottom_sheet_date)    TextView mBottom_sheet_date;
+    @BindView(R.id.bottom_sheet_openingHours)    TextView mBottom_sheet_openingHours;
+    @BindView(R.id.bottom_sheet_weblink)    TextView mBottom_sheet_weblink;
 
     private GoogleMap mGoogleMap;
     private BottomSheetBehavior mBottomSheetBehavior;
@@ -75,16 +79,25 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
         mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
         mBottomSheetBehavior.setHideable(true);
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        mBottomSheetBehavior.setPeekHeight(450);
+        mBottomSheetBehavior.setPeekHeight(BottomSheetBehavior.PEEK_HEIGHT_AUTO);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.mGoogleMap = googleMap;
         LatLng latLng = new LatLng(48.209206, 16.372778);
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+        showUserLocation(mGoogleMap);
         mMapPresenter.loadMärkte();
         mGoogleMap.setOnMarkerClickListener(this);
+    }
+
+    @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    public void showUserLocation(GoogleMap googleMap) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            return;
+
+        googleMap.setMyLocationEnabled(true);
     }
 
     /***** MVP View methods implementation *****/
@@ -105,32 +118,11 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
         DialogFactory.createGenericErrorDialog(this, "Es gab ein Problem beim Laden der Karte").show();
     }
 
-    private int mNavbarItemId = 1;
-    private PrimaryDrawerItem createNavbarItem(@StringRes int stringId, @DrawableRes int iconId) {
-        return new PrimaryDrawerItem()
-                .withIdentifier(mNavbarItemId++)
-                .withName(stringId)
-                .withIcon(iconId)
-                .withIconTintingEnabled(true)
-                .withIconColor(getResources().getColor(R.color.grey_600))
-                .withSelectedIconColor(getResources().getColor(R.color.blue_500));
-    }
-
-    private PrimaryDrawerItem createNavbarItem(@StringRes int stringId, Drawable drawable) {
-        return new PrimaryDrawerItem()
-                .withIdentifier(mNavbarItemId++)
-                .withName(stringId)
-                .withIcon(drawable)
-                .withIconTintingEnabled(true)
-                .withIconColor(getResources().getColor(R.color.grey_600))
-                .withSelectedIconColor(getResources().getColor(R.color.blue_500));
-    }
-
     @Override
     public boolean onMarkerClick(Marker newMarker) {
-        if(mCurrentMarker != null){
+        if(mCurrentMarker != null)
             mCurrentMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        }
+
         mCurrentMarker = newMarker;
         mCurrentMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -141,11 +133,27 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
         mBottom_sheet_date.setText(mMarkerMap.get(mCurrentMarker).properties().DATUM());
         mBottom_sheet_openingHours.setText(mMarkerMap.get(mCurrentMarker).properties().OEFFNUNGSZEIT());
         mBottom_sheet_weblink.setText(mMarkerMap.get(mCurrentMarker).properties().WEBLINK1());
+
+        /*
+        if(mMapPresenter.userHasLocation())
+        {
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            builder.include(new LatLng(mMapPresenter.getUserLat(), mMapPresenter.getUserLng()));
+            builder.include(mCurrentMarker.getPosition());
+            LatLngBounds bounds = builder.build();
+
+            mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 6));
+        }
+        else {
+        */
+            mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mCurrentMarker.getPosition(), 18));
+        //}
+
         return true;
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent event){
+    public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (mBottomSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED || mBottomSheetBehavior.getState()==BottomSheetBehavior.STATE_COLLAPSED) {
 

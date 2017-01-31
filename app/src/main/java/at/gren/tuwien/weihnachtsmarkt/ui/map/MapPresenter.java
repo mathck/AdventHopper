@@ -37,7 +37,7 @@ public class MapPresenter  extends BasePresenter<MapMvpView> {
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void loadMärkte() {
+    void loadMärkte() {
         checkViewAttached();
         RxUtil.unsubscribe(mSubscription);
         mSubscription = mDataManager.getMärkte()
@@ -65,5 +65,17 @@ public class MapPresenter  extends BasePresenter<MapMvpView> {
 
     void storeLocation(Location lastLocation) {
         mDataManager.getPreferencesHelper().storeLocation(lastLocation);
+    }
+
+    boolean userHasLocation() {
+        return mDataManager.getPreferencesHelper().hasLocation();
+    }
+
+    double getUserLat() {
+        return mDataManager.getPreferencesHelper().getLocationLatitude();
+    }
+
+    double getUserLng() {
+        return mDataManager.getPreferencesHelper().getLocationLongitude();
     }
 }

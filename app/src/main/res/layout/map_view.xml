@@ -44,8 +44,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="24dp">
+            android:layout_height="match_parent">
 
             <TextView
                 android:text="@string/default_market_name"
@@ -53,7 +52,7 @@
                 android:transitionName="marketTitle"
                 android:layout_height="wrap_content"
                 android:id="@+id/bottom_sheet_title"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textColor="@color/black"
                 android:paddingBottom="8dp"
                 android:alpha="0.87"

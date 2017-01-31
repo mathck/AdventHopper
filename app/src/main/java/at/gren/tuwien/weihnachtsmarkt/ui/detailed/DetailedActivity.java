@@ -180,6 +180,6 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
         Marker marker = googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(mMarkt.geometry().coordinates().get(0), mMarkt.geometry().coordinates().get(1)))
                 .title(mMarkt.properties().BEZEICHNUNG()));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 14));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 18));
     }
 }

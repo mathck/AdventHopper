@@ -1,14 +1,19 @@
 package at.gren.tuwien.weihnachtsmarkt.ui.map;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -53,6 +58,7 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
     @BindView(R.id.bottom_sheet_date)    TextView mBottom_sheet_date;
     @BindView(R.id.bottom_sheet_openingHours)    TextView mBottom_sheet_openingHours;
     @BindView(R.id.bottom_sheet_weblink)    TextView mBottom_sheet_weblink;
+    @BindView(R.id.floatingActionButton)    FloatingActionButton mFloatingActionButton;
 
     private GoogleMap mGoogleMap;
     private BottomSheetBehavior mBottomSheetBehavior;
@@ -79,7 +85,18 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
         mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
         mBottomSheetBehavior.setHideable(true);
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        mBottomSheetBehavior.setPeekHeight(BottomSheetBehavior.PEEK_HEIGHT_AUTO);
+        mBottomSheetBehavior.setPeekHeight(400);
+
+        Context context = this;
+        mFloatingActionButton.setOnClickListener((View v) -> {
+            Intent navigationIntent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("google.navigation:q=" +
+                            mMarkerMap.get(mCurrentMarker).geometry().coordinates().get(0) + "," +
+                            mMarkerMap.get(mCurrentMarker).geometry().coordinates().get(1) +
+                            "&mode=w"));
+
+            context.startActivity(navigationIntent);
+        });
     }
 
     @Override
@@ -109,7 +126,7 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
             Marker marker = mGoogleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(weihnachtsmarkt.geometry().coordinates().get(0), weihnachtsmarkt.geometry().coordinates().get(1)))
                     .title(weihnachtsmarkt.properties().BEZEICHNUNG()));
-            mMarkerMap.put(marker,weihnachtsmarkt);
+            mMarkerMap.put(marker, weihnachtsmarkt);
         }
     }
 

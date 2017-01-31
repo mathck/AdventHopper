@@ -150,7 +150,7 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
             mDistance.setText(distance);
         }
 
-        final Context context = this;
+        Context context = this;
         mFloatingActionButton.setOnClickListener((View v) -> {
                 Intent navigationIntent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse("google.navigation:q=" +

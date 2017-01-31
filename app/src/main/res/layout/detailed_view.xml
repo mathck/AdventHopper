@@ -73,7 +73,7 @@
         android:textColorHighlight="@color/white"
         android:elevation="10dp" />
 
-    <android.support.v4.widget.NestedScrollView
+    <at.gren.tuwien.weihnachtsmarkt.widgets.MapScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -286,6 +286,6 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </at.gren.tuwien.weihnachtsmarkt.widgets.MapScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

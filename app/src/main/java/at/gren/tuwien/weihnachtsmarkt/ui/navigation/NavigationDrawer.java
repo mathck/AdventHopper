@@ -48,11 +48,19 @@ public class NavigationDrawer {
                 switch ((int) drawerItem.getIdentifier()) {
 
                     case 1:
+
+                        if (context instanceof MainActivity)
+                            return false;
+
                         intent = new Intent(context, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(intent);
                         break;
                     case 2:
+
+                        if (context instanceof MapActivity)
+                            return false;
+
                         intent = new Intent(context, MapActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(intent);

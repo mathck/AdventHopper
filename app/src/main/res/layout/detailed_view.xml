@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Headline"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
@@ -83,19 +84,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="24dp">
-
-            <TextView
-                android:text="@string/default_market_name"
-                android:layout_width="match_parent"
-                android:transitionName="marketTitle"
-                android:layout_height="wrap_content"
-                android:id="@+id/title"
-                android:textSize="24sp"
-                android:textColor="@color/black"
-                android:paddingBottom="8dp"
-                android:alpha="0.87"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp" />
 
             <RelativeLayout
                 android:orientation="horizontal"

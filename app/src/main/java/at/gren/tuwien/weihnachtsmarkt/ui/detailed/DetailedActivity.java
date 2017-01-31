@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.graphics.drawable.DrawableCompat;
 
@@ -41,6 +43,7 @@ import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static at.gren.tuwien.weihnachtsmarkt.R.id.collapsing_toolbar;
 import static at.gren.tuwien.weihnachtsmarkt.R.id.ratingBar;
 
 public class DetailedActivity extends BaseActivity implements DetailedMvpView,OnMapReadyCallback {
@@ -52,8 +55,7 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
     @Inject DataManager mDataManager;
 
     @BindView(R.id.detailed_toolbar) Toolbar mdetailed_toolbar;
-    @BindView(ratingBar) RatingBar mRatingBar;
-    @BindView(R.id.title) TextView mTitle;
+    @BindView(R.id.ratingBar) RatingBar mRatingBar;
     @BindView(R.id.address) TextView mAddress;
     @BindView(R.id.openingHours) TextView mOpeningHours;
     @BindView(R.id.weblink) TextView mWeblink;
@@ -62,6 +64,8 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
     @BindView(R.id.distance) TextView mDistance;
     @BindView(R.id.floatingActionButton) FloatingActionButton mFloatingActionButton;
     @BindView(R.id.marketImage) ImageView mMarketImage;
+    @BindView(R.id.collapsing_toolbar)  CollapsingToolbarLayout collapsing_toolbar;
+    @BindView(R.id.app_bar_layout)   AppBarLayout app_bar_layout;
 
     private Weihnachtsmarkt mMarkt;
 
@@ -90,6 +94,14 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
 
         mStorage = FirebaseStorage.getInstance();
         mStorageRef = mStorage.getReferenceFromUrl("gs://advent-hopper.appspot.com");
+
+        // hide distance when toolbar is collapsed
+        app_bar_layout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+            if (verticalOffset == 0)
+                mDistance.setVisibility(View.VISIBLE);
+            else
+                mDistance.setVisibility(View.GONE);
+        });
     }
 
     /***** MVP View methods implementation *****/
@@ -107,7 +119,8 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
                 .crossFade()
                 .into(mMarketImage);
 
-        mTitle.setText(markt.properties().BEZEICHNUNG());
+        collapsing_toolbar.setTitle(markt.properties().BEZEICHNUNG());
+
         mAddress.setText(markt.properties().ADRESSE());
 
         mOpeningHours.setText(markt.properties().OEFFNUNGSZEIT().replace(",<br />", "\n"));

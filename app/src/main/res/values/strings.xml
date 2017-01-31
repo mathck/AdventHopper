@@ -7,7 +7,8 @@
     <string name="others">Sonstiges</string>
     <string name="settings">Einstellungen</string>
     <string name="opensource">Open Source</string>
-    <string name="contact">Kontakt</string>
+    <string name="recommend">App empfehlen</string>
+    <string name="contact">Schreib uns</string>
 
     <string name="action_settings">Einstellungen</string>
 
@@ -22,4 +23,6 @@
     <string name="action_search">Suchen</string>
     <string name="rate">Bewerten</string>
     <string name="your_rating">Deine Bewertung</string>
+    <string name="recommend_txt">Mit Advent Hopper hast du eine Übersicht über alle Adventmärkte in Wien:</string>
+    <string name="send_mail">\"E-Mail versenden mit ...\"</string>
 </resources>

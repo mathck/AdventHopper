@@ -37,6 +37,7 @@ public class NavigationDrawer {
                     new SecondaryDrawerItem().withName(R.string.others),
                     createNavbarItem(context, R.string.settings, new IconicsDrawable(context).icon(GoogleMaterial.Icon.gmd_settings)).withEnabled(false).withBadge("bald verfügbar!"),
                     createNavbarItem(context, R.string.opensource, new IconicsDrawable(context).icon(GoogleMaterial.Icon.gmd_code)),
+                    createNavbarItem(context, R.string.recommend, new IconicsDrawable(context).icon(GoogleMaterial.Icon.gmd_favorite)),
                     createNavbarItem(context, R.string.contact, new IconicsDrawable(context).icon(GoogleMaterial.Icon.gmd_mail))
             )
             .withOnDrawerItemClickListener((view, position, drawerItem) -> {
@@ -67,11 +68,18 @@ public class NavigationDrawer {
                         context.startActivity(intent);
                         break;
                     case 6:
+                        intent = new Intent(Intent.ACTION_SEND);
+                        intent.putExtra(Intent.EXTRA_TEXT,
+                                context.getString(R.string.recommend_txt) + "https://play.google.com/store/apps/details?id=at.gren.tuwien.weihnachtsmarkt");
+                        intent.setType("text/plain");
+                        context.startActivity(intent);
+                        break;
+                    case 7:
                         ShareCompat.IntentBuilder.from(context)
                                 .setType("message/rfc822")
                                 .addEmailTo("mateusz@gren.at")
                                 .setSubject("Weihnachtsmarkt App")
-                                .setChooserTitle("E-Mail versenden mit ...")
+                                .setChooserTitle(context.getString(R.string.send_mail))
                                 .startChooser();
                         break;
                     default:

@@ -40,14 +40,12 @@ import at.gren.tuwien.weihnachtsmarkt.R;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.ui.base.BaseActivity;
 import at.gren.tuwien.weihnachtsmarkt.ui.main.MainActivity;
+import at.gren.tuwien.weihnachtsmarkt.ui.navigation.NavigationDrawer;
 import at.gren.tuwien.weihnachtsmarkt.util.DialogFactory;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-/**
- * Created by Michael on 30.01.2017.
- */
 public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     @Inject MapPresenter mMapPresenter;
@@ -79,70 +77,9 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
         MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
         mapFragment.getMapAsync(this);
 
-        final Context context = this;
-
-        Drawer result = new DrawerBuilder()
-                .withActivity(this)
-                .withToolbar(mToolbar)
-                .withHeader(R.layout.drawer_header)
-                .addDrawerItems(
-                        createNavbarItem(R.string.title_cardView, new IconicsDrawable(this).icon(GoogleMaterial.Icon.gmd_place)),
-                        createNavbarItem(R.string.title_bestRated, new IconicsDrawable(this).icon(GoogleMaterial.Icon.gmd_star)),
-                        createNavbarItem(R.string.title_map, new IconicsDrawable(this).icon(GoogleMaterial.Icon.gmd_map)),
-                        new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName(R.string.others),
-                        createNavbarItem(R.string.settings, new IconicsDrawable(this).icon(GoogleMaterial.Icon.gmd_settings)).withEnabled(false).withBadge("bald verfügbar!"),
-                        createNavbarItem(R.string.opensource, new IconicsDrawable(this).icon(GoogleMaterial.Icon.gmd_code)),
-                        createNavbarItem(R.string.contact, new IconicsDrawable(this).icon(GoogleMaterial.Icon.gmd_mail))
-                )
-                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-
-                    Intent intent;
-
-                    switch ((int) drawerItem.getIdentifier()) {
-
-                        case 1:
-                            intent = new Intent(context, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            context.startActivity(intent);
-                            break;
-                        case 2:
-                            intent = new Intent(context, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            context.startActivity(intent);
-                            break;
-                        case 3:
-                            intent = new Intent(context, MapActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            context.startActivity(intent);
-                            break;
-                        case 4:
-                            break;
-                        case 5:
-                            intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/mathck/AdventHopper"));
-                            startActivity(intent);
-                            break;
-                        case 6:
-                            ShareCompat.IntentBuilder.from(this)
-                                    .setType("message/rfc822")
-                                    .addEmailTo("mateusz@gren.at")
-                                    .setSubject("Weihnachtsmarkt App")
-                                    .setChooserTitle("E-Mail versenden mit ...")
-                                    .startChooser();
-                            break;
-                        default:
-                            intent = new Intent(context, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            context.startActivity(intent);
-
-                            break;
-                    }
-
-                    return true;
-                })
-                .build();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
+        Drawer drawer = new NavigationDrawer().build(this, mToolbar);
+        drawer.deselect();
+        drawer.getDrawerItem(3).withSetSelected(true);
 
         mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
         mBottomSheetBehavior.setHideable(true);
@@ -152,7 +89,7 @@ public class MapActivity extends BaseActivity implements MapMvpView, OnMapReadyC
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.mGoogleMap = googleMap;
-        LatLng latLng = new LatLng(48.209206,16.372778);
+        LatLng latLng = new LatLng(48.209206, 16.372778);
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
         mMapPresenter.loadMärkte();
         mGoogleMap.setOnMarkerClickListener(this);

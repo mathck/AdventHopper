@@ -116,6 +116,8 @@ public class DataManager {
         if ((rating <= 5) && (rating > 0)) {
             dbRef.child(weihnachtsmarktId).child(deviceId).setValue(rating);
         }
+
+        syncRatings();
     }
 
     public void getOwnRating (String weihnachtsmarktId, Dialog rankDialog){

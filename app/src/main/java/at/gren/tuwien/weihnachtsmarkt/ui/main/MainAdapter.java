@@ -82,8 +82,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MarktViewHolde
         Glide.with(holder.itemView.getContext())
                 .using(new FirebaseImageLoader())
                 .load(mStorageRef.child("images/" + markt.id() + ".jpg"))
-                .placeholder(R.mipmap.snow_backdrop)
-                .error(R.mipmap.snow_backdrop)
+                .placeholder(R.mipmap.market_placeholder)
+                .error(R.mipmap.market_placeholder)
+                .fitCenter()
                 .crossFade()
                 .into(holder.marketImage);
 

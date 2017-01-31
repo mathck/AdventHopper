@@ -100,8 +100,9 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
         Glide.with(this)
                 .using(new FirebaseImageLoader())
                 .load(mStorageRef.child("images/" + markt.id() + ".jpg"))
-                .placeholder(R.mipmap.snow_backdrop)
-                .error(R.mipmap.snow_backdrop)
+                .placeholder(R.mipmap.market_placeholder)
+                .error(R.mipmap.market_placeholder)
+                .fitCenter()
                 .crossFade()
                 .into(mMarketImage);
 
@@ -117,11 +118,11 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
         mRatingBar.setOnTouchListener((View v, MotionEvent event)->{
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 String christmasMarktId = markt.id().substring(15);
-                Dialog rankDialog = new Dialog(DetailedActivity.this, R.style.FullHeightDialog);
+                Dialog rankDialog = new Dialog(DetailedActivity.this, R.style.RateDialog);
                 rankDialog.setContentView(R.layout.rank_dialog);
                 rankDialog.setCancelable(true);
                 RatingBar dialogRatingBar = (RatingBar) rankDialog.findViewById(R.id.dialog_ratingbar);
-                dialogRatingBar.setRating(2);
+                dialogRatingBar.setRating(5);
                 mDataManager.getOwnRating(christmasMarktId, rankDialog);
 
                 TextView text = (TextView) rankDialog.findViewById(R.id.rank_dialog_text);
@@ -130,9 +131,6 @@ public class DetailedActivity extends BaseActivity implements DetailedMvpView,On
                 Button updateButton = (Button) rankDialog.findViewById(R.id.rank_dialog_button);
                 updateButton.setOnClickListener((View w) -> {
                     mDataManager.setRating(christmasMarktId, Math.round(dialogRatingBar.getRating()));
-                    mDataManager.syncRatings();
-                    mDataManager.syncMärkte();
-                    showAdventmarkt(markt);
                     rankDialog.dismiss();
                 });
                 rankDialog.show();

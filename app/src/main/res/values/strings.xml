@@ -20,4 +20,6 @@
 
     <string name="image_launcher">Advent Hopper Icon</string>
     <string name="action_search">Suchen</string>
+    <string name="rate">Bewerten</string>
+    <string name="your_rating">Deine Bewertung</string>
 </resources>

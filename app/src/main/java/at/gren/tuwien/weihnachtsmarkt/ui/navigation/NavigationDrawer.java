@@ -23,7 +23,7 @@ import at.gren.tuwien.weihnachtsmarkt.ui.map.MapActivity;
 
 public class NavigationDrawer {
 
-    public void build(BaseActivity context, Toolbar toolbar) {
+    public Drawer build(BaseActivity context, Toolbar toolbar) {
 
         Drawer result = new DrawerBuilder()
             .withActivity(context)
@@ -88,6 +88,8 @@ public class NavigationDrawer {
 
         context.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
+
+        return result;
     }
 
     private int mNavbarItemId = 1;

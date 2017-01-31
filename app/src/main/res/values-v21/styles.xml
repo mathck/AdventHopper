@@ -19,6 +19,9 @@
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">@color/yellow_700</item>
+        <item name="colorPrimary">@color/blue_500</item>
+        <item name="colorPrimaryDark">@color/blue_700</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:colorButtonNormal">@color/blue_500</item>
     </style>
 </resources>

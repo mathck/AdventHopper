@@ -2,9 +2,6 @@ package at.gren.tuwien.weihnachtsmarkt.util.sort;
 
 import java.util.Comparator;
 
-import javax.inject.Inject;
-
-import at.gren.tuwien.weihnachtsmarkt.data.DataManager;
 import at.gren.tuwien.weihnachtsmarkt.data.model.Weihnachtsmarkt;
 import at.gren.tuwien.weihnachtsmarkt.util.DistanceUtil;
 

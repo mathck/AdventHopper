@@ -13,11 +13,11 @@ import rx.Observable;
 
 public interface GovernmentDataService {
 
-    //String ENDPOINT = "http://data.wien.gv.at/daten/";
-    String ENDPOINT = "http://homepage.univie.ac.at/a0302840/inf/";
+    String ENDPOINT = "http://data.wien.gv.at/daten/";
+    //String ENDPOINT = "http://homepage.univie.ac.at/a0302840/inf/";
 
-    //@GET("geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:ADVENTMARKTOGD&srsName=EPSG:4326&outputFormat=json")
-    @GET("adventmarkt.json")
+    @GET("geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:ADVENTMARKTOGD&srsName=EPSG:4326&outputFormat=json")
+    //@GET("adventmarkt.json")
     Observable<FeatureCollection> getWeihnachtsmärkteUndSilvesterständeWien();
 
     /******** Helper class that sets up a new services *******/

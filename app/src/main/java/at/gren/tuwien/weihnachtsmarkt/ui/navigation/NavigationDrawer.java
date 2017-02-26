@@ -37,7 +37,7 @@ public class NavigationDrawer {
                     new DividerDrawerItem(),
                     new SecondaryDrawerItem().withName(R.string.others),
                     createNavbarItem(context, R.string.settings, new IconicsDrawable(context).icon(GoogleMaterial.Icon.gmd_settings)).withEnabled(false).withBadge("bald verfügbar!"),
-                    createNavbarItem(context, R.string.opensource, new IconicsDrawable(context).icon(GoogleMaterial.Icon.gmd_code)),
+                    //createNavbarItem(context, R.string.opensource, new IconicsDrawable(context).icon(GoogleMaterial.Icon.gmd_code)),
                     createNavbarItem(context, R.string.recommend, new IconicsDrawable(context).icon(GoogleMaterial.Icon.gmd_favorite)),
                     createNavbarItem(context, R.string.contact, new IconicsDrawable(context).icon(GoogleMaterial.Icon.gmd_mail))
             )
